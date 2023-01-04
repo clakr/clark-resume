@@ -27,12 +27,12 @@ model Account {
     type              String
     provider          String
     providerAccountId String
-    refresh_token     String? // @db.Text
-    access_token      String? // @db.Text
+    refresh_token     String?
+    access_token      String?
     expires_at        Int?
     token_type        String?
     scope             String?
-    id_token          String? // @db.Text
+    id_token          String?
     session_state     String?
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -92,10 +92,10 @@ model Education {
 }
 
 model Experience {
-    id                    String                  @id @default(cuid())
-    organizationId        String
-    organization          Organization            @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-    ExperienceDescription ExperienceDescription[]
+    id                     String                  @id @default(cuid())
+    organizationId         String
+    organization           Organization            @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+    experienceDescriptions ExperienceDescription[]
 }
 
 model ExperienceDescription {
@@ -106,15 +106,15 @@ model ExperienceDescription {
 }
 
 model Leadership {
-    id                String              @id @default(cuid())
-    organization      Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-    organizationId    String
-    LeadershipProject LeadershipProject[]
+    id                 String              @id @default(cuid())
+    organization       Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+    organizationId     String
+    leadershipProjects LeadershipProject[]
 }
 
 model LeadershipProject {
     id             String     @id @default(cuid())
-    Leadership     Leadership @relation(fields: [leadershipId], references: [id], onDelete: Cascade)
+    leadership     Leadership @relation(fields: [leadershipId], references: [id], onDelete: Cascade)
     leadershipId   String
     course         String
     name           String?
@@ -129,9 +129,9 @@ model Organization {
     location      String
     timeframeFrom DateTime
     timeframeTo   DateTime?
-    Education     Education[]
-    Experience    Experience[]
-    Leadership    Leadership[]
+    educations    Education[]
+    experiences   Experience[]
+    leaderships   Leadership[]
 }
 
 model Technical {

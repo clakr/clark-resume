@@ -55,7 +55,7 @@ const Header = () => {
 export default Header;
 
 const Contacts = () => {
-  const { data } = api.contacts.getAll.useQuery(),
+  const { data } = api.contact.getAll.useQuery(),
     address = data?.find(({ type }) => type === "ADDRESS"),
     email = data?.find(({ type }) => type === "EMAIL"),
     phone = data?.find(({ type }) => type === "PHONE");
@@ -82,7 +82,7 @@ const Contacts = () => {
 };
 
 const Abouts = () => {
-  const { data } = api.abouts.getAll.useQuery();
+  const { data } = api.about.getAll.useQuery();
 
   return (
     <>
