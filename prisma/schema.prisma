@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite"
+    provider = "postgresql"
     // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
     // Further reading:
     // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
@@ -63,4 +63,88 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Contact {
+    id          String      @id @default(cuid())
+    type        ContactType
+    description String
+}
+
+enum ContactType {
+    ADDRESS
+    EMAIL
+    PHONE
+}
+
+model About {
+    id          String @id @default(cuid())
+    description String
+}
+
+model Education {
+    id             String       @id @default(cuid())
+    organizationId String
+    organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+    degree         String?
+    thesis         String?
+    awards         String?
+}
+
+model Experience {
+    id                    String                  @id @default(cuid())
+    organizationId        String
+    organization          Organization            @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+    ExperienceDescription ExperienceDescription[]
+}
+
+model ExperienceDescription {
+    id           String     @id @default(cuid())
+    experience   Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+    experienceId String
+    description  String
+}
+
+model Leadership {
+    id                String              @id @default(cuid())
+    organization      Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+    organizationId    String
+    LeadershipProject LeadershipProject[]
+}
+
+model LeadershipProject {
+    id             String     @id @default(cuid())
+    Leadership     Leadership @relation(fields: [leadershipId], references: [id], onDelete: Cascade)
+    leadershipId   String
+    course         String
+    name           String?
+    purpose        String?
+    otherPositions String?
+}
+
+model Organization {
+    id            String       @id @default(cuid())
+    position      String
+    name          String
+    location      String
+    timeframeFrom DateTime
+    timeframeTo   DateTime?
+    Education     Education[]
+    Experience    Experience[]
+    Leadership    Leadership[]
+}
+
+model Technical {
+    id   String @id @default(cuid())
+    name String
+}
+
+model Language {
+    id   String @id @default(cuid())
+    name String
+}
+
+model Interest {
+    id   String @id @default(cuid())
+    name String
 }

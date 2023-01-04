@@ -1,4 +1,4 @@
-import { createTRPCRouter } from "./trpc";
+import { createTRPCRouter, publicProcedure } from "./trpc";
 import { exampleRouter } from "./routers/example";
 
 /**
@@ -8,6 +8,11 @@ import { exampleRouter } from "./routers/example";
  */
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
+  about: createTRPCRouter({
+    getAll: publicProcedure.query(({ ctx }) => {
+      return ctx.prisma.about.findMany();
+    }),
+  })
 });
 
 // export type definition of API
