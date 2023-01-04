@@ -1,5 +1,6 @@
-import { createTRPCRouter, publicProcedure } from "./trpc";
-import { exampleRouter } from "./routers/example";
+import { aboutRouter } from "./routers/abouts";
+import { contactRouter } from "./routers/contacts";
+import { createTRPCRouter } from "./trpc";
 
 /**
  * This is the primary router for your server.
@@ -7,12 +8,8 @@ import { exampleRouter } from "./routers/example";
  * All routers added in /api/routers should be manually added here
  */
 export const appRouter = createTRPCRouter({
-  example: exampleRouter,
-  about: createTRPCRouter({
-    getAll: publicProcedure.query(({ ctx }) => {
-      return ctx.prisma.about.findMany();
-    }),
-  })
+  contacts: contactRouter,
+  abouts: aboutRouter,
 });
 
 // export type definition of API
