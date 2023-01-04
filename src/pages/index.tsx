@@ -5,7 +5,9 @@ import Aside from "../components/Aside";
 import Content from "../components/Content";
 import Header from "../components/Header";
 
-const inter = Inter();
+const inter = Inter({
+  subsets: ["latin"],
+});
 
 const Home: NextPage = () => {
   return (
