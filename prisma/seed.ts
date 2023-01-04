@@ -15,6 +15,7 @@ async function main() {
     data: [
       {
         description:
+        
           "#54 Bakersfield St., Laguna Bel Air 1, Sta. Rosa, Laguna, 4026, Philippines",
         type: "ADDRESS",
       },
