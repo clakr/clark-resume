@@ -1,28 +1,19 @@
-# Create T3 App
+# clark-resume
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## Todo
 
-## What's next? How do I make an app with this?
+- [x] Fetch from tRPC typesafe APIs
+- [x] Integrate NextJS' Data Fetch Patterns, for whichever fits best
+- [x] Mobile Responsive
+- [x] Dark Mode
+- [ ] Interaction Menu
+- [ ] Project Information
+- [ ] Export to PDF
+- [ ] Admin Portal for mutating page content
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## References
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
-
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
-
-## Learn More
-
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
-
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
-
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+- [Harvard Resume Template](https://cdn-careerservices.fas.harvard.edu/wp-content/uploads/sites/161/2022/08/resume-and-letter_2022-1.pdf)
+- [Template #1 - Framer](https://dribbble.com/shots/18674024-Framer-Template-Resum-Site)
+- [Template #2 - UntitledUI](https://dribbble.com/shots/16855988-Freelancer-portfolio-Untitled-UI)
+- [Template #3 - UntitledUI](https://dribbble.com/shots/18147584-Freelancer-portfolio-Untitled-UI)
