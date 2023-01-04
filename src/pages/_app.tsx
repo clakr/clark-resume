@@ -1,12 +1,10 @@
+import { Analytics } from "@vercel/analytics/react";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
-
 import { type AppType } from "next/app";
-
-import { api } from "../utils/api";
-
 import "../styles/globals.css";
+import { api } from "../utils/api";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -16,6 +14,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
     <SessionProvider session={session}>
       <ThemeProvider attribute="class" enableSystem>
         <Component {...pageProps} />
+        <Analytics />
       </ThemeProvider>
     </SessionProvider>
   );
