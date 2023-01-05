@@ -1,5 +1,6 @@
 import Education from "./Education";
 import Experience from "./Experience";
+import Footer from "./Footer";
 import Leadership from "./Leadership";
 import Skills from "./Skills";
 
@@ -22,6 +23,8 @@ const Content = () => {
       <Experience />
       <Leadership />
       <Skills />
+
+      <Footer />
     </section>
   );
 };
