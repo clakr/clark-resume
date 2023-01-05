@@ -73,8 +73,9 @@ enum ContactType {
 }
 
 model About {
-    id          String @id @default(cuid())
+    id          String   @id @default(cuid())
     description String
+    createdAt   DateTime @default(now())
 }
 
 model Education {
@@ -84,6 +85,7 @@ model Education {
     degree         String?
     thesis         String?
     awards         String?
+    createdAt      DateTime     @default(now())
 }
 
 model Experience {
@@ -91,6 +93,7 @@ model Experience {
     organizationId         String
     organization           Organization            @relation(fields: [organizationId], references: [id], onDelete: Cascade)
     experienceDescriptions ExperienceDescription[]
+    createdAt              DateTime                @default(now())
 }
 
 model ExperienceDescription {
@@ -98,6 +101,7 @@ model ExperienceDescription {
     experience   Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
     experienceId String
     description  String
+    createdAt    DateTime   @default(now())
 }
 
 model Leadership {
@@ -105,6 +109,7 @@ model Leadership {
     organization       Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
     organizationId     String
     leadershipProjects LeadershipProject[]
+    createdAt          DateTime            @default(now())
 }
 
 model LeadershipProject {
@@ -115,6 +120,7 @@ model LeadershipProject {
     name           String?
     purpose        String?
     otherPositions String?
+    createdAt      DateTime   @default(now())
 }
 
 model Organization {
@@ -127,19 +133,23 @@ model Organization {
     educations    Education[]
     experiences   Experience[]
     leaderships   Leadership[]
+    createdAt     DateTime     @default(now())
 }
 
 model Technical {
-    id   String @id @default(cuid())
-    name String
+    id        String   @id @default(cuid())
+    name      String
+    createdAt DateTime @default(now())
 }
 
 model Language {
-    id   String @id @default(cuid())
-    name String
+    id        String   @id @default(cuid())
+    name      String
+    createdAt DateTime @default(now())
 }
 
 model Interest {
-    id   String @id @default(cuid())
-    name String
+    id        String   @id @default(cuid())
+    name      String
+    createdAt DateTime @default(now())
 }
