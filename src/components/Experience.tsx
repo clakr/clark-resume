@@ -30,11 +30,9 @@ const Experience = () => {
                 timeframeTo={timeframeTo}
               >
                 <ul className="list-inside list-disc">
-                  {experienceDescriptions
-                    ?.filter(({ experienceId }) => id === experienceId)
-                    .map(({ id, description }) => (
-                      <ListItem key={id} content={description} />
-                    ))}
+                  {experienceDescriptions.map(({ id, description }) => (
+                    <ListItem key={id} content={description} />
+                  ))}
                 </ul>
               </OrganizationItem>
             )

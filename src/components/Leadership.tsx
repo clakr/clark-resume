@@ -32,9 +32,8 @@ const Leadership = () => {
                 timeframeTo={timeframeTo}
               >
                 <div className="space-y-4 lg:space-y-8">
-                  {leadershipProjects
-                    ?.filter(({ leadershipId }) => id === leadershipId)
-                    .map(({ id, course, name, purpose, otherPositions }) => (
+                  {leadershipProjects.map(
+                    ({ id, course, name, purpose, otherPositions }) => (
                       <LeadershipItem key={id} course={course}>
                         {name && (
                           <DefinitionItem term="Project:" description={name} />
@@ -52,7 +51,8 @@ const Leadership = () => {
                           />
                         )}
                       </LeadershipItem>
-                    ))}
+                    )
+                  )}
                 </div>
               </OrganizationItem>
             )
