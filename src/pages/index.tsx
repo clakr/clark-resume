@@ -19,7 +19,7 @@ const Home: NextPage = () => {
         <title>Clark Kenneth C. Tolosa - Web Developer</title>
         <meta
           name="description"
-          content={data?.map(({ description }) => description).join(" ")}
+          content="I am a passionate Web Developer. Currently in love with Frontend Engineering with libraries and modern JavaScript frameworks with the likes of Tailwind CSS, React, and Next. Also interested in managing, interpreting, and visualizing data in the Backend and engineering the connection of both Frontend and Backend. Capable of Full Stack Web Development. Knowledgeable in modern technologies."
         />
         <link rel="icon" href="favicon/favicon.ico" />
       </Head>
