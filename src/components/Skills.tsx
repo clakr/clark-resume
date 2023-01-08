@@ -1,12 +1,10 @@
-import { api } from "../utils/api";
+import { useQueries } from "../pages";
 import CategoryItem from "./CategoryItem";
 import DefinitionItem from "./DefinitionItem";
 import DefinitionList from "./DefinitionList";
 
 const Skills = () => {
-  const { data: technicals } = api.technical.getAll.useQuery();
-  const { data: languages } = api.language.getAll.useQuery();
-  const { data: interests } = api.interest.getAll.useQuery();
+  const { technicals, languages, interests } = useQueries();
 
   return (
     <>

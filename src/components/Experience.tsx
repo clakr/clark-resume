@@ -1,9 +1,9 @@
-import { api } from "../utils/api";
+import { useQueries } from "../pages";
 import CategoryItem from "./CategoryItem";
 import OrganizationItem from "./OrganizationItem";
 
 const Experience = () => {
-  const { data } = api.experience.getAll.useQuery();
+  const { experiences: data } = useQueries();
 
   return (
     <>

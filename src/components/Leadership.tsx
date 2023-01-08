@@ -1,11 +1,11 @@
-import { api } from "../utils/api";
+import { useQueries } from "../pages";
 import CategoryItem from "./CategoryItem";
 import DefinitionItem from "./DefinitionItem";
 import DefinitionList from "./DefinitionList";
 import OrganizationItem from "./OrganizationItem";
 
 const Leadership = () => {
-  const { data } = api.leadership.getAll.useQuery();
+  const { leaderships: data } = useQueries();
 
   return (
     <>

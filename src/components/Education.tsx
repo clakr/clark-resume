@@ -1,11 +1,11 @@
-import { api } from "../utils/api";
+import { useQueries } from "../pages";
 import CategoryItem from "./CategoryItem";
 import DefinitionItem from "./DefinitionItem";
 import DefinitionList from "./DefinitionList";
 import OrganizationItem from "./OrganizationItem";
 
 const Education = () => {
-  const { data } = api.education.getAll.useQuery();
+  const { educations: data } = useQueries();
 
   return (
     <>

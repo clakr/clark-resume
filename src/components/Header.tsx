@@ -1,6 +1,6 @@
 import { Disclosure, Transition } from "@headlessui/react";
 import { FaChevronDown, FaEnvelope, FaHome, FaPhone } from "react-icons/fa";
-import { api } from "../utils/api";
+import { useQueries } from "../pages";
 import ContactItem from "./ContactItem";
 import ContactList from "./ContactList";
 
@@ -46,7 +46,7 @@ const Header = () => {
 export default Header;
 
 const Contacts = () => {
-  const { data } = api.contact.getAll.useQuery(),
+  const { contacts: data } = useQueries(),
     address = data?.find(({ type }) => type === "ADDRESS"),
     email = data?.find(({ type }) => type === "EMAIL"),
     phone = data?.find(({ type }) => type === "PHONE");
@@ -73,7 +73,7 @@ const Contacts = () => {
 };
 
 const Abouts = () => {
-  const { data } = api.about.getAll.useQuery();
+  const { abouts: data } = useQueries();
 
   return (
     <>
