@@ -51,7 +51,7 @@ async function main() {
       position: "Student",
       name: "FEU - Institute of Technology",
       location: "MNL, PH",
-      timeframeFrom: new Date(2018, 0, 1, 0, 0, 0, 0),
+      timeframeFrom: new Date(2018, 7, 1, 0, 0, 0, 0),
     },
   });
 
@@ -60,8 +60,8 @@ async function main() {
       position: "Student",
       name: "Systems Plus Computer College",
       location: "CAC, PH",
-      timeframeFrom: new Date(2006, 0, 1, 0, 0, 0, 0),
-      timeframeTo: new Date(2018, 0, 1, 0, 0, 0, 0),
+      timeframeFrom: new Date(2006, 5, 1, 0, 0, 0, 0),
+      timeframeTo: new Date(2018, 2, 1, 0, 0, 0, 0),
     },
   });
 
@@ -85,7 +85,8 @@ async function main() {
       position: "Web Developer Intern",
       name: "Aguora IT Solutions and Technology Inc.",
       location: "WFH",
-      timeframeFrom: new Date(2022, 0, 1, 0, 0, 0, 0),
+      timeframeFrom: new Date(2022, 3, 1, 0, 0, 0, 0),
+      timeframeTo: new Date(2022, 10, 1, 0, 0, 0, 0)
     },
   });
 

@@ -25,10 +25,12 @@ const OrganizationItem = ({
   const [timeframe, setTimeframe] = useState('')
 
   const getDate = (timeframe: Date) => {
-    return `${new Intl.DateTimeFormat('EN-PH', {
+    return `${new Intl.DateTimeFormat('en-PH', {
       month: 'long'
-    }).format(timeframe.getMonth())} ${timeframe.getFullYear()}` 
+    }).format(timeframe)} ${timeframe.getFullYear()}` 
   }
+  
+  console.log(timeframeFrom.getMonth())
 
   useEffect(() => {
 
@@ -38,7 +40,7 @@ const OrganizationItem = ({
         setTimeframe(`${getDate(timeframeFrom)} - ${getDate(timeframeTo)}`)
         return
       }
-
+      
 
 
       setTimeframe(`${getDate(timeframeFrom)} - Present`)
