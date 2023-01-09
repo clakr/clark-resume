@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 
 type OrganizationItemProps = {
   position: string | null
@@ -10,19 +10,44 @@ type OrganizationItemProps = {
 
 const OrganizationItem = ({
   position,
+  
+
+
+
+
   organization,
   organizationLocation,
   timeframeFrom,
   timeframeTo,
   children,
 }: React.PropsWithChildren<OrganizationItemProps>) => {
-  const getTimeframe = useCallback(() => {
-    if (timeframeTo) {
-      return `${timeframeFrom.getFullYear()} - ${timeframeTo.getFullYear()}`
+
+  const [timeframe, setTimeframe] = useState('')
+
+  const getDate = (timeframe: Date) => {
+    return `${new Intl.DateTimeFormat('EN-PH', {
+      month: 'long'
+    }).format(timeframe.getMonth())} ${timeframe.getFullYear()}` 
+  }
+
+  useEffect(() => {
+
+    const getTimeframe = () => {
+
+      if(timeframeTo){
+        setTimeframe(`${getDate(timeframeFrom)} - ${getDate(timeframeTo)}`)
+        return
+      }
+
+
+
+      setTimeframe(`${getDate(timeframeFrom)} - Present`)
+
     }
 
-    return `${timeframeFrom?.getFullYear()} - Present`
-  }, [timeframeFrom, timeframeTo])
+    getTimeframe()
+
+  }, [timeframeTo, timeframeFrom])
 
   return (
     <div className="space-y-2">
@@ -37,7 +62,7 @@ const OrganizationItem = ({
             {organizationLocation}
           </span>
         </h4>
-        <label className="text-base opacity-75">{getTimeframe()}</label>
+        <label className="text-base opacity-75">{timeframe}</label>
       </div>
 
       {children}
