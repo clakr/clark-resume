@@ -5,6 +5,7 @@ import type { IconType } from "react-icons/lib";
 type Link = {
   href: string;
   icon: IconType;
+  alt: string;
 };
 
 const Footer = () => {
@@ -12,10 +13,12 @@ const Footer = () => {
     {
       href: "https://github.com/clakr",
       icon: FaGithub,
+      alt: 'Github Profile'
     },
     {
       href: "https://www.linkedin.com/in/clark-tolosa/",
       icon: FaLinkedin,
+      alt: 'LinkedIn Profile'
     },
   ];
 
@@ -26,9 +29,9 @@ const Footer = () => {
       <h2>Web Developer</h2>
       <span>•</span>
       <ul className="flex items-center gap-2 text-base">
-        {links.map(({ href, icon: Icon }, index) => (
+        {links.map(({ href, icon: Icon, alt }, index) => (
           <li key={index}>
-            <Link href={href} target="_blank">
+            <Link href={href} target="_blank" aria-label={alt}>
               <Icon />
             </Link>
           </li>
