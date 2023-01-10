@@ -1,61 +1,47 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 
 type OrganizationItemProps = {
-  position: string | null
-  organization: string
-  organizationLocation: string
-  timeframeFrom: Date
-  timeframeTo: Date | null
-}
+  position: string | null;
+  organization: string;
+  organizationLocation: string;
+  timeframeFrom: Date;
+  timeframeTo: Date | null;
+};
 
 const OrganizationItem = ({
   position,
-  
-
-
-
-
   organization,
   organizationLocation,
   timeframeFrom,
   timeframeTo,
   children,
 }: React.PropsWithChildren<OrganizationItemProps>) => {
-
-  const [timeframe, setTimeframe] = useState('')
+  const [timeframe, setTimeframe] = useState("");
 
   const getDate = (timeframe: Date) => {
-    return `${new Intl.DateTimeFormat('en-PH', {
-      month: 'long'
-    }).format(timeframe)} ${timeframe.getFullYear()}` 
-  }
-  
-  console.log(timeframeFrom.getMonth())
+    return `${new Intl.DateTimeFormat("en-PH", {
+      month: "long",
+    }).format(timeframe)} ${timeframe.getFullYear()}`;
+  };
 
   useEffect(() => {
-
     const getTimeframe = () => {
-
-      if(timeframeTo){
-        setTimeframe(`${getDate(timeframeFrom)} - ${getDate(timeframeTo)}`)
-        return
+      if (timeframeTo) {
+        setTimeframe(`${getDate(timeframeFrom)} - ${getDate(timeframeTo)}`);
+        return;
       }
-      
 
+      setTimeframe(`${getDate(timeframeFrom)} - Present`);
+    };
 
-      setTimeframe(`${getDate(timeframeFrom)} - Present`)
-
-    }
-
-    getTimeframe()
-
-  }, [timeframeTo, timeframeFrom])
+    getTimeframe();
+  }, [timeframeTo, timeframeFrom]);
 
   return (
     <div className="space-y-2">
       <div className="text-lg leading-4 lg:leading-3">
         <h4>
-          {position !== 'Student' && (
+          {position !== "Student" && (
             <span className="mr-2 font-bold">{position},</span>
           )}
           {organization}
@@ -69,7 +55,7 @@ const OrganizationItem = ({
 
       {children}
     </div>
-  )
-}
+  );
+};
 
-export default OrganizationItem
+export default OrganizationItem;
