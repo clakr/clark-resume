@@ -7,6 +7,10 @@ import Content from "../components/Content";
 import Header from "../components/Header";
 import type { RouterOutputs } from "../utils/api";
 import { api } from "../utils/api";
+import { createProxySSGHelpers } from "@trpc/react-query/ssg";
+import { appRouter } from "../server/api/root";
+import superjson from "superjson";
+import { createInnerTRPCContext } from "../server/api/trpc";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -28,6 +32,30 @@ const QueriesContext = createContext<
 
 export const useQueries = () => {
   return useContext(QueriesContext);
+};
+
+export const getStaticProps = async () => {
+  const ssg = createProxySSGHelpers({
+    router: appRouter,
+    ctx: await createInnerTRPCContext(),
+    transformer: superjson,
+  });
+
+  await ssg.contact.getAll.fetch();
+  await ssg.about.getAll.fetch();
+  await ssg.education.getAll.fetch();
+  await ssg.experience.getAll.fetch();
+  await ssg.leadership.getAll.fetch();
+  await ssg.technical.getAll.fetch();
+  await ssg.language.getAll.fetch();
+  await ssg.interest.getAll.fetch();
+
+  return {
+    props: {
+      trpcState: ssg.dehydrate(),
+    },
+    revalidate: 1,
+  };
 };
 
 const Home: NextPage = () => {
