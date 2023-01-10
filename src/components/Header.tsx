@@ -30,7 +30,7 @@ const Header = () => {
             </Disclosure.Panel>
           </Transition>
 
-          <Disclosure.Button className="grid place-items-center p-2">
+          <Disclosure.Button className="grid place-items-center p-2" aria-label="Expand Button">
             <FaChevronDown
               className={
                 open ? "rotate-180 animate-pulse" : "rotate-0 animate-bounce"
