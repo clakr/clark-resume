@@ -9,8 +9,8 @@ import type { RouterOutputs } from "../utils/api";
 import { api } from "../utils/api";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { appRouter } from "../server/api/root";
-import superjson from "superjson";
 import { createInnerTRPCContext } from "../server/api/trpc";
+import superjson from "superjson";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -41,14 +41,16 @@ export const getStaticProps = async () => {
     transformer: superjson,
   });
 
-  await ssg.contact.getAll.fetch();
-  await ssg.about.getAll.fetch();
-  await ssg.education.getAll.fetch();
-  await ssg.experience.getAll.fetch();
-  await ssg.leadership.getAll.fetch();
-  await ssg.technical.getAll.fetch();
-  await ssg.language.getAll.fetch();
-  await ssg.interest.getAll.fetch();
+  await Promise.allSettled([
+    ssg.contact.getAll.fetch(),
+    ssg.about.getAll.fetch(),
+    ssg.education.getAll.fetch(),
+    ssg.experience.getAll.fetch(),
+    ssg.leadership.getAll.fetch(),
+    ssg.technical.getAll.fetch(),
+    ssg.language.getAll.fetch(),
+    ssg.interest.getAll.fetch(),
+  ]);
 
   return {
     props: {
@@ -59,14 +61,14 @@ export const getStaticProps = async () => {
 };
 
 const Home: NextPage = () => {
-  const { data: contacts } = api.contact.getAll.useQuery();
-  const { data: abouts } = api.about.getAll.useQuery();
-  const { data: educations } = api.education.getAll.useQuery();
-  const { data: experiences } = api.experience.getAll.useQuery();
-  const { data: leaderships } = api.leadership.getAll.useQuery();
-  const { data: technicals } = api.technical.getAll.useQuery();
-  const { data: languages } = api.language.getAll.useQuery();
-  const { data: interests } = api.interest.getAll.useQuery();
+  const { data: contacts } = api.contact.getAll.useQuery(),
+    { data: abouts } = api.about.getAll.useQuery(),
+    { data: educations } = api.education.getAll.useQuery(),
+    { data: experiences } = api.experience.getAll.useQuery(),
+    { data: leaderships } = api.leadership.getAll.useQuery(),
+    { data: technicals } = api.technical.getAll.useQuery(),
+    { data: languages } = api.language.getAll.useQuery(),
+    { data: interests } = api.interest.getAll.useQuery();
 
   return (
     <>
