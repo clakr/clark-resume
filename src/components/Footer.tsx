@@ -28,11 +28,11 @@ const Footer = () => {
       <span>•</span>
       <h2>Web Developer</h2>
       <span>•</span>
-      <ul className="flex items-center gap-2 text-base">
+      <ul className="flex items-center text-base">
         {links.map(({ href, icon: Icon, alt }, index) => (
           <li key={index}>
             <Link href={href} target="_blank" aria-label={alt}>
-              <Icon />
+              <Icon className="w-12 h-12 p-3"  />
             </Link>
           </li>
         ))}
