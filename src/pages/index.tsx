@@ -5,6 +5,7 @@ import Head from "next/head";
 import { createContext, useContext } from "react";
 import superjson from "superjson";
 import Aside from "../components/Aside";
+import CommandPalette from "../components/CommandPalette";
 import Content from "../components/Content";
 import Header from "../components/Header";
 import { appRouter } from "../server/api/root";
@@ -100,6 +101,8 @@ const Home: NextPage = () => {
           <Content />
           <Aside />
         </main>
+
+        <CommandPalette />
       </QueriesContext.Provider>
     </>
   );
