@@ -5,13 +5,13 @@ import DefinitionList from "./DefinitionList";
 import OrganizationItem from "./OrganizationItem";
 
 const Leadership = () => {
-  const { leaderships: data } = useQueries();
+  const data = useQueries();
 
   return (
     <>
       {data && (
         <CategoryItem title="Leadership">
-          {data.map(
+          {data.leadership.map(
             ({
               id,
               organization: {

@@ -4,29 +4,29 @@ import DefinitionItem from "./DefinitionItem";
 import DefinitionList from "./DefinitionList";
 
 const Skills = () => {
-  const { technicals, languages, interests } = useQueries();
+  const data = useQueries();
 
   return (
     <>
-      {(technicals || languages || interests) && (
+      {data && (
         <CategoryItem title="Skills and Interests">
           <DefinitionList>
-            {technicals && (
+            {data.technical && (
               <DefinitionItem
                 term="Technical:"
-                description={technicals.map(({ name }) => name).join(", ")}
+                description={data.technical.map(({ name }) => name).join(", ")}
               />
             )}
-            {languages && (
+            {data.language && (
               <DefinitionItem
                 term="Language:"
-                description={languages.map(({ name }) => name).join(", ")}
+                description={data.language.map(({ name }) => name).join(", ")}
               />
             )}
-            {interests && (
+            {data.interest && (
               <DefinitionItem
                 term="Interest:"
-                description={interests.map(({ name }) => name).join(", ")}
+                description={data.interest.map(({ name }) => name).join(", ")}
               />
             )}
           </DefinitionList>

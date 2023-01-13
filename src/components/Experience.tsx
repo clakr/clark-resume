@@ -3,13 +3,13 @@ import CategoryItem from "./CategoryItem";
 import OrganizationItem from "./OrganizationItem";
 
 const Experience = () => {
-  const { experiences: data } = useQueries();
+  const data = useQueries();
 
   return (
     <>
       {data && (
         <CategoryItem title="Experience">
-          {data.map(
+          {data.experience.map(
             ({
               id,
               organization: {
