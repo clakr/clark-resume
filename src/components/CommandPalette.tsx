@@ -161,7 +161,7 @@ const Button = forwardRef(
     ref: ForwardedRef<HTMLButtonElement>
   ) => (
     <button
-      className="flex items-center gap-2 rounded-lg bg-slate-800 p-4 hover:bg-slate-700 focus:bg-slate-700"
+      className="flex items-center gap-2 rounded-lg bg-slate-200 p-4 hover:bg-slate-300 focus:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 dark:focus:bg-slate-700"
       ref={ref}
       onClick={onClick}
     >
