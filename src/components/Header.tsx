@@ -1,4 +1,5 @@
 import { Disclosure, Transition } from "@headlessui/react";
+import type { Contact } from "@prisma/client";
 import { FaChevronDown, FaEnvelope, FaHome, FaPhone } from "react-icons/fa";
 import { useQueries } from "../pages";
 import ContactItem from "./ContactItem";
@@ -30,7 +31,10 @@ const Header = () => {
             </Disclosure.Panel>
           </Transition>
 
-          <Disclosure.Button className="grid place-items-center p-2" aria-label="Expand Button">
+          <Disclosure.Button
+            className="grid place-items-center p-2"
+            aria-label="Expand Button"
+          >
             <FaChevronDown
               className={
                 open ? "rotate-180 animate-pulse" : "rotate-0 animate-bounce"
@@ -46,10 +50,17 @@ const Header = () => {
 export default Header;
 
 const Contacts = () => {
-  const { contacts: data } = useQueries(),
-    address = data?.find(({ type }) => type === "ADDRESS"),
-    email = data?.find(({ type }) => type === "EMAIL"),
-    phone = data?.find(({ type }) => type === "PHONE");
+  const data = useQueries();
+
+  let address: Contact | undefined = undefined,
+    email: Contact | undefined = undefined,
+    phone: Contact | undefined = undefined;
+
+  if (data) {
+    address = data?.contact.find(({ type }) => type === "ADDRESS");
+    phone = data?.contact.find(({ type }) => type === "PHONE");
+    email = data?.contact.find(({ type }) => type === "EMAIL");
+  }
 
   return (
     <>
@@ -73,13 +84,13 @@ const Contacts = () => {
 };
 
 const Abouts = () => {
-  const { abouts: data } = useQueries();
+  const data = useQueries();
 
   return (
     <>
       {data && (
         <ContactItem title="About">
-          {data.map(({ id, description }) => (
+          {data.about.map(({ id, description }) => (
             <p key={id}>{description}</p>
           ))}
         </ContactItem>

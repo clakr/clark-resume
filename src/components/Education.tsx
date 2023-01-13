@@ -5,13 +5,13 @@ import DefinitionList from "./DefinitionList";
 import OrganizationItem from "./OrganizationItem";
 
 const Education = () => {
-  const { educations: data } = useQueries();
+  const data = useQueries();
 
   return (
     <>
       {data && (
         <CategoryItem title="Education">
-          {data.map(
+          {data.education.map(
             ({
               id,
               degree,
