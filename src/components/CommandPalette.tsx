@@ -51,7 +51,13 @@ const CommandPalette = () => {
       icon: FaFileExport,
       text: "Export to PDF",
       onClick: () => {
-        console.log("Dark mode");
+        fetch("https://pdfgen.app/api/generate?templateId=e4514cc", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            api_key: "oqO22WUBsqgc6Q1QVHzjV",
+          },
+        });
       },
     },
     {
