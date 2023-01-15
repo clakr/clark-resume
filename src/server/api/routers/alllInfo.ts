@@ -27,7 +27,7 @@ export const allInfoRouter = createTRPCRouter({
         },
         include: {
           organization: true,
-          experienceDescriptions: true,
+          experienceDescs: true,
         },
       }),
       leadership: await ctx.prisma.leadership.findMany({

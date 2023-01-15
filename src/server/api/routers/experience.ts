@@ -5,7 +5,7 @@ export const experienceRouter = createTRPCRouter({
     return ctx.prisma.experience.findMany({
       include: {
         organization: true,
-        experienceDescriptions: true,
+        experienceDescs: true,
       },
       orderBy: {
         createdAt: "asc",
