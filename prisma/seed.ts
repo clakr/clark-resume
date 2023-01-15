@@ -7,15 +7,12 @@ async function main() {
   await prisma.education.deleteMany();
   await prisma.experience.deleteMany();
   await prisma.experienceDescription.deleteMany();
-  await prisma.technical.deleteMany();
-  await prisma.language.deleteMany();
-  await prisma.interest.deleteMany();
+  await prisma.miscellaneous.deleteMany();
 
   await prisma.contact.createMany({
     data: [
       {
         description:
-        
           "#54 Bakersfield St., Laguna Bel Air 1, Sta. Rosa, Laguna, 4026, Philippines",
         type: "ADDRESS",
       },
@@ -86,7 +83,7 @@ async function main() {
       name: "Aguora IT Solutions and Technology Inc.",
       location: "WFH",
       timeframeFrom: new Date(2022, 3, 1, 0, 0, 0, 0),
-      timeframeTo: new Date(2022, 10, 1, 0, 0, 0, 0)
+      timeframeTo: new Date(2022, 10, 1, 0, 0, 0, 0),
     },
   });
 
@@ -161,74 +158,83 @@ async function main() {
     ],
   });
 
-  await prisma.technical.createMany({
+  await prisma.miscellaneous.createMany({
     data: [
       {
         name: "HTML",
+        type: "TECHNICAL",
       },
       {
         name: "CSS",
+        type: "TECHNICAL",
       },
       {
         name: "JavaScript",
+        type: "TECHNICAL",
       },
       {
         name: "React",
+        type: "TECHNICAL",
       },
       {
         name: "TailwindCSS",
+        type: "TECHNICAL",
       },
       {
         name: "TypeScript",
+        type: "TECHNICAL",
       },
       {
         name: "NextJS",
+        type: "TECHNICAL",
       },
       {
         name: "PHP",
+        type: "TECHNICAL",
       },
       {
         name: "Laravel",
+        type: "TECHNICAL",
       },
       {
         name: "Bootstrap",
+        type: "TECHNICAL",
       },
       {
         name: "jQuery",
+        type: "TECHNICAL",
       },
       {
         name: "SQL",
+        type: "TECHNICAL",
       },
       {
         name: "REST API",
+        type: "TECHNICAL",
       },
-    ],
-  });
-
-  await prisma.language.createMany({
-    data: [
       {
         name: "Filipino",
+        type: "LANGUAGE",
       },
       {
         name: "English",
+        type: "LANGUAGE",
       },
-    ],
-  });
-
-  await prisma.interest.createMany({
-    data: [
       {
         name: "Modern Technologies",
+        type: "INTEREST",
       },
       {
         name: "Web Frameworks",
+        type: "INTEREST",
       },
       {
         name: "Basketball",
+        type: "INTEREST",
       },
       {
         name: "PC and Console Gaming",
+        type: "INTEREST",
       },
     ],
   });

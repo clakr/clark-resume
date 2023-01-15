@@ -136,20 +136,15 @@ model Organization {
     createdAt     DateTime     @default(now())
 }
 
-model Technical {
-    id        String   @id @default(cuid())
+model Miscellaneous {
+    id        String            @id @default(cuid())
     name      String
-    createdAt DateTime @default(now())
+    type      MiscellaneousType
+    createdAt DateTime          @default(now())
 }
 
-model Language {
-    id        String   @id @default(cuid())
-    name      String
-    createdAt DateTime @default(now())
-}
-
-model Interest {
-    id        String   @id @default(cuid())
-    name      String
-    createdAt DateTime @default(now())
+enum MiscellaneousType {
+    TECHNICAL
+    LANGUAGE
+    INTEREST
 }
