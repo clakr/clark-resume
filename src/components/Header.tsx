@@ -68,14 +68,12 @@ const Contacts = () => {
         <ContactItem title="Contact">
           <ul className="flex flex-col gap-2">
             {address && (
-              <ContactList icon={<FaHome />} content={address.description} />
+              <ContactList icon={<FaHome />} content={address.desc} />
             )}
             {email && (
-              <ContactList icon={<FaEnvelope />} content={email.description} />
+              <ContactList icon={<FaEnvelope />} content={email.desc} />
             )}
-            {phone && (
-              <ContactList icon={<FaPhone />} content={phone.description} />
-            )}
+            {phone && <ContactList icon={<FaPhone />} content={phone.desc} />}
           </ul>
         </ContactItem>
       )}
@@ -90,8 +88,8 @@ const Abouts = () => {
     <>
       {data && (
         <ContactItem title="About">
-          {data.about.map(({ id, description }) => (
-            <p key={id}>{description}</p>
+          {data.about.map(({ id, desc }) => (
+            <p key={id}>{desc}</p>
           ))}
         </ContactItem>
       )}
