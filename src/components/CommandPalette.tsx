@@ -5,6 +5,7 @@ import { Fragment, forwardRef, useEffect, useRef, useState } from "react";
 import { FaFileExport, FaGithub, FaInfoCircle, FaMoon } from "react-icons/fa";
 import type { IconType } from "react-icons/lib";
 import { MdOutlineClose } from "react-icons/md";
+import { useQueries } from "../pages";
 
 type Button = {
   text: string;
@@ -17,6 +18,7 @@ const CommandPalette = () => {
   const [isOpen, setIsOpen] = useState(false);
   const initialFocusRef = useRef<HTMLButtonElement>(null);
   const { theme, setTheme, systemTheme } = useTheme();
+  const data = useQueries();
 
   const buttons: Button[] = [
     {
@@ -50,14 +52,21 @@ const CommandPalette = () => {
     {
       icon: FaFileExport,
       text: "Export to PDF",
-      onClick: () => {
-        fetch("https://pdfgen.app/api/generate?templateId=e4514cc", {
+      onClick: async () => {
+        await fetch("/api/export", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            api_key: "oqO22WUBsqgc6Q1QVHzjV",
-          },
+          body: JSON.stringify(data),
         });
+
+        await fetch("resume.pdf")
+          .then((res) => res.blob())
+          .then((blob) => {
+            const fileUrl = window.URL.createObjectURL(blob);
+            const aLink = document.createElement("a");
+            aLink.href = fileUrl;
+            aLink.download = "TOLOSA_Resume.pdf";
+            aLink.click();
+          });
       },
     },
     {
