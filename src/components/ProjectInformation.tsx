@@ -6,7 +6,11 @@ const ProjectInformation = ({
 }: {
   state: [boolean, Dispatch<SetStateAction<boolean>>];
 }) => {
-  return <Modal state={state}>ProjectInformation</Modal>;
+  return (
+    <Modal state={state} title="Project Information">
+      ProjectInformation
+    </Modal>
+  );
 };
 
 export default ProjectInformation;
