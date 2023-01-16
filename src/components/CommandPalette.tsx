@@ -2,6 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { useTheme } from "next-themes";
 import type { ForwardedRef } from "react";
 import { Fragment, forwardRef, useEffect, useRef, useState } from "react";
+import { AiOutlineLoading } from "react-icons/ai";
 import { FaFileExport, FaGithub, FaInfoCircle, FaMoon } from "react-icons/fa";
 import type { IconType } from "react-icons/lib";
 import { MdOutlineClose } from "react-icons/md";
@@ -10,81 +11,33 @@ import { useQueries } from "../pages";
 type Button = {
   text: string;
   icon: IconType;
-  onClick: () => void;
   isFocused?: boolean;
 };
+
+const buttons: Button[] = [
+  {
+    icon: FaMoon,
+    text: "Dark Mode",
+  },
+  {
+    icon: FaFileExport,
+    text: "Export to PDF",
+  },
+  {
+    icon: FaInfoCircle,
+    text: "Project Information",
+  },
+  {
+    icon: FaGithub,
+    text: "Sign in with GitHub",
+
+    isFocused: true,
+  },
+];
 
 const CommandPalette = () => {
   const [isOpen, setIsOpen] = useState(false);
   const initialFocusRef = useRef<HTMLButtonElement>(null);
-  const { theme, setTheme, systemTheme } = useTheme();
-  const data = useQueries();
-
-  const buttons: Button[] = [
-    {
-      icon: FaMoon,
-      text: "Dark Mode",
-      onClick: () => {
-        switch (theme) {
-          case "system":
-            if (systemTheme === "dark") {
-              setTheme("light");
-            } else {
-              setTheme("dark");
-            }
-
-            break;
-
-          case "dark":
-            setTheme("light");
-            break;
-
-          case "light":
-            setTheme("dark");
-            break;
-
-          default:
-            setTheme("dark");
-            break;
-        }
-      },
-    },
-    {
-      icon: FaFileExport,
-      text: "Export to PDF",
-      onClick: async () => {
-        await fetch("/api/exportToPDF", {
-          method: "POST",
-          body: JSON.stringify(data),
-        });
-
-        await fetch("resume.pdf")
-          .then((res) => res.blob())
-          .then((blob) => {
-            const fileUrl = window.URL.createObjectURL(blob);
-            const aLink = document.createElement("a");
-            aLink.href = fileUrl;
-            aLink.download = "TOLOSA_Resume.pdf";
-            aLink.click();
-          });
-      },
-    },
-    {
-      icon: FaInfoCircle,
-      text: "Project Information",
-      onClick: () => {
-        console.log("Dark mode");
-      },
-    },
-    {
-      icon: FaGithub,
-      text: "Sign in with GitHub",
-      onClick: () => {
-        console.log("Dark mode");
-      },
-      isFocused: true,
-    },
-  ];
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -151,13 +104,12 @@ const CommandPalette = () => {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  {buttons.map(({ text, icon, onClick, isFocused }, index) => (
+                  {buttons.map(({ text, icon, isFocused }, index) => (
                     <Button
                       key={index}
                       text={text}
                       icon={icon}
                       ref={isFocused ? initialFocusRef : null}
-                      onClick={onClick}
                     />
                   ))}
                 </div>
@@ -171,19 +123,98 @@ const CommandPalette = () => {
 };
 
 const Button = forwardRef(
-  (
-    { text, icon: Icon, onClick }: Button,
-    ref: ForwardedRef<HTMLButtonElement>
-  ) => (
-    <button
-      className="flex items-center gap-2 rounded-lg bg-slate-200 p-4 hover:bg-slate-300 focus:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 dark:focus:bg-slate-700"
-      ref={ref}
-      onClick={onClick}
-    >
-      <Icon className="h-6 w-6" />
-      <span className="flex-1">{text}</span>
-    </button>
-  )
+  ({ text, icon: Icon }: Button, ref: ForwardedRef<HTMLButtonElement>) => {
+    const [isLoading, setIsLoading] = useState(false);
+    let onClick: (() => void) | undefined = undefined;
+
+    const { theme, setTheme, systemTheme } = useTheme();
+    const data = useQueries();
+
+    switch (text) {
+      case "Dark Mode":
+        onClick = () => {
+          switch (theme) {
+            case "system":
+              if (systemTheme === "dark") {
+                setTheme("light");
+              } else {
+                setTheme("dark");
+              }
+
+              break;
+
+            case "dark":
+              setTheme("light");
+              break;
+
+            case "light":
+              setTheme("dark");
+              break;
+
+            default:
+              setTheme("dark");
+              break;
+          }
+        };
+        break;
+
+      case "Export to PDF":
+        onClick = async () => {
+          setIsLoading(true);
+          await fetch("/api/exportToPDF", {
+            method: "POST",
+            body: JSON.stringify(data),
+          });
+
+          await fetch("resume.pdf")
+            .then((res) => res.blob())
+            .then((blob) => {
+              const fileUrl = window.URL.createObjectURL(blob);
+              const aLink = document.createElement("a");
+              aLink.href = fileUrl;
+              aLink.download = "TOLOSA_Resume.pdf";
+              aLink.click();
+            })
+            .finally(() => setIsLoading(false));
+        };
+        break;
+
+      case "Project Information":
+        onClick = () => {
+          console.log("qwe");
+        };
+        break;
+
+      case "Sign in with GitHub":
+        onClick = () => {
+          console.log("qwe");
+        };
+        break;
+
+      default:
+        break;
+    }
+
+    return (
+      <button
+        className={`flex items-center gap-2 rounded-lg bg-slate-200 p-4 hover:bg-slate-300 focus:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 dark:focus:bg-slate-700 ${
+          isLoading && "opacity-50"
+        }`}
+        ref={ref}
+        onClick={onClick}
+        disabled={isLoading}
+      >
+        {isLoading ? (
+          <AiOutlineLoading className="h-6 w-6 flex-1 animate-spin" />
+        ) : (
+          <>
+            <Icon className="h-6 w-6" />
+            <span className="flex-1">{text}</span>
+          </>
+        )}
+      </button>
+    );
+  }
 );
 
 Button.displayName = "Button";
