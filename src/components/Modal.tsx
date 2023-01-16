@@ -7,6 +7,7 @@ import type {
 } from "react";
 import { Fragment } from "react";
 import { MdOutlineClose } from "react-icons/md";
+import { useStateContext } from "./CommandPalette";
 
 const Modal = ({
   children,
@@ -18,18 +19,38 @@ const Modal = ({
   initialFocus?: RefObject<HTMLButtonElement>;
   title: string;
 }>) => {
+  const {
+    paletteState: [, setIsPaletteOpen],
+  } = useStateContext();
+
+  let onClose: () => void;
+
+  switch (title) {
+    case "Project Information":
+      onClose = () => {
+        setIsOpen(false);
+        setIsPaletteOpen(true);
+      };
+      break;
+
+    default:
+      onClose = () => {
+        setIsOpen(false);
+      };
+      break;
+  }
+
   return (
-    <Transition show={isOpen} as={Fragment}>
+    <Transition show={isOpen} as={Fragment} appear>
       <Dialog
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
+        onClose={onClose}
         className="text-slate-900"
         as="div"
         initialFocus={initialFocus}
       >
         <Transition.Child
           as={Fragment}
-          enter="ease-out dura/tion-300"
+          enter="ease-out duration-300"
           enterFrom="opacity-0"
           enterTo="opacity-100"
           leave="ease-in duration-200"
@@ -62,7 +83,7 @@ const Modal = ({
                   <button
                     type="button"
                     className="opacity-75"
-                    onClick={() => setIsOpen(false)}
+                    onClick={onClose}
                   >
                     <MdOutlineClose className="h-6 w-6" />
                   </button>
