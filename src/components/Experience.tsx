@@ -19,7 +19,7 @@ const Experience = () => {
                 timeframeFrom,
                 timeframeTo,
               },
-              experienceDescriptions,
+              experienceDescs,
             }) => (
               <OrganizationItem
                 key={id}
@@ -30,8 +30,8 @@ const Experience = () => {
                 timeframeTo={timeframeTo}
               >
                 <ul className="list-inside list-disc">
-                  {experienceDescriptions.map(({ id, description }) => (
-                    <ListItem key={id} content={description} />
+                  {experienceDescs.map(({ id, desc }) => (
+                    <ListItem key={id} content={desc} />
                   ))}
                 </ul>
               </OrganizationItem>

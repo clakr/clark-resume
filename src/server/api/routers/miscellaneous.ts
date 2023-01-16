@@ -1,8 +1,8 @@
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
-export const languageRouter = createTRPCRouter({
+export const miscellaneousRouter = createTRPCRouter({
   getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.language.findMany({
+    return ctx.prisma.miscellaneous.findMany({
       orderBy: {
         createdAt: "asc",
       },

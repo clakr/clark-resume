@@ -3,10 +3,8 @@ import { allInfoRouter } from "./routers/alllInfo";
 import { contactRouter } from "./routers/contact";
 import { educationRouter } from "./routers/education";
 import { experienceRouter } from "./routers/experience";
-import { interestRouter } from "./routers/interest";
-import { languageRouter } from "./routers/language";
 import { leadershipRouter } from "./routers/leadership";
-import { technicalRouter } from "./routers/technical";
+import { miscellaneousRouter } from "./routers/miscellaneous";
 import { createTRPCRouter } from "./trpc";
 
 /**
@@ -21,9 +19,7 @@ export const appRouter = createTRPCRouter({
   education: educationRouter,
   experience: experienceRouter,
   leadership: leadershipRouter,
-  technical: technicalRouter,
-  language: languageRouter,
-  interest: interestRouter,
+  miscellaneous: miscellaneousRouter,
 });
 
 // export type definition of API

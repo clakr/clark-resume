@@ -27,7 +27,7 @@ export const allInfoRouter = createTRPCRouter({
         },
         include: {
           organization: true,
-          experienceDescriptions: true,
+          experienceDescs: true,
         },
       }),
       leadership: await ctx.prisma.leadership.findMany({
@@ -39,17 +39,7 @@ export const allInfoRouter = createTRPCRouter({
           leadershipProjects: true,
         },
       }),
-      technical: await ctx.prisma.technical.findMany({
-        orderBy: {
-          createdAt: "asc",
-        },
-      }),
-      language: await ctx.prisma.language.findMany({
-        orderBy: {
-          createdAt: "asc",
-        },
-      }),
-      interest: await ctx.prisma.interest.findMany({
+      miscellaneous: await ctx.prisma.miscellaneous.findMany({
         orderBy: {
           createdAt: "asc",
         },
