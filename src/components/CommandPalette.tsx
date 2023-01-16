@@ -53,7 +53,7 @@ const CommandPalette = () => {
       icon: FaFileExport,
       text: "Export to PDF",
       onClick: async () => {
-        await fetch("/api/export", {
+        await fetch("/api/exportToPDF", {
           method: "POST",
           body: JSON.stringify(data),
         });
