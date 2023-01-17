@@ -1,8 +1,15 @@
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import type { Dispatch, ForwardedRef, SetStateAction } from "react";
 import { createContext, forwardRef, useContext, useRef, useState } from "react";
 import { AiOutlineLoading } from "react-icons/ai";
-import { FaFileExport, FaGithub, FaInfoCircle, FaMoon } from "react-icons/fa";
+import {
+  FaFileExport,
+  FaGithub,
+  FaInfoCircle,
+  FaMoon,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import type { IconType } from "react-icons/lib";
 import { useQueries } from "../pages";
 import usePalette from "../utils/usePalette";
@@ -33,6 +40,10 @@ const buttons: Button[] = [
     text: "Sign in with GitHub",
     isFocused: true,
   },
+  {
+    icon: FaSignOutAlt,
+    text: "Sign Out",
+  },
 ];
 
 const StateContext = createContext<
@@ -50,6 +61,7 @@ export const useStateContext = () => {
 const CommandPalette = () => {
   const paletteState = usePalette();
   const infoState = useState(false);
+  const { data: session } = useSession();
 
   const initialFocusRef = useRef<HTMLButtonElement>(null);
 
@@ -69,6 +81,7 @@ const CommandPalette = () => {
               ref={isFocused ? initialFocusRef : null}
             />
           ))}
+          <span className="bg-red-400">qwe{session?.user?.id}</span>
         </div>
 
         <ProjectInformation state={infoState} />
@@ -138,15 +151,21 @@ const Button = forwardRef(
         break;
 
       case "Project Information":
-        onClick = () => {
-          setIsInfoOpen(true);
-        };
+        onClick = () => setIsInfoOpen(true);
+
         break;
 
       case "Sign in with GitHub":
-        onClick = () => {
-          console.log("qwe");
-        };
+        onClick = () =>
+          signIn("github", {
+            callbackUrl: "/a/about",
+          });
+
+        break;
+
+      case "Sign Out":
+        onClick = () => signOut();
+
         break;
 
       default:
