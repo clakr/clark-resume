@@ -1,34 +1,27 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-  // Further reading:
-  // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-  // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
   url      = env("DATABASE_URL")
 }
 
-// Necessary for Next auth
 model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String?
-  access_token      String?
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?
-  session_state     String?
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                       String  @id @default(cuid())
+  userId                   String
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String?
+  refresh_token_expires_in Int?
+  access_token             String?
+  expires_at               Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String?
+  session_state            String?
+  user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -62,65 +55,59 @@ model VerificationToken {
 model Contact {
   id        String      @id @default(cuid())
   type      ContactType
-  desc      String
   createdAt DateTime    @default(now())
-}
-
-enum ContactType {
-  ADDRESS
-  EMAIL
-  PHONE
+  desc      String
 }
 
 model About {
   id        String   @id @default(cuid())
-  desc      String
   createdAt DateTime @default(now())
+  desc      String
 }
 
 model Education {
   id             String       @id @default(cuid())
   organizationId String
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   degree         String?
   thesis         String?
   awards         String?
   createdAt      DateTime     @default(now())
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 }
 
 model Experience {
   id              String           @id @default(cuid())
   organizationId  String
+  createdAt       DateTime         @default(now())
   organization    Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   experienceDescs ExperienceDesc[]
-  createdAt       DateTime         @default(now())
 }
 
 model ExperienceDesc {
   id           String     @id @default(cuid())
-  experience   Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
   experienceId String
   desc         String
   createdAt    DateTime   @default(now())
+  experience   Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
 }
 
 model Leadership {
   id                 String              @id @default(cuid())
-  organization       Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   organizationId     String
-  leadershipProjects LeadershipProject[]
   createdAt          DateTime            @default(now())
+  organization       Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  leadershipProjects LeadershipProject[]
 }
 
 model LeadershipProject {
   id             String     @id @default(cuid())
-  leadership     Leadership @relation(fields: [leadershipId], references: [id], onDelete: Cascade)
   leadershipId   String
   course         String
   name           String?
   purpose        String?
   otherPositions String?
   createdAt      DateTime   @default(now())
+  leadership     Leadership @relation(fields: [leadershipId], references: [id], onDelete: Cascade)
 }
 
 model Organization {
@@ -130,10 +117,10 @@ model Organization {
   location      String
   timeframeFrom DateTime
   timeframeTo   DateTime?
+  createdAt     DateTime     @default(now())
   educations    Education[]
   experiences   Experience[]
   leaderships   Leadership[]
-  createdAt     DateTime     @default(now())
 }
 
 model Miscellaneous {
@@ -141,6 +128,12 @@ model Miscellaneous {
   name      String
   type      MiscellaneousType
   createdAt DateTime          @default(now())
+}
+
+enum ContactType {
+  ADDRESS
+  EMAIL
+  PHONE
 }
 
 enum MiscellaneousType {
