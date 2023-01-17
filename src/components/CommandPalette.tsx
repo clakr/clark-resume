@@ -148,10 +148,12 @@ const Button = forwardRef(
         break;
 
       case "Sign in with GitHub":
-        onClick = () =>
+        onClick = () => {
+          setIsLoading(true);
           signIn("github", {
             callbackUrl: "/a/about",
           });
+        };
 
         break;
 
