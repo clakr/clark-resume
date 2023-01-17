@@ -1,15 +1,9 @@
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import type { Dispatch, ForwardedRef, SetStateAction } from "react";
 import { createContext, forwardRef, useContext, useRef, useState } from "react";
 import { AiOutlineLoading } from "react-icons/ai";
-import {
-  FaFileExport,
-  FaGithub,
-  FaInfoCircle,
-  FaMoon,
-  FaSignOutAlt,
-} from "react-icons/fa";
+import { FaFileExport, FaGithub, FaInfoCircle, FaMoon } from "react-icons/fa";
 import type { IconType } from "react-icons/lib";
 import { useQueries } from "../pages";
 import usePalette from "../utils/usePalette";
@@ -26,6 +20,7 @@ const buttons: Button[] = [
   {
     icon: FaMoon,
     text: "Dark Mode",
+    isFocused: true,
   },
   {
     icon: FaFileExport,
@@ -39,10 +34,6 @@ const buttons: Button[] = [
     icon: FaGithub,
     text: "Sign in with GitHub",
     isFocused: true,
-  },
-  {
-    icon: FaSignOutAlt,
-    text: "Sign Out",
   },
 ];
 
@@ -73,15 +64,16 @@ const CommandPalette = () => {
         title="Command Palette"
       >
         <div className="flex flex-col gap-2 opacity-75">
-          {buttons.map(({ text, icon, isFocused }, index) => (
-            <Button
-              key={index}
-              text={text}
-              icon={icon}
-              ref={isFocused ? initialFocusRef : null}
-            />
-          ))}
-          <span className="bg-red-400">qwe{session?.user?.id}</span>
+          {(session ? buttons.slice(0, 3) : buttons).map(
+            ({ text, icon, isFocused }, index) => (
+              <Button
+                key={index}
+                text={text}
+                icon={icon}
+                ref={isFocused ? initialFocusRef : null}
+              />
+            )
+          )}
         </div>
 
         <ProjectInformation state={infoState} />
@@ -160,11 +152,6 @@ const Button = forwardRef(
           signIn("github", {
             callbackUrl: "/a/about",
           });
-
-        break;
-
-      case "Sign Out":
-        onClick = () => signOut();
 
         break;
 
