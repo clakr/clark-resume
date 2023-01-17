@@ -54,28 +54,26 @@ const CommandPalette = () => {
   const initialFocusRef = useRef<HTMLButtonElement>(null);
 
   return (
-    <>
-      <StateContext.Provider value={{ infoState, paletteState }}>
-        <Modal
-          state={paletteState}
-          initialFocus={initialFocusRef}
-          title="Command Palette"
-        >
-          <div className="flex flex-col gap-2">
-            {buttons.map(({ text, icon, isFocused }, index) => (
-              <Button
-                key={index}
-                text={text}
-                icon={icon}
-                ref={isFocused ? initialFocusRef : null}
-              />
-            ))}
-          </div>
-        </Modal>
+    <StateContext.Provider value={{ infoState, paletteState }}>
+      <Modal
+        state={paletteState}
+        initialFocus={initialFocusRef}
+        title="Command Palette"
+      >
+        <div className="flex flex-col gap-2 opacity-75">
+          {buttons.map(({ text, icon, isFocused }, index) => (
+            <Button
+              key={index}
+              text={text}
+              icon={icon}
+              ref={isFocused ? initialFocusRef : null}
+            />
+          ))}
+        </div>
 
         <ProjectInformation state={infoState} />
-      </StateContext.Provider>
-    </>
+      </Modal>
+    </StateContext.Provider>
   );
 };
 
@@ -88,7 +86,6 @@ const Button = forwardRef(
     const data = useQueries();
     const {
       infoState: [, setIsInfoOpen],
-      paletteState: [, setIsPaletteOpen],
     } = useStateContext();
 
     switch (text) {
@@ -142,7 +139,6 @@ const Button = forwardRef(
 
       case "Project Information":
         onClick = () => {
-          setIsPaletteOpen(false);
           setIsInfoOpen(true);
         };
         break;
@@ -159,7 +155,7 @@ const Button = forwardRef(
 
     return (
       <button
-        className={`flex items-center gap-2 rounded-xl bg-slate-200 p-4 hover:bg-slate-300 focus:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 dark:focus:bg-slate-700 ${
+        className={`dark:focus:bg-slate -700 flex items-center gap-2 rounded-xl bg-slate-200 p-4 hover:bg-slate-300 focus:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 ${
           isLoading && "opacity-50"
         }`}
         ref={ref}
