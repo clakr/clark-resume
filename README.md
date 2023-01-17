@@ -6,9 +6,8 @@
 - [x] Integrate NextJS' Data Fetch Patterns, for whichever fits best
 - [x] Mobile Responsive
 - [x] Dark Mode
-- [ ] Interaction Menu
-- [ ] Project Information
-- [ ] Export to PDF
+- [x] Project Information
+- [x] Export to PDF
 - [ ] Admin Portal for mutating page content
 
 ## References
