@@ -23,6 +23,50 @@ import {
 } from "react-icons/ri";
 import Panel from "./Panel";
 
+type Links = {
+  goTo: string;
+  icon: IconType;
+  activeIcon: IconType;
+};
+
+const links: Links[] = [
+  {
+    goTo: "about",
+    icon: IoMdInformationCircleOutline,
+    activeIcon: IoMdInformationCircle,
+  },
+  {
+    goTo: "contact",
+    icon: RiContactsBook2Line,
+    activeIcon: RiContactsBook2Fill,
+  },
+  {
+    goTo: "organization",
+    icon: MdOutlineGroups,
+    activeIcon: MdGroups,
+  },
+  {
+    goTo: "education",
+    icon: MdOutlineSchool,
+    activeIcon: MdSchool,
+  },
+  {
+    goTo: "experience",
+    icon: RiSuitcaseLine,
+    activeIcon: RiSuitcaseFill,
+  },
+  {
+    goTo: "leadership",
+    icon: AiOutlineStar,
+    activeIcon: AiFillStar,
+  },
+  {
+    goTo: "miscellaneous",
+    icon: HiOutlineCog,
+    activeIcon: HiCog,
+  },
+];
+
 const AsideAdmin = () => {
   return (
     <Panel
@@ -30,41 +74,9 @@ const AsideAdmin = () => {
       className="col-span-1 flex w-[65px] min-w-[65px] flex-col py-6"
     >
       <div className="flex-grow space-y-6">
-        <LinkAside
-          goTo="about"
-          icon={IoMdInformationCircleOutline}
-          activeIcon={IoMdInformationCircle}
-        />
-        <LinkAside
-          goTo="contacts"
-          icon={RiContactsBook2Line}
-          activeIcon={RiContactsBook2Fill}
-        />
-        <LinkAside
-          goTo="organizations"
-          icon={MdOutlineGroups}
-          activeIcon={MdGroups}
-        />
-        <LinkAside
-          goTo="educations"
-          icon={MdOutlineSchool}
-          activeIcon={MdSchool}
-        />
-        <LinkAside
-          goTo="experiences"
-          icon={RiSuitcaseLine}
-          activeIcon={RiSuitcaseFill}
-        />
-        <LinkAside
-          goTo="leaderships"
-          icon={AiOutlineStar}
-          activeIcon={AiFillStar}
-        />
-        <LinkAside
-          goTo="miscellaneous"
-          icon={HiOutlineCog}
-          activeIcon={HiCog}
-        />
+        {links.map((props, index) => (
+          <LinkAside key={index} {...props} />
+        ))}
       </div>
       <div className="flex-shrink space-y-6">
         {/* <button
@@ -77,20 +89,14 @@ const AsideAdmin = () => {
           className="flex w-full items-center justify-center"
           onClick={() => signOut({ callbackUrl: "/" })}
         >
-          <BiLogOut size={24} />
+          <BiLogOut className="h-6 w-6" />
         </button>
       </div>
     </Panel>
   );
 };
 
-type LinkAsideProps = {
-  goTo: string;
-  icon: IconType;
-  activeIcon: IconType;
-};
-
-const LinkAside = ({ goTo, icon, activeIcon }: LinkAsideProps) => {
+const LinkAside = ({ goTo, icon, activeIcon }: Links) => {
   const router = useRouter();
   const isActive = router.asPath === `/a/${goTo}`;
 
@@ -98,7 +104,7 @@ const LinkAside = ({ goTo, icon, activeIcon }: LinkAsideProps) => {
 
   return (
     <Link href={`/a/${goTo}`} className="grid place-items-center">
-      <Icon size={24} />
+      <Icon className="h-6 w-6" />
     </Link>
   );
 };
