@@ -1,8 +1,10 @@
 import { signOut } from "next-auth/react";
+import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { BiLogOut } from "react-icons/bi";
+import { FaMoon } from "react-icons/fa";
 import { HiCog, HiOutlineCog } from "react-icons/hi";
 import {
   IoMdInformationCircle,
@@ -68,6 +70,8 @@ const links: Links[] = [
 ];
 
 const AsideAdmin = () => {
+  const { theme, setTheme, systemTheme } = useTheme();
+
   return (
     <Panel
       element="aside"
@@ -79,12 +83,35 @@ const AsideAdmin = () => {
         ))}
       </div>
       <div className="flex-shrink space-y-6">
-        {/* <button
+        <button
           className="flex w-full items-center justify-center"
-          onClick={handleOnClick}
+          onClick={() => {
+            switch (theme) {
+              case "system":
+                if (systemTheme === "dark") {
+                  setTheme("light");
+                } else {
+                  setTheme("dark");
+                }
+
+                break;
+
+              case "dark":
+                setTheme("light");
+                break;
+
+              case "light":
+                setTheme("dark");
+                break;
+
+              default:
+                setTheme("dark");
+                break;
+            }
+          }}
         >
-          {handleIcon()}
-        </button> */}
+          <FaMoon className="h-6 w-6" />
+        </button>
         <button
           className="flex w-full items-center justify-center"
           onClick={() => signOut({ callbackUrl: "/" })}
