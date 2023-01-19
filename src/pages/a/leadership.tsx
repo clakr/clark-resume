@@ -1,7 +1,8 @@
 import type { NextPage } from "next";
+import Admin from "../../components/Admin";
 
 const Leadership: NextPage = () => {
-  return <div>Leadership</div>;
+  return <Admin pageTitle="Leadership"></Admin>;
 };
 
 export default Leadership;
