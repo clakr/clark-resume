@@ -12,25 +12,8 @@ const Leadership = () => {
       {data && (
         <CategoryItem title="Leadership">
           {data.leadership.map(
-            ({
-              id,
-              organization: {
-                position,
-                name,
-                location,
-                timeframeFrom,
-                timeframeTo,
-              },
-              leadershipProjects,
-            }) => (
-              <OrganizationItem
-                key={id}
-                position={position}
-                organization={name}
-                organizationLocation={location}
-                timeframeFrom={timeframeFrom}
-                timeframeTo={timeframeTo}
-              >
+            ({ id, organization: { ...rest }, leadershipProjects }) => (
+              <OrganizationItem key={id} {...rest}>
                 <div className="space-y-4 lg:space-y-8">
                   {leadershipProjects.map(
                     ({ id, course, name, purpose, otherPositions }) => (

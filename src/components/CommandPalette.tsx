@@ -65,12 +65,11 @@ const CommandPalette = () => {
       >
         <div className="flex flex-col gap-2 opacity-75">
           {(session ? buttons.slice(0, 3) : buttons).map(
-            ({ text, icon, isFocused }, index) => (
+            ({ isFocused, ...rest }, index) => (
               <Button
                 key={index}
-                text={text}
-                icon={icon}
                 ref={isFocused ? initialFocusRef : null}
+                {...rest}
               />
             )
           )}

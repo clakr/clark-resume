@@ -12,27 +12,8 @@ const Education = () => {
       {data && (
         <CategoryItem title="Education">
           {data.education.map(
-            ({
-              id,
-              degree,
-              thesis,
-              awards,
-              organization: {
-                position,
-                name,
-                location,
-                timeframeFrom,
-                timeframeTo,
-              },
-            }) => (
-              <OrganizationItem
-                key={id}
-                position={position}
-                organization={name}
-                organizationLocation={location}
-                timeframeFrom={timeframeFrom}
-                timeframeTo={timeframeTo}
-              >
+            ({ id, degree, thesis, awards, organization: { ...rest } }) => (
+              <OrganizationItem key={id} {...rest}>
                 <DefinitionList>
                   {degree && (
                     <DefinitionItem term="Degree:" description={degree} />

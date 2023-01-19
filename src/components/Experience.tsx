@@ -10,25 +10,8 @@ const Experience = () => {
       {data && (
         <CategoryItem title="Experience">
           {data.experience.map(
-            ({
-              id,
-              organization: {
-                position,
-                name,
-                location,
-                timeframeFrom,
-                timeframeTo,
-              },
-              experienceDescs,
-            }) => (
-              <OrganizationItem
-                key={id}
-                position={position}
-                organization={name}
-                organizationLocation={location}
-                timeframeFrom={timeframeFrom}
-                timeframeTo={timeframeTo}
-              >
+            ({ id, organization: { ...rest }, experienceDescs }) => (
+              <OrganizationItem key={id} {...rest}>
                 <ul className="list-inside list-disc">
                   {experienceDescs.map(({ id, desc }) => (
                     <ListItem key={id} content={desc} />

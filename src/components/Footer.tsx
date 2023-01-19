@@ -13,12 +13,12 @@ const Footer = () => {
     {
       href: "https://github.com/clakr",
       icon: FaGithub,
-      alt: 'Github Profile'
+      alt: "Github Profile",
     },
     {
       href: "https://www.linkedin.com/in/clark-tolosa/",
       icon: FaLinkedin,
-      alt: 'LinkedIn Profile'
+      alt: "LinkedIn Profile",
     },
   ];
 
@@ -32,7 +32,7 @@ const Footer = () => {
         {links.map(({ href, icon: Icon, alt }, index) => (
           <li key={index}>
             <Link href={href} target="_blank" aria-label={alt}>
-              <Icon className="w-12 h-12 p-3"  />
+              <Icon className="h-12 w-12 p-3" />
             </Link>
           </li>
         ))}

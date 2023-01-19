@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 type OrganizationItemProps = {
   position: string | null;
-  organization: string;
-  organizationLocation: string;
+  name: string;
+  location: string;
   timeframeFrom: Date;
   timeframeTo: Date | null;
 };
 
 const OrganizationItem = ({
   position,
-  organization,
-  organizationLocation,
+  name,
+  location,
   timeframeFrom,
   timeframeTo,
   children,
@@ -44,11 +44,9 @@ const OrganizationItem = ({
           {position !== "Student" && (
             <span className="mr-2 font-bold">{position},</span>
           )}
-          {organization}
+          {name}
 
-          <span className="ml-2 text-xs font-bold opacity-75">
-            {organizationLocation}
-          </span>
+          <span className="ml-2 text-xs font-bold opacity-75">{location}</span>
         </h4>
         <label className="text-base opacity-75">{timeframe}</label>
       </div>
