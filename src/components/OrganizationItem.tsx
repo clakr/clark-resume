@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import getDate from "../utils/getDate";
 
 type OrganizationItemProps = {
   position: string | null;
@@ -18,23 +19,8 @@ const OrganizationItem = ({
 }: React.PropsWithChildren<OrganizationItemProps>) => {
   const [timeframe, setTimeframe] = useState("");
 
-  const getDate = (timeframe: Date) => {
-    return `${new Intl.DateTimeFormat("en-PH", {
-      month: "long",
-    }).format(timeframe)} ${timeframe.getFullYear()}`;
-  };
-
   useEffect(() => {
-    const getTimeframe = () => {
-      if (timeframeTo) {
-        setTimeframe(`${getDate(timeframeFrom)} - ${getDate(timeframeTo)}`);
-        return;
-      }
-
-      setTimeframe(`${getDate(timeframeFrom)} - Present`);
-    };
-
-    getTimeframe();
+    setTimeframe(`${getDate(timeframeFrom)} - ${getDate(timeframeTo)}`);
   }, [timeframeTo, timeframeFrom]);
 
   return (
