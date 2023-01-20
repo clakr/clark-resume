@@ -103,7 +103,7 @@ model LeadershipProject {
   id             String     @id @default(cuid())
   leadershipId   String
   course         String
-  name           String?
+  name           String
   purpose        String?
   otherPositions String?
   createdAt      DateTime   @default(now())
