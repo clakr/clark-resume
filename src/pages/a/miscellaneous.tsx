@@ -1,3 +1,4 @@
+import { Miscellaneous } from "@prisma/client";
 import type { NextPage } from "next";
 import Admin from "../../components/Admin";
 import Table from "../../components/Table";
@@ -31,6 +32,16 @@ const intent = "Miscellaneous",
 const Miscellaneous: NextPage = () => {
   const { data } = api.miscellaneous.getAll.useQuery();
 
+  let technical: Miscellaneous[] | undefined = undefined,
+    language: Miscellaneous[] | undefined = undefined,
+    interest: Miscellaneous[] | undefined = undefined;
+
+  if (data) {
+    technical = data.filter(({ type }) => type === "TECHNICAL");
+    language = data.filter(({ type }) => type === "LANGUAGE");
+    interest = data.filter(({ type }) => type === "INTEREST");
+  }
+
   return (
     <Admin pageTitle={intent}>
       <Table>
@@ -42,12 +53,30 @@ const Miscellaneous: NextPage = () => {
           ))}
         </Table.Head>
         <Table.Body>
-          {data?.map(({ id, name, type }) => (
-            <Table.BodyRow key={id}>
-              <Table.Data>{name}</Table.Data>
-              <Table.Data>{type}</Table.Data>
+          {technical && (
+            <Table.BodyRow>
+              <Table.Data>Technical</Table.Data>
+              <Table.Data>
+                {technical.map(({ name }) => name).join(", ")}
+              </Table.Data>
             </Table.BodyRow>
-          ))}
+          )}
+          {language && (
+            <Table.BodyRow>
+              <Table.Data>Language</Table.Data>
+              <Table.Data>
+                {language.map(({ name }) => name).join(", ")}
+              </Table.Data>
+            </Table.BodyRow>
+          )}
+          {interest && (
+            <Table.BodyRow>
+              <Table.Data>Interest</Table.Data>
+              <Table.Data>
+                {interest.map(({ name }) => name).join(", ")}
+              </Table.Data>
+            </Table.BodyRow>
+          )}
         </Table.Body>
         <Table.Foot intent={intent} colSpan={tableHeadRows.length + 1} />
       </Table>

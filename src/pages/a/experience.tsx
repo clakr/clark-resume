@@ -23,9 +23,6 @@ const intent = "Experience",
     {
       text: "Organization Name",
     },
-    {
-      text: "Descriptions",
-    },
   ];
 
 const Experience: NextPage = () => {
@@ -44,13 +41,14 @@ const Experience: NextPage = () => {
         <Table.Body>
           {data?.map(({ id, organization: { name }, experienceDescs }) => (
             <Table.BodyRow key={id}>
-              <Table.Data>{name}</Table.Data>
               <Table.Data>
-                <ul className="list-outside list-disc text-justify">
-                  {experienceDescs.map(({ desc }, index) => (
-                    <li key={index}>{desc}</li>
-                  ))}
-                </ul>
+                <Table.Collapsible name={name}>
+                  <ul className="ml-12 list-outside list-disc text-justify text-sm">
+                    {experienceDescs.map(({ desc }, index) => (
+                      <li key={index}>{desc}</li>
+                    ))}
+                  </ul>
+                </Table.Collapsible>
               </Table.Data>
             </Table.BodyRow>
           ))}

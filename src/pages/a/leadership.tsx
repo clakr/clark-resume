@@ -18,15 +18,26 @@ export const getStaticProps = async () => {
   };
 };
 
-const intent = "Experience",
+const intent = "Leadership",
   tableHeadRows: TableHeading[] = [
     {
       text: "Organization Name",
     },
-    {
-      text: "Course/s",
-    },
   ];
+
+type DefinitionItemProps = {
+  term: string;
+  description: string;
+};
+
+const DefinitionItem = ({ description, term }: DefinitionItemProps) => {
+  return (
+    <>
+      <dd className="col-span-2 font-medium">{term}: </dd>
+      <dt className="col-span-8">{description}</dt>
+    </>
+  );
+};
 
 const Leadership: NextPage = () => {
   const { data } = api.leadership.getAll.useQuery();
@@ -42,16 +53,48 @@ const Leadership: NextPage = () => {
           ))}
         </Table.Head>
         <Table.Body>
-          {data?.map(({ id, organization: { name }, leadershipProjects }) => (
+          {data?.map(({ id, organization, leadershipProjects }) => (
             <Table.BodyRow key={id}>
-              <Table.Data>{name}</Table.Data>
               <Table.Data>
+                <Table.Collapsible name={organization.name}>
+                  <div className="ml-8 space-y-6">
+                    {leadershipProjects.map(
+                      ({ id, name, course, purpose, otherPositions }) => (
+                        <Table.Collapsible name={course} key={id} type="sub">
+                          <dl className="ml-8 grid grid-cols-10 gap-2">
+                            {name && (
+                              <DefinitionItem
+                                description={name}
+                                term="Project"
+                              />
+                            )}
+                            {purpose && (
+                              <DefinitionItem
+                                description={purpose}
+                                term="Purpose"
+                              />
+                            )}
+                            {otherPositions && (
+                              <DefinitionItem
+                                description={otherPositions}
+                                term="Other Position/s"
+                              />
+                            )}
+                          </dl>
+                        </Table.Collapsible>
+                      )
+                    )}
+                  </div>
+                </Table.Collapsible>
+              </Table.Data>
+
+              {/*<Table.Data>
                 <ul className="list-outside list-disc text-justify">
                   {leadershipProjects.map(({ course }, index) => (
                     <li key={index}>{course}</li>
                   ))}
                 </ul>
-              </Table.Data>
+              </Table.Data> */}
             </Table.BodyRow>
           ))}
         </Table.Body>
