@@ -5,6 +5,7 @@ import { educationRouter } from "./routers/education";
 import { experienceRouter } from "./routers/experience";
 import { leadershipRouter } from "./routers/leadership";
 import { miscellaneousRouter } from "./routers/miscellaneous";
+import { organizationRouter } from "./routers/organization";
 import { createTRPCRouter } from "./trpc";
 
 /**
@@ -16,6 +17,7 @@ export const appRouter = createTRPCRouter({
   allInfo: allInfoRouter,
   contact: contactRouter,
   about: aboutRouter,
+  organization: organizationRouter,
   education: educationRouter,
   experience: experienceRouter,
   leadership: leadershipRouter,
