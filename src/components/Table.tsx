@@ -23,7 +23,7 @@ const TableFoot = ({
 };
 
 const TableData = ({ children }: PropsWithChildren) => {
-  return <td className="py-4 px-8 text-center">{children}</td>;
+  return <td className="py-6 px-2 text-center">{children ?? "-"}</td>;
 };
 
 const TableBodyRow = ({ children }: PropsWithChildren) => {
