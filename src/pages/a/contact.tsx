@@ -18,16 +18,15 @@ export const getStaticProps = async () => {
   };
 };
 
-const intent = "Contact";
-
-const tableHeadRows: TableHeading[] = [
-  {
-    text: "Description",
-  },
-  {
-    text: "Type",
-  },
-];
+const intent = "Contact",
+  tableHeadRows: TableHeading[] = [
+    {
+      text: "Description",
+    },
+    {
+      text: "Type",
+    },
+  ];
 
 const Contact: NextPage = () => {
   const { data } = api.contact.getAll.useQuery();
