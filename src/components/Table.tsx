@@ -1,6 +1,43 @@
+import { Disclosure, Transition } from "@headlessui/react";
 import type { PropsWithChildren } from "react";
-import { FaPlus } from "react-icons/fa";
+import { FaCaretRight, FaPlus } from "react-icons/fa";
 import { SlOptions } from "react-icons/sl";
+
+const TableDataCollapsible = ({
+  children,
+  name,
+}: PropsWithChildren<{ name: string }>) => {
+  return (
+    <TableData>
+      <div className="flex flex-col gap-4">
+        <Disclosure>
+          {({ open }) => (
+            <>
+              <Disclosure.Button className="flex w-full items-center justify-center gap-2 text-center">
+                <FaCaretRight
+                  className={`${
+                    open ? "rotate-90" : "rotate-0"
+                  } h-4 w-4 transition-all duration-300`}
+                />
+                {name}
+              </Disclosure.Button>
+              <Transition
+                enter="transition duration-300 ease-out"
+                enterFrom="transform opacity-0 -translate-y-20"
+                enterTo="transform opacity-100 translate-0"
+                leave="transition duration-300 ease-out"
+                leaveFrom="transform opacity-100 translate-0"
+                leaveTo="transform opacity-0 -translate-y-20"
+              >
+                <Disclosure.Panel>{children}</Disclosure.Panel>
+              </Transition>
+            </>
+          )}
+        </Disclosure>
+      </div>
+    </TableData>
+  );
+};
 
 const TableFoot = ({
   colSpan,
@@ -30,7 +67,7 @@ const TableBodyRow = ({ children }: PropsWithChildren) => {
   return (
     <tr className="border border-slate-300 dark:border-slate-700">
       {children}
-      <td className="py-4 px-8">
+      <td className="!w-1/6 py-4 px-8">
         <button className="grid w-full place-items-center">
           <SlOptions className="h-4 w-4" />
         </button>
@@ -64,7 +101,7 @@ const TableHead = ({ children }: PropsWithChildren) => {
 
 export const Table = ({ children }: PropsWithChildren) => {
   return (
-    <table className="w-full text-slate-600 dark:text-slate-400">
+    <table className="w-full table-auto text-slate-600 dark:text-slate-400">
       {children}
     </table>
   );
@@ -76,5 +113,6 @@ Table.Body = TableBody;
 Table.BodyRow = TableBodyRow;
 Table.Data = TableData;
 Table.Foot = TableFoot;
+Table.Collapsible = TableDataCollapsible;
 
 export default Table;
