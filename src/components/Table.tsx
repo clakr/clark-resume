@@ -6,36 +6,47 @@ import { SlOptions } from "react-icons/sl";
 const TableDataCollapsible = ({
   children,
   name,
-}: PropsWithChildren<{ name: string }>) => {
+  type = "main",
+}: PropsWithChildren<{
+  name: string;
+  type?: "main" | "sub";
+}>) => {
   return (
-    <TableData>
-      <div className="flex flex-col gap-4">
-        <Disclosure>
-          {({ open }) => (
-            <>
-              <Disclosure.Button className="flex w-full items-center justify-center gap-2 text-center">
-                <FaCaretRight
-                  className={`${
-                    open ? "rotate-90" : "rotate-0"
-                  } h-4 w-4 transition-all duration-300`}
-                />
-                {name}
-              </Disclosure.Button>
-              <Transition
-                enter="transition duration-300 ease-out"
-                enterFrom="transform opacity-0 -translate-y-20"
-                enterTo="transform opacity-100 translate-0"
-                leave="transition duration-300 ease-out"
-                leaveFrom="transform opacity-100 translate-0"
-                leaveTo="transform opacity-0 -translate-y-20"
-              >
-                <Disclosure.Panel>{children}</Disclosure.Panel>
-              </Transition>
-            </>
-          )}
-        </Disclosure>
-      </div>
-    </TableData>
+    <Disclosure
+      as="div"
+      className={`flex flex-col ${type === "main" ? "gap-4" : "gap-2 text-sm"}`}
+    >
+      {({ open }) => (
+        <>
+          <Disclosure.Button
+            className={`flex w-full items-center gap-2  ${
+              type === "main"
+                ? "justify-center font-bold"
+                : "justify-start font-medium"
+            }`}
+          >
+            <FaCaretRight
+              className={`${
+                open ? "rotate-90" : "rotate-0"
+              } h-4 w-4 transition-all duration-300`}
+            />
+            {name}
+          </Disclosure.Button>
+          <Transition
+            enter="transition duration-300 ease-out"
+            enterFrom="transform opacity-0 -translate-y-8"
+            enterTo="transform opacity-100 translate-0"
+            leave="transition duration-300 ease-out"
+            leaveFrom="transform opacity-100 translate-0"
+            leaveTo="transform opacity-0 -translate-y-8"
+          >
+            <Disclosure.Panel className="text-start">
+              {children}
+            </Disclosure.Panel>
+          </Transition>
+        </>
+      )}
+    </Disclosure>
   );
 };
 
@@ -60,14 +71,14 @@ const TableFoot = ({
 };
 
 const TableData = ({ children }: PropsWithChildren) => {
-  return <td className="py-6 px-2 text-center">{children ?? "-"}</td>;
+  return <td className="p-6 text-center">{children ?? "-"}</td>;
 };
 
 const TableBodyRow = ({ children }: PropsWithChildren) => {
   return (
     <tr className="border border-slate-300 dark:border-slate-700">
       {children}
-      <td className="!w-1/6 py-4 px-8">
+      <td className="!w-1/12 p-6">
         <button className="grid w-full place-items-center">
           <SlOptions className="h-4 w-4" />
         </button>
