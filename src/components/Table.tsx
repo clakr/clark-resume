@@ -1,12 +1,14 @@
 import type { PropsWithChildren } from "react";
 import { FaPlus } from "react-icons/fa";
 import { SlOptions } from "react-icons/sl";
-import { TableHeading } from "../types";
 
 const TableFoot = ({
   colSpan,
   intent,
-}: Pick<TableHeading, "colSpan"> & { intent: string }) => {
+}: {
+  colSpan: number;
+  intent: string;
+}) => {
   return (
     <tfoot className="border border-dashed border-slate-300 text-sm opacity-75 dark:border-slate-700">
       <tr>
@@ -41,14 +43,11 @@ const TableBody = ({ children }: PropsWithChildren) => {
   return <tbody>{children}</tbody>;
 };
 
-const TableHeading = ({
-  children,
-  colSpan = 1,
-}: PropsWithChildren<Pick<TableHeading, "colSpan">>) => {
+const TableHeading = ({ children }: PropsWithChildren) => {
   return (
-    <th className="p-3" colSpan={colSpan}>
-      {children}
-    </th>
+    <>
+      <th className="p-3">{children}</th>
+    </>
   );
 };
 
@@ -57,6 +56,7 @@ const TableHead = ({ children }: PropsWithChildren) => {
     <thead>
       <tr className="border border-slate-300 bg-slate-300 dark:border-slate-700 dark:bg-slate-700">
         {children}
+        <TableHeading />
       </tr>
     </thead>
   );

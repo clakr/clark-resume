@@ -23,7 +23,6 @@ const intent = "About";
 const tableHeadRows: TableHeading[] = [
   {
     text: "Description",
-    colSpan: 2,
   },
 ];
 
