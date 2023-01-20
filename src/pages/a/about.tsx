@@ -1,19 +1,12 @@
-import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import type { NextPage } from "next";
-import superjson from "superjson";
 import Admin from "../../components/Admin";
 import Table from "../../components/Table";
-import { appRouter } from "../../server/api/root";
-import { createInnerTRPCContext } from "../../server/api/trpc";
 import type { TableHeading } from "../../types";
 import { api } from "../../utils/api";
+import createTRPCSSG from "../../utils/createTRPCSSG";
 
 export const getStaticProps = async () => {
-  const ssg = createProxySSGHelpers({
-    router: appRouter,
-    ctx: await createInnerTRPCContext(),
-    transformer: superjson,
-  });
+  const ssg = await createTRPCSSG();
 
   await ssg.about.getAll.fetch();
 

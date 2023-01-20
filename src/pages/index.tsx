@@ -1,17 +1,14 @@
 import { Inter } from "@next/font/google";
-import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { type NextPage } from "next";
 import Head from "next/head";
 import { createContext, useContext } from "react";
-import superjson from "superjson";
 import Aside from "../components/Aside";
 import CommandPalette from "../components/CommandPalette";
 import Content from "../components/Content";
 import Header from "../components/Header";
-import { appRouter } from "../server/api/root";
-import { createInnerTRPCContext } from "../server/api/trpc";
 import type { RouterOutputs } from "../utils/api";
 import { api } from "../utils/api";
+import createTRPCSSG from "../utils/createTRPCSSG";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,11 +23,7 @@ export const useQueries = () => {
 };
 
 export const getStaticProps = async () => {
-  const ssg = createProxySSGHelpers({
-    router: appRouter,
-    ctx: await createInnerTRPCContext(),
-    transformer: superjson,
-  });
+  const ssg = await createTRPCSSG();
 
   await ssg.allInfo.getAll.fetch();
 
