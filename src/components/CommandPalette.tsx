@@ -123,12 +123,15 @@ const Button = forwardRef(
       case "Export to PDF":
         onClick = async () => {
           setIsLoading(true);
-          await fetch("/api/exportToPDF", {
-            method: "POST",
-            body: JSON.stringify(data),
-          });
 
-          await fetch("resume.pdf")
+          await fetch("https://pdfgen.app/api/generate?templateId=e4514cc", {
+            method: "POST",
+            body: JSON.stringify({ data }),
+            headers: {
+              "Content-Type": "application/json",
+              api_key: "oqO22WUBsqgc6Q1QVHzjV",
+            },
+          })
             .then((res) => res.blob())
             .then((blob) => {
               const fileUrl = window.URL.createObjectURL(blob);
