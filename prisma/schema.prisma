@@ -14,13 +14,13 @@ model Account {
   provider                 String
   providerAccountId        String
   refresh_token            String?
-  refresh_token_expires_in Int?
   access_token             String?
   expires_at               Int?
   token_type               String?
   scope                    String?
   id_token                 String?
   session_state            String?
+  refresh_token_expires_in Int?
   user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
