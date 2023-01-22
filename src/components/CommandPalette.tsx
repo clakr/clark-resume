@@ -38,10 +38,7 @@ const buttons: Button[] = [
 ];
 
 const StateContext = createContext<
-  | {
-      infoState: [boolean, Dispatch<SetStateAction<boolean>>];
-      paletteState: [boolean, Dispatch<SetStateAction<boolean>>];
-    }
+  | { infoState: [boolean, Dispatch<SetStateAction<boolean>>] }
   | Record<string, never>
 >({});
 
@@ -57,27 +54,29 @@ const CommandPalette = () => {
   const initialFocusRef = useRef<HTMLButtonElement>(null);
 
   return (
-    <StateContext.Provider value={{ infoState, paletteState }}>
-      <Modal
-        state={paletteState}
-        initialFocus={initialFocusRef}
-        title="Command Palette"
-      >
-        <div className="flex flex-col gap-2 opacity-75">
-          {(session ? buttons.slice(0, 3) : buttons).map(
-            ({ isFocused, ...rest }, index) => (
-              <Button
-                key={index}
-                ref={isFocused ? initialFocusRef : null}
-                {...rest}
-              />
-            )
-          )}
-        </div>
+    <Modal
+      state={paletteState}
+      initialFocus={initialFocusRef}
+      title="Command Palette"
+    >
+      <div className="flex flex-col gap-2 opacity-75">
+        {(session ? buttons.slice(0, 3) : buttons).map(
+          ({ isFocused, ...rest }, index) => (
+            <>
+              <StateContext.Provider value={{ infoState }}>
+                <Button
+                  key={index}
+                  ref={isFocused ? initialFocusRef : null}
+                  {...rest}
+                />
+              </StateContext.Provider>
+            </>
+          )
+        )}
+      </div>
 
-        <ProjectInformation state={infoState} />
-      </Modal>
-    </StateContext.Provider>
+      <ProjectInformation state={infoState} />
+    </Modal>
   );
 };
 
@@ -102,7 +101,6 @@ const Button = forwardRef(
               } else {
                 setTheme("dark");
               }
-
               break;
 
             case "dark":
@@ -156,7 +154,6 @@ const Button = forwardRef(
             callbackUrl: "/a/about",
           });
         };
-
         break;
 
       default:
