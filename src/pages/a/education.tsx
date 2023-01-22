@@ -55,7 +55,7 @@ const Education: NextPage = () => {
                 <Table.Data>{degree}</Table.Data>
                 <Table.Data>{thesis}</Table.Data>
                 <Table.Data>{awards}</Table.Data>
-                <Table.DataOptions />
+                <Table.DataOptions intent={intent} />
               </Table.BodyRow>
             )
           )}

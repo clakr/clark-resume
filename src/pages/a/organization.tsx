@@ -60,7 +60,7 @@ const Organization: NextPage = () => {
                 <Table.Data>{location}</Table.Data>
                 <Table.Data>{getDate(timeframeFrom)}</Table.Data>
                 <Table.Data>{getDate(timeframeTo)}</Table.Data>
-                <Table.DataOptions />
+                <Table.DataOptions intent={intent} />
               </Table.BodyRow>
             )
           )}

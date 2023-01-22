@@ -87,15 +87,7 @@ const Leadership: NextPage = () => {
                   </div>
                 </Table.Collapsible>
               </Table.Data>
-              <Table.DataOptions />
-
-              {/*<Table.Data>
-                <ul className="list-outside list-disc text-justify">
-                  {leadershipProjects.map(({ course }, index) => (
-                    <li key={index}>{course}</li>
-                  ))}
-                </ul>
-              </Table.Data> */}
+              <Table.DataOptions intent={intent} />
             </Table.BodyRow>
           ))}
         </Table.Body>

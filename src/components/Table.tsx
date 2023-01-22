@@ -1,7 +1,10 @@
-import { Disclosure, Transition } from "@headlessui/react";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
 import type { PropsWithChildren } from "react";
-import { FaCaretRight, FaPlus } from "react-icons/fa";
+import { useState } from "react";
+import { FaCaretRight, FaEdit, FaPlus, FaTrash } from "react-icons/fa";
+import type { IconType } from "react-icons/lib";
 import { SlOptions } from "react-icons/sl";
+import Modal from "./Modal";
 
 const TableDataCollapsible = ({
   children,
@@ -57,28 +60,93 @@ const TableAddIntent = ({
   colSpan: number;
   intent: string;
 }) => {
+  const modalState = useState(false),
+    [, setIsOpen] = modalState;
+
+  const handleClick = () => setIsOpen(true);
+
   return (
     <>
-      <tfoot className="border border-dashed border-slate-300 text-sm opacity-75 dark:border-slate-700">
+      <tfoot className="-z-10 border border-dashed border-slate-300 text-sm opacity-75 dark:border-slate-700">
         <tr>
           <td colSpan={colSpan}>
-            <button className="flex w-full items-center justify-center gap-2 py-3">
+            <button
+              className="flex w-full items-center justify-center gap-2 py-3"
+              onClick={handleClick}
+            >
               <FaPlus className="h-4 w-4" /> Add {intent}
             </button>
           </td>
         </tr>
       </tfoot>
+
+      <Modal title={`Add ${intent}`} state={modalState}></Modal>
     </>
   );
 };
 
-const TableDataOptions = () => {
+type DataOptions = {
+  intent: "Update" | "Delete";
+  icon: IconType;
+  onClick: () => void;
+};
+
+const TableDataOptions = ({ intent }: { intent: string }) => {
+  const updateModal = useState(false),
+    deleteModal = useState(false),
+    [, setIsUpdate] = updateModal,
+    [, setIsDelete] = deleteModal;
+
+  const options: DataOptions[] = [
+    {
+      icon: FaEdit,
+      intent: "Update",
+      onClick: () => setIsUpdate(true),
+    },
+    {
+      icon: FaTrash,
+      intent: "Delete",
+      onClick: () => setIsDelete(true),
+    },
+  ];
+
   return (
-    <td className="!w-1/12 p-6">
-      <button className="grid w-full place-items-center">
-        <SlOptions className="h-4 w-4" />
-      </button>
-    </td>
+    <>
+      <Menu as="td" className="w-1/12">
+        <Menu.Button className="grid w-full place-items-center py-2">
+          <SlOptions />
+        </Menu.Button>
+        <Transition
+          enter="transition duration-100 ease-out"
+          enterFrom="transform scale-95 opacity-0"
+          enterTo="transform scale-100 opacity-100"
+          leave="transition duration-75 ease-out"
+          leaveFrom="transform scale-100 opacity-100"
+          leaveTo="transform scale-95 opacity-0"
+        >
+          <Menu.Items className="absolute top-0 left-0 flex w-32 translate-x-1/2 -translate-y-1/2 flex-col gap-1 rounded border border-slate-300 bg-slate-100 p-1 text-sm shadow-lg shadow-slate-300 dark:border-slate-900 dark:bg-slate-700 dark:text-slate-100 dark:shadow-slate-900">
+            {options.map(({ icon: Icon, intent, onClick }, index) => (
+              <Menu.Item key={index}>
+                {({ active }) => (
+                  <button
+                    className={`flex items-center justify-start gap-3 rounded p-2 ${
+                      active && "bg-slate-400 text-slate-50 dark:bg-slate-500"
+                    }`}
+                    onClick={onClick}
+                  >
+                    <Icon />
+                    {intent}
+                  </button>
+                )}
+              </Menu.Item>
+            ))}
+          </Menu.Items>
+        </Transition>
+      </Menu>
+
+      <Modal state={updateModal} title={`Update ${intent}`}></Modal>
+      <Modal state={deleteModal} title={`Delete ${intent}`}></Modal>
+    </>
   );
 };
 

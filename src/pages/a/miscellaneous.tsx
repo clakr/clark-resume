@@ -59,7 +59,7 @@ const Miscellaneous: NextPage = () => {
               <Table.Data>
                 {technical.map(({ name }) => name).join(", ")}
               </Table.Data>
-              <Table.DataOptions />
+              <Table.DataOptions intent={intent} />
             </Table.BodyRow>
           )}
           {language && (
@@ -68,7 +68,7 @@ const Miscellaneous: NextPage = () => {
               <Table.Data>
                 {language.map(({ name }) => name).join(", ")}
               </Table.Data>
-              <Table.DataOptions />
+              <Table.DataOptions intent={intent} />
             </Table.BodyRow>
           )}
           {interest && (
@@ -77,7 +77,7 @@ const Miscellaneous: NextPage = () => {
               <Table.Data>
                 {interest.map(({ name }) => name).join(", ")}
               </Table.Data>
-              <Table.DataOptions />
+              <Table.DataOptions intent={intent} />
             </Table.BodyRow>
           )}
         </Table.Body>

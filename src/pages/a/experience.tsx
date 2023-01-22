@@ -50,7 +50,7 @@ const Experience: NextPage = () => {
                   </ul>
                 </Table.Collapsible>
               </Table.Data>
-              <Table.DataOptions />
+              <Table.DataOptions intent={intent} />
             </Table.BodyRow>
           ))}
         </Table.Body>

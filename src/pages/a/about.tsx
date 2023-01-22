@@ -42,7 +42,7 @@ const About: NextPage = () => {
           {data?.map(({ id, desc }) => (
             <Table.BodyRow key={id}>
               <Table.Data>{desc}</Table.Data>
-              <Table.DataOptions />
+              <Table.DataOptions intent={intent} />
             </Table.BodyRow>
           ))}
         </Table.Body>
