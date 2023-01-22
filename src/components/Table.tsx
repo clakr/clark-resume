@@ -1,5 +1,5 @@
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import type { PropsWithChildren } from "react";
+import type { PropsWithChildren, ReactNode } from "react";
 import { useState } from "react";
 import { FaCaretRight, FaEdit, FaPlus, FaTrash } from "react-icons/fa";
 import type { IconType } from "react-icons/lib";
@@ -56,9 +56,11 @@ const TableDataCollapsible = ({
 const TableAddIntent = ({
   colSpan,
   intent,
+  form,
 }: {
   colSpan: number;
   intent: string;
+  form: ReactNode;
 }) => {
   const modalState = useState(false),
     [, setIsOpen] = modalState;
@@ -80,7 +82,9 @@ const TableAddIntent = ({
         </tr>
       </tfoot>
 
-      <Modal title={`Add ${intent}`} state={modalState}></Modal>
+      <Modal title={`Add ${intent}`} state={modalState}>
+        {form}
+      </Modal>
     </>
   );
 };
