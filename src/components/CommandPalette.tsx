@@ -60,19 +60,19 @@ const CommandPalette = () => {
       title="Command Palette"
     >
       <div className="flex flex-col gap-2 opacity-75">
-        {(session ? buttons.slice(0, 3) : buttons).map(
-          ({ isFocused, ...rest }, index) => (
-            <>
-              <StateContext.Provider value={{ infoState }}>
+        <StateContext.Provider value={{ infoState }}>
+          {(session ? buttons.slice(0, 3) : buttons).map(
+            ({ isFocused, ...rest }, index) => (
+              <>
                 <Button
                   key={index}
                   ref={isFocused ? initialFocusRef : null}
                   {...rest}
                 />
-              </StateContext.Provider>
-            </>
-          )
-        )}
+              </>
+            )
+          )}
+        </StateContext.Provider>
       </div>
 
       <ProjectInformation state={infoState} />
