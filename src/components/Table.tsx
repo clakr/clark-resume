@@ -50,7 +50,7 @@ const TableDataCollapsible = ({
   );
 };
 
-const TableFoot = ({
+const TableAddIntent = ({
   colSpan,
   intent,
 }: {
@@ -58,15 +58,27 @@ const TableFoot = ({
   intent: string;
 }) => {
   return (
-    <tfoot className="border border-dashed border-slate-300 text-sm opacity-75 dark:border-slate-700">
-      <tr>
-        <td colSpan={colSpan}>
-          <button className="flex w-full items-center justify-center gap-2 py-3">
-            <FaPlus className="h-4 w-4" /> Add {intent}
-          </button>
-        </td>
-      </tr>
-    </tfoot>
+    <>
+      <tfoot className="border border-dashed border-slate-300 text-sm opacity-75 dark:border-slate-700">
+        <tr>
+          <td colSpan={colSpan}>
+            <button className="flex w-full items-center justify-center gap-2 py-3">
+              <FaPlus className="h-4 w-4" /> Add {intent}
+            </button>
+          </td>
+        </tr>
+      </tfoot>
+    </>
+  );
+};
+
+const TableDataOptions = () => {
+  return (
+    <td className="!w-1/12 p-6">
+      <button className="grid w-full place-items-center">
+        <SlOptions className="h-4 w-4" />
+      </button>
+    </td>
   );
 };
 
@@ -78,11 +90,6 @@ const TableBodyRow = ({ children }: PropsWithChildren) => {
   return (
     <tr className="border border-slate-300 dark:border-slate-700">
       {children}
-      <td className="!w-1/12 p-6">
-        <button className="grid w-full place-items-center">
-          <SlOptions className="h-4 w-4" />
-        </button>
-      </td>
     </tr>
   );
 };
@@ -123,7 +130,8 @@ Table.Heading = TableHeading;
 Table.Body = TableBody;
 Table.BodyRow = TableBodyRow;
 Table.Data = TableData;
-Table.Foot = TableFoot;
+Table.DataOptions = TableDataOptions;
+Table.AddIntent = TableAddIntent;
 Table.Collapsible = TableDataCollapsible;
 
 export default Table;
