@@ -50,10 +50,11 @@ const Experience: NextPage = () => {
                   </ul>
                 </Table.Collapsible>
               </Table.Data>
+              <Table.DataOptions />
             </Table.BodyRow>
           ))}
         </Table.Body>
-        <Table.Foot intent={intent} colSpan={tableHeadRows.length + 1} />
+        <Table.AddIntent intent={intent} colSpan={tableHeadRows.length + 1} />
       </Table>
     </Admin>
   );

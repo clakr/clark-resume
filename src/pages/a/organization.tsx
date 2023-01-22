@@ -60,11 +60,12 @@ const Organization: NextPage = () => {
                 <Table.Data>{location}</Table.Data>
                 <Table.Data>{getDate(timeframeFrom)}</Table.Data>
                 <Table.Data>{getDate(timeframeTo)}</Table.Data>
+                <Table.DataOptions />
               </Table.BodyRow>
             )
           )}
         </Table.Body>
-        <Table.Foot intent={intent} colSpan={tableHeadRows.length + 1} />
+        <Table.AddIntent intent={intent} colSpan={tableHeadRows.length + 1} />
       </Table>
     </Admin>
   );

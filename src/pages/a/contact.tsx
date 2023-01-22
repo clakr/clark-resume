@@ -46,10 +46,11 @@ const Contact: NextPage = () => {
             <Table.BodyRow key={id}>
               <Table.Data>{desc}</Table.Data>
               <Table.Data>{type}</Table.Data>
+              <Table.DataOptions />
             </Table.BodyRow>
           ))}
         </Table.Body>
-        <Table.Foot intent={intent} colSpan={tableHeadRows.length + 1} />
+        <Table.AddIntent intent={intent} colSpan={tableHeadRows.length + 1} />
       </Table>
     </Admin>
   );

@@ -87,6 +87,7 @@ const Leadership: NextPage = () => {
                   </div>
                 </Table.Collapsible>
               </Table.Data>
+              <Table.DataOptions />
 
               {/*<Table.Data>
                 <ul className="list-outside list-disc text-justify">
@@ -98,7 +99,7 @@ const Leadership: NextPage = () => {
             </Table.BodyRow>
           ))}
         </Table.Body>
-        <Table.Foot intent={intent} colSpan={tableHeadRows.length + 1} />
+        <Table.AddIntent intent={intent} colSpan={tableHeadRows.length + 1} />
       </Table>
     </Admin>
   );
