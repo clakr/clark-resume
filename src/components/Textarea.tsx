@@ -9,7 +9,7 @@ const Textarea = forwardRef<
 >(({ onChange, onBlur, name, children }, ref) => {
   return (
     <textarea
-      className="w-full rounded-lg border border-slate-300 bg-slate-200 p-4 outline-slate-400"
+      className="w-full rounded-lg border border-slate-300 bg-slate-200 p-4 outline-slate-400 dark:border-slate-700 dark:bg-slate-800"
       rows={5}
       name={name}
       ref={ref}
