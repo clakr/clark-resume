@@ -1,10 +1,7 @@
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import type { PropsWithChildren, ReactNode } from "react";
-import { useState } from "react";
+import type { Dispatch, PropsWithChildren, SetStateAction } from "react";
 import { FaCaretRight, FaEdit, FaPlus, FaTrash } from "react-icons/fa";
-import type { IconType } from "react-icons/lib";
 import { SlOptions } from "react-icons/sl";
-import Modal from "./Modal";
 
 const TableDataCollapsible = ({
   children,
@@ -56,61 +53,45 @@ const TableDataCollapsible = ({
 const TableAddIntent = ({
   colSpan,
   intent,
-  form,
+  state: [, setIsOpen],
 }: {
   colSpan: number;
   intent: string;
-  form: ReactNode;
+  state: [boolean, Dispatch<SetStateAction<boolean>>];
 }) => {
-  const modalState = useState(false),
-    [, setIsOpen] = modalState;
-
-  const handleClick = () => setIsOpen(true);
-
   return (
-    <>
-      <tfoot className="-z-10 border border-dashed border-slate-300 text-sm opacity-75 dark:border-slate-700">
-        <tr>
-          <td colSpan={colSpan}>
-            <button
-              className="flex w-full items-center justify-center gap-2 py-3"
-              onClick={handleClick}
-            >
-              <FaPlus className="h-4 w-4" /> Add {intent}
-            </button>
-          </td>
-        </tr>
-      </tfoot>
-
-      <Modal title={`Add ${intent}`} state={modalState}>
-        {form}
-      </Modal>
-    </>
+    <tfoot className="border border-dashed border-slate-300 text-sm opacity-75 dark:border-slate-700">
+      <tr>
+        <td colSpan={colSpan}>
+          <button
+            className="flex w-full items-center justify-center gap-2 py-3"
+            onClick={() => setIsOpen(true)}
+          >
+            <FaPlus className="h-4 w-4" /> Add {intent}
+          </button>
+        </td>
+      </tr>
+    </tfoot>
   );
 };
 
-type DataOptions = {
-  intent: "Update" | "Delete";
-  icon: IconType;
-  onClick: () => void;
-};
-
-const TableDataOptions = ({ intent }: { intent: string }) => {
-  const updateModal = useState(false),
-    deleteModal = useState(false),
-    [, setIsUpdate] = updateModal,
-    [, setIsDelete] = deleteModal;
-
-  const options: DataOptions[] = [
+const TableDataOptions = ({
+  updateState: [, setIsUpdateOpen],
+  deleteState: [, setIsDeleteOpen],
+}: {
+  updateState: [boolean, Dispatch<SetStateAction<boolean>>];
+  deleteState: [boolean, Dispatch<SetStateAction<boolean>>];
+}) => {
+  const options = [
     {
       icon: FaEdit,
       intent: "Update",
-      onClick: () => setIsUpdate(true),
+      onClick: () => setIsUpdateOpen(true),
     },
     {
       icon: FaTrash,
       intent: "Delete",
-      onClick: () => setIsDelete(true),
+      onClick: () => setIsDeleteOpen(true),
     },
   ];
 
@@ -147,9 +128,6 @@ const TableDataOptions = ({ intent }: { intent: string }) => {
           </Menu.Items>
         </Transition>
       </Menu>
-
-      <Modal state={updateModal} title={`Update ${intent}`}></Modal>
-      <Modal state={deleteModal} title={`Delete ${intent}`}></Modal>
     </>
   );
 };

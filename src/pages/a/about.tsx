@@ -1,9 +1,11 @@
 import type { NextPage } from "next";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form/dist/types";
 import { FaPlus } from "react-icons/fa";
 import Admin from "../../components/Admin";
 import FormGroup from "../../components/FormGroup";
+import Modal from "../../components/Modal";
 import Table from "../../components/Table";
 import Textarea from "../../components/Textarea";
 import type { AboutFormType, TableHeading } from "../../types";
@@ -68,6 +70,10 @@ const Form = () => {
 const About: NextPage = () => {
   const { data } = api.about.getAll.useQuery();
 
+  const addModalState = useState(false),
+    updateModalState = useState(false),
+    deleteModalState = useState(false);
+
   return (
     <Admin pageTitle={intent}>
       <Table>
@@ -82,16 +88,23 @@ const About: NextPage = () => {
           {data?.map(({ id, desc }) => (
             <Table.BodyRow key={id}>
               <Table.Data>{desc}</Table.Data>
-              <Table.DataOptions intent={intent} />
+              <Table.DataOptions
+                updateState={updateModalState}
+                deleteState={deleteModalState}
+              />
             </Table.BodyRow>
           ))}
         </Table.Body>
         <Table.AddIntent
           intent={intent}
           colSpan={tableHeadRows.length + 1}
-          form={<Form />}
+          state={addModalState}
         />
       </Table>
+
+      <Modal title={`Add ${intent}`} state={addModalState}></Modal>
+      <Modal title={`Update ${intent}`} state={updateModalState}></Modal>
+      <Modal title={`Delete ${intent}`} state={deleteModalState}></Modal>
     </Admin>
   );
 };
