@@ -6,19 +6,28 @@ import type {
   SetStateAction,
 } from "react";
 import { Fragment } from "react";
+import type { UseFormReset } from "react-hook-form";
 import { MdOutlineClose } from "react-icons/md";
+import type { AboutFormType } from "../types";
 
 const Modal = ({
   children,
   state: [isOpen, setIsOpen],
   initialFocus,
   title,
+  reset,
 }: PropsWithChildren<{
   state: [boolean, Dispatch<SetStateAction<boolean>>];
   initialFocus?: RefObject<HTMLButtonElement>;
   title: string;
+  reset?: UseFormReset<AboutFormType>;
 }>) => {
-  const handleClose = () => setIsOpen(false);
+  const handleClose = () => {
+    if (reset) {
+      reset();
+    }
+    setIsOpen(false);
+  };
 
   return (
     <Transition show={isOpen} as={Fragment} appear>

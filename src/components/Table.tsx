@@ -1,7 +1,8 @@
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import type { Dispatch, PropsWithChildren, SetStateAction } from "react";
-import { FaCaretRight, FaEdit, FaPlus, FaTrash } from "react-icons/fa";
+import type { PropsWithChildren } from "react";
+import { FaCaretRight, FaPlus } from "react-icons/fa";
 import { SlOptions } from "react-icons/sl";
+import type { TableOptions } from "../types";
 
 const TableDataCollapsible = ({
   children,
@@ -53,11 +54,11 @@ const TableDataCollapsible = ({
 const TableAddIntent = ({
   colSpan,
   intent,
-  state: [, setIsOpen],
+  buttonOnClick,
 }: {
   colSpan: number;
   intent: string;
-  state: [boolean, Dispatch<SetStateAction<boolean>>];
+  buttonOnClick: () => void;
 }) => {
   return (
     <tfoot className="border border-dashed border-slate-300 text-sm opacity-75 dark:border-slate-700">
@@ -65,7 +66,7 @@ const TableAddIntent = ({
         <td colSpan={colSpan}>
           <button
             className="flex w-full items-center justify-center gap-2 py-3"
-            onClick={() => setIsOpen(true)}
+            onClick={buttonOnClick}
           >
             <FaPlus className="h-4 w-4" /> Add {intent}
           </button>
@@ -76,25 +77,11 @@ const TableAddIntent = ({
 };
 
 const TableDataOptions = ({
-  updateState: [, setIsUpdateOpen],
-  deleteState: [, setIsDeleteOpen],
-}: {
-  updateState: [boolean, Dispatch<SetStateAction<boolean>>];
-  deleteState: [boolean, Dispatch<SetStateAction<boolean>>];
-}) => {
-  const options = [
-    {
-      icon: FaEdit,
-      intent: "Update",
-      onClick: () => setIsUpdateOpen(true),
-    },
-    {
-      icon: FaTrash,
-      intent: "Delete",
-      onClick: () => setIsDeleteOpen(true),
-    },
-  ];
-
+  children,
+  options,
+}: PropsWithChildren<{
+  options: TableOptions[];
+}>) => {
   return (
     <>
       <Menu as="td" className="w-1/12">
@@ -125,6 +112,7 @@ const TableDataOptions = ({
                 )}
               </Menu.Item>
             ))}
+            {children}
           </Menu.Items>
         </Transition>
       </Menu>
