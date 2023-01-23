@@ -22,4 +22,34 @@ export const aboutRouter = createTRPCRouter({
         },
       });
     }),
+  updateOne: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        desc: z.string(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.about.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          desc: input.desc,
+        },
+      });
+    }),
+  deleteOne: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.about.delete({
+        where: {
+          id: input.id,
+        },
+      });
+    }),
 });
