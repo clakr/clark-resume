@@ -2,7 +2,6 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import type { PropsWithChildren } from "react";
 import { FaCaretRight, FaPlus } from "react-icons/fa";
 import { SlOptions } from "react-icons/sl";
-import type { TableOptions } from "../types";
 
 const TableDataCollapsible = ({
   children,
@@ -51,13 +50,13 @@ const TableDataCollapsible = ({
   );
 };
 
-const TableAddIntent = ({
+const TableAddCategory = ({
   colSpan,
-  intent,
+  category,
   buttonOnClick,
 }: {
   colSpan: number;
-  intent: string;
+  category: string;
   buttonOnClick: () => void;
 }) => {
   return (
@@ -68,7 +67,7 @@ const TableAddIntent = ({
             className="flex w-full items-center justify-center gap-2 py-3"
             onClick={buttonOnClick}
           >
-            <FaPlus className="h-4 w-4" /> Add {intent}
+            <FaPlus className="h-4 w-4" /> Add {category}
           </button>
         </td>
       </tr>
@@ -76,12 +75,7 @@ const TableAddIntent = ({
   );
 };
 
-const TableDataOptions = ({
-  children,
-  options,
-}: PropsWithChildren<{
-  options: TableOptions[];
-}>) => {
+const TableDataOptions = ({ children }: PropsWithChildren) => {
   return (
     <>
       <Menu as="td" className="w-1/12">
@@ -97,21 +91,6 @@ const TableDataOptions = ({
           leaveTo="transform scale-95 opacity-0"
         >
           <Menu.Items className="absolute bottom-0 right-0 flex w-32 -translate-x-1/2 translate-y-1/2 flex-col gap-1 rounded border border-slate-300 bg-slate-100 p-1 text-sm shadow-lg shadow-slate-300 dark:border-slate-900 dark:bg-slate-700 dark:text-slate-100 dark:shadow-slate-900">
-            {options.map(({ icon: Icon, intent, onClick }, index) => (
-              <Menu.Item key={index}>
-                {({ active }) => (
-                  <button
-                    className={`flex items-center justify-start gap-3 rounded p-2 ${
-                      active && "bg-slate-400 text-slate-50 dark:bg-slate-500"
-                    }`}
-                    onClick={onClick}
-                  >
-                    <Icon />
-                    {intent}
-                  </button>
-                )}
-              </Menu.Item>
-            ))}
             {children}
           </Menu.Items>
         </Transition>
@@ -169,7 +148,7 @@ Table.Body = TableBody;
 Table.BodyRow = TableBodyRow;
 Table.Data = TableData;
 Table.DataOptions = TableDataOptions;
-Table.AddIntent = TableAddIntent;
+Table.AddCategory = TableAddCategory;
 Table.Collapsible = TableDataCollapsible;
 
 export default Table;

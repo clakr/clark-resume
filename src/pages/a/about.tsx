@@ -1,3 +1,4 @@
+import { Menu } from "@headlessui/react";
 import type { NextPage } from "next";
 import { useState } from "react";
 import type { SubmitHandler, UseFormReturn } from "react-hook-form";
@@ -6,6 +7,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import Admin from "../../components/Admin";
 import FormGroup from "../../components/FormGroup";
 import Modal from "../../components/Modal";
+import SubmitButton from "../../components/SubmitButton";
 import Table from "../../components/Table";
 import Textarea from "../../components/Textarea";
 import type { AboutFormType, TableHeading, TableOptions } from "../../types";
@@ -25,7 +27,7 @@ export const getStaticProps = async () => {
   };
 };
 
-const intent = "About",
+const category = "About",
   tableHeadRows: TableHeading[] = [
     {
       text: "Description",
@@ -49,9 +51,11 @@ const Form = ({ form }: { form: UseFormReturn<AboutFormType> }) => {
 const About: NextPage = () => {
   const { data } = api.about.getAll.useQuery();
 
-  const addModalState = useState(false),
+  const itemIdState = useState<string | null>(null),
+    addModalState = useState(false),
     updateModalState = useState(false),
     deleteModalState = useState(false),
+    [itemId, setItemId] = itemIdState,
     [, setIsAddOpen] = addModalState,
     [, setIsUpdateOpen] = updateModalState,
     [, setIsDeleteOpen] = deleteModalState;
@@ -67,12 +71,13 @@ const About: NextPage = () => {
     updateMutation = api.about.updateOne.useMutation(),
     deleteMutation = api.about.deleteOne.useMutation();
 
-  const { handleSubmit, reset } = formInstance;
+  const { handleSubmit, reset, setValue } = formInstance;
 
   const submitAdd: SubmitHandler<AboutFormType> = ({ desc }) => {
     addMutation.mutate({
       desc,
     });
+    setItemId(null);
     reset();
     setIsAddOpen(false);
   };
@@ -82,6 +87,7 @@ const About: NextPage = () => {
       id,
       desc,
     });
+    setItemId(null);
     reset();
     setIsUpdateOpen(false);
   };
@@ -90,6 +96,7 @@ const About: NextPage = () => {
     deleteMutation.mutate({
       id,
     });
+    setItemId(null);
     reset();
     setIsDeleteOpen(false);
   };
@@ -98,17 +105,32 @@ const About: NextPage = () => {
     {
       icon: FaEdit,
       intent: "Update",
-      onClick: () => setIsUpdateOpen(true),
+      onClick(id) {
+        setItemId(id);
+        setIsUpdateOpen(true);
+      },
     },
     {
       icon: FaTrash,
       intent: "Delete",
-      onClick: () => setIsDeleteOpen(true),
+      onClick(id) {
+        setItemId(id);
+        setIsDeleteOpen(true);
+      },
     },
   ];
 
+  if (itemId) {
+    const updateItem = data?.find(({ id }) => itemId === id);
+
+    if (updateItem) {
+      setValue("id", updateItem.id);
+      setValue("desc", updateItem.desc);
+    }
+  }
+
   return (
-    <Admin pageTitle={intent}>
+    <Admin pageTitle={category}>
       <Table>
         <Table.Head>
           {tableHeadRows.map(({ text, ...rest }, index) => (
@@ -121,32 +143,64 @@ const About: NextPage = () => {
           {data?.map(({ id, desc }) => (
             <Table.BodyRow key={id}>
               <Table.Data>{desc}</Table.Data>
-              <Table.DataOptions options={options} />
+              <Table.DataOptions>
+                {options.map(({ icon: Icon, intent, onClick }, index) => (
+                  <Menu.Item key={index}>
+                    {({ active }) => (
+                      <button
+                        className={`flex items-center justify-start gap-3 rounded p-2 ${
+                          active &&
+                          "bg-slate-400 text-slate-50 dark:bg-slate-500"
+                        }`}
+                        onClick={() => onClick(id)}
+                      >
+                        <Icon />
+                        {intent}
+                      </button>
+                    )}
+                  </Menu.Item>
+                ))}
+              </Table.DataOptions>
             </Table.BodyRow>
           ))}
         </Table.Body>
-        <Table.AddIntent
-          intent={intent}
+        <Table.AddCategory
+          category={category}
           colSpan={tableHeadRows.length + 1}
           buttonOnClick={() => setIsAddOpen(true)}
         />
       </Table>
 
-      <Modal title={`Add ${intent}`} state={addModalState} reset={reset}>
+      <Modal
+        title={`Add ${category}`}
+        modalState={addModalState}
+        itemIdState={itemIdState}
+        reset={reset}
+      >
         <form onSubmit={handleSubmit(submitAdd)}>
           <Form form={formInstance} />
-          <button type="submit">add</button>
+          <SubmitButton intent="Add" category={category} />
         </form>
       </Modal>
-      <Modal title={`Update ${intent}`} state={updateModalState} reset={reset}>
+      <Modal
+        title={`Update ${category}`}
+        modalState={updateModalState}
+        itemIdState={itemIdState}
+        reset={reset}
+      >
         <form onSubmit={handleSubmit(submitUpdate)}>
           <Form form={formInstance} />
-          <button type="submit">update</button>
+          <SubmitButton intent="Update" category={category} />
         </form>
       </Modal>
-      <Modal title={`Delete ${intent}`} state={deleteModalState}>
+      <Modal
+        title={`Delete ${category}`}
+        modalState={deleteModalState}
+        itemIdState={itemIdState}
+        reset={reset}
+      >
         <form onSubmit={handleSubmit(submitDelete)}>
-          <button type="submit">delete</button>
+          <SubmitButton intent="Delete" category={category} />
         </form>
       </Modal>
     </Admin>

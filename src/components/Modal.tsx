@@ -12,12 +12,14 @@ import type { AboutFormType } from "../types";
 
 const Modal = ({
   children,
-  state: [isOpen, setIsOpen],
+  modalState: [isOpen, setIsOpen],
+  itemIdState,
   initialFocus,
   title,
   reset,
 }: PropsWithChildren<{
-  state: [boolean, Dispatch<SetStateAction<boolean>>];
+  modalState: [boolean, Dispatch<SetStateAction<boolean>>];
+  itemIdState?: [string | null, Dispatch<SetStateAction<string | null>>];
   initialFocus?: RefObject<HTMLButtonElement>;
   title: string;
   reset?: UseFormReset<AboutFormType>;
@@ -25,6 +27,10 @@ const Modal = ({
   const handleClose = () => {
     if (reset) {
       reset();
+    }
+    if (itemIdState) {
+      const [, setItemId] = itemIdState;
+      setItemId(null);
     }
     setIsOpen(false);
   };

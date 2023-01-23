@@ -8,7 +8,7 @@ export type TableHeading = {
 export type TableOptions = {
   icon: IconType;
   intent: string;
-  onClick: () => void;
+  onClick: (id: string) => void;
 };
 
 export type AboutFormType = Omit<About, "createdAt">;
