@@ -19,7 +19,7 @@ export const getStaticProps = async () => {
   };
 };
 
-const intent = "Organization",
+const category = "Organization",
   tableHeadRows: TableHeading[] = [
     {
       text: "Name",
@@ -42,7 +42,7 @@ const Organization: NextPage = () => {
   const { data } = api.organization.getAll.useQuery();
 
   return (
-    <Admin pageTitle={intent}>
+    <Admin pageTitle={category}>
       <Table>
         <Table.Head>
           {tableHeadRows.map(({ text, ...rest }, index) => (
@@ -60,12 +60,16 @@ const Organization: NextPage = () => {
                 <Table.Data>{location}</Table.Data>
                 <Table.Data>{getDate(timeframeFrom)}</Table.Data>
                 <Table.Data>{getDate(timeframeTo)}</Table.Data>
-                <Table.DataOptions intent={intent} />
+                <Table.DataOptions />
               </Table.BodyRow>
             )
           )}
         </Table.Body>
-        <Table.AddIntent intent={intent} colSpan={tableHeadRows.length + 1} />
+        <Table.AddCategory
+          category={category}
+          colSpan={tableHeadRows.length + 1}
+          buttonOnClick={() => console.log("foo!")}
+        />
       </Table>
     </Admin>
   );

@@ -18,7 +18,7 @@ export const getStaticProps = async () => {
   };
 };
 
-const intent = "Leadership",
+const category = "Leadership",
   tableHeadRows: TableHeading[] = [
     {
       text: "Organization Name",
@@ -43,7 +43,7 @@ const Leadership: NextPage = () => {
   const { data } = api.leadership.getAll.useQuery();
 
   return (
-    <Admin pageTitle={intent}>
+    <Admin pageTitle={category}>
       <Table>
         <Table.Head>
           {tableHeadRows.map(({ text, ...rest }, index) => (
@@ -87,11 +87,15 @@ const Leadership: NextPage = () => {
                   </div>
                 </Table.Collapsible>
               </Table.Data>
-              <Table.DataOptions intent={intent} />
+              <Table.DataOptions />
             </Table.BodyRow>
           ))}
         </Table.Body>
-        <Table.AddIntent intent={intent} colSpan={tableHeadRows.length + 1} />
+        <Table.AddCategory
+          category={category}
+          colSpan={tableHeadRows.length + 1}
+          buttonOnClick={() => console.log("foo!")}
+        />
       </Table>
     </Admin>
   );

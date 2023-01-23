@@ -18,7 +18,7 @@ export const getStaticProps = async () => {
   };
 };
 
-const intent = "Education",
+const category = "Education",
   tableHeadRows: TableHeading[] = [
     {
       text: "Organization Name",
@@ -38,7 +38,7 @@ const Education: NextPage = () => {
   const { data } = api.education.getAll.useQuery();
 
   return (
-    <Admin pageTitle={intent}>
+    <Admin pageTitle={category}>
       <Table>
         <Table.Head>
           {tableHeadRows.map(({ text, ...rest }, index) => (
@@ -55,12 +55,16 @@ const Education: NextPage = () => {
                 <Table.Data>{degree}</Table.Data>
                 <Table.Data>{thesis}</Table.Data>
                 <Table.Data>{awards}</Table.Data>
-                <Table.DataOptions intent={intent} />
+                <Table.DataOptions />
               </Table.BodyRow>
             )
           )}
         </Table.Body>
-        <Table.AddIntent intent={intent} colSpan={tableHeadRows.length + 1} />
+        <Table.AddCategory
+          category={category}
+          colSpan={tableHeadRows.length + 1}
+          buttonOnClick={() => console.log("foo!")}
+        />
       </Table>
     </Admin>
   );

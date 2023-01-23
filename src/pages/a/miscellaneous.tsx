@@ -19,7 +19,7 @@ export const getStaticProps = async () => {
   };
 };
 
-const intent = "Miscellaneous",
+const category = "Miscellaneous",
   tableHeadRows: TableHeading[] = [
     {
       text: "Type",
@@ -43,7 +43,7 @@ const Miscellaneous: NextPage = () => {
   }
 
   return (
-    <Admin pageTitle={intent}>
+    <Admin pageTitle={category}>
       <Table>
         <Table.Head>
           {tableHeadRows.map(({ text, ...rest }, index) => (
@@ -59,7 +59,7 @@ const Miscellaneous: NextPage = () => {
               <Table.Data>
                 {technical.map(({ name }) => name).join(", ")}
               </Table.Data>
-              <Table.DataOptions intent={intent} />
+              <Table.DataOptions />
             </Table.BodyRow>
           )}
           {language && (
@@ -68,7 +68,7 @@ const Miscellaneous: NextPage = () => {
               <Table.Data>
                 {language.map(({ name }) => name).join(", ")}
               </Table.Data>
-              <Table.DataOptions intent={intent} />
+              <Table.DataOptions />
             </Table.BodyRow>
           )}
           {interest && (
@@ -77,11 +77,15 @@ const Miscellaneous: NextPage = () => {
               <Table.Data>
                 {interest.map(({ name }) => name).join(", ")}
               </Table.Data>
-              <Table.DataOptions intent={intent} />
+              <Table.DataOptions />
             </Table.BodyRow>
           )}
         </Table.Body>
-        <Table.AddIntent intent={intent} colSpan={tableHeadRows.length + 1} />
+        <Table.AddCategory
+          category={category}
+          colSpan={tableHeadRows.length + 1}
+          buttonOnClick={() => console.log("foo!")}
+        />
       </Table>
     </Admin>
   );

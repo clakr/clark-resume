@@ -57,35 +57,17 @@ const About: NextPage = () => {
         const prevData = utils.about.getAll.getData();
         return { prevData };
       },
-      onError(err, newAbout, ctx) {
-        utils.about.getAll.setData(undefined, ctx?.prevData);
-      },
-      onSettled() {
-        utils.about.getAll.invalidate();
-      },
     }),
     updateMutation = api.about.updateOne.useMutation({
       async onMutate() {
         const prevData = utils.about.getAll.getData();
         return { prevData };
       },
-      onError(err, newAbout, ctx) {
-        utils.about.getAll.setData(undefined, ctx?.prevData);
-      },
-      onSettled() {
-        utils.about.getAll.invalidate();
-      },
     }),
     deleteMutation = api.about.deleteOne.useMutation({
       async onMutate() {
         const prevData = utils.about.getAll.getData();
         return { prevData };
-      },
-      onError(err, newPost, ctx) {
-        utils.about.getAll.setData(undefined, ctx?.prevData);
-      },
-      onSettled() {
-        utils.about.getAll.invalidate();
       },
     });
 

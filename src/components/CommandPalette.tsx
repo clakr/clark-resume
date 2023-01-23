@@ -55,7 +55,7 @@ const CommandPalette = () => {
 
   return (
     <Modal
-      state={paletteState}
+      modalState={paletteState}
       initialFocus={initialFocusRef}
       title="Command Palette"
     >
