@@ -51,6 +51,44 @@ const Form = ({ form }: { form: UseFormReturn<AboutFormType> }) => {
 const About: NextPage = () => {
   const { data } = api.about.getAll.useQuery();
 
+  const utils = api.useContext();
+  const addMutation = api.about.addOne.useMutation({
+      async onMutate() {
+        const prevData = utils.about.getAll.getData();
+        return { prevData };
+      },
+      onError(err, newAbout, ctx) {
+        utils.about.getAll.setData(undefined, ctx?.prevData);
+      },
+      onSettled() {
+        utils.about.getAll.invalidate();
+      },
+    }),
+    updateMutation = api.about.updateOne.useMutation({
+      async onMutate() {
+        const prevData = utils.about.getAll.getData();
+        return { prevData };
+      },
+      onError(err, newAbout, ctx) {
+        utils.about.getAll.setData(undefined, ctx?.prevData);
+      },
+      onSettled() {
+        utils.about.getAll.invalidate();
+      },
+    }),
+    deleteMutation = api.about.deleteOne.useMutation({
+      async onMutate() {
+        const prevData = utils.about.getAll.getData();
+        return { prevData };
+      },
+      onError(err, newPost, ctx) {
+        utils.about.getAll.setData(undefined, ctx?.prevData);
+      },
+      onSettled() {
+        utils.about.getAll.invalidate();
+      },
+    });
+
   const itemIdState = useState<string | null>(null),
     addModalState = useState(false),
     updateModalState = useState(false),
@@ -66,10 +104,6 @@ const About: NextPage = () => {
       desc: "",
     },
   });
-
-  const addMutation = api.about.addOne.useMutation(),
-    updateMutation = api.about.updateOne.useMutation(),
-    deleteMutation = api.about.deleteOne.useMutation();
 
   const { handleSubmit, reset, setValue } = formInstance;
 

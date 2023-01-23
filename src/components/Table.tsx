@@ -90,7 +90,7 @@ const TableDataOptions = ({ children }: PropsWithChildren) => {
           leaveFrom="transform scale-100 opacity-100"
           leaveTo="transform scale-95 opacity-0"
         >
-          <Menu.Items className="absolute bottom-0 right-0 flex w-32 -translate-x-1/2 translate-y-1/2 flex-col gap-1 rounded border border-slate-300 bg-slate-100 p-1 text-sm shadow-lg shadow-slate-300 dark:border-slate-900 dark:bg-slate-700 dark:text-slate-100 dark:shadow-slate-900">
+          <Menu.Items className="absolute bottom-0 right-0 flex w-32 -translate-x-1/2 flex-col gap-1 rounded border border-slate-300 bg-slate-100 p-1 text-sm shadow-lg shadow-slate-300 dark:border-slate-900 dark:bg-slate-700 dark:text-slate-100 dark:shadow-slate-900">
             {children}
           </Menu.Items>
         </Transition>
