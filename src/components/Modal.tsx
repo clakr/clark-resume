@@ -8,9 +8,9 @@ import type {
 import { Fragment } from "react";
 import type { UseFormReset } from "react-hook-form";
 import { MdOutlineClose } from "react-icons/md";
-import type { AboutFormType } from "../types";
+import type { AboutFormType, ContactFormType } from "../types";
 
-const Modal = ({
+const Modal = <T extends AboutFormType | ContactFormType>({
   children,
   modalState: [isOpen, setIsOpen],
   itemIdState,
@@ -22,7 +22,7 @@ const Modal = ({
   itemIdState?: [string | null, Dispatch<SetStateAction<string | null>>];
   initialFocus?: RefObject<HTMLButtonElement>;
   title: string;
-  reset?: UseFormReset<AboutFormType>;
+  reset?: UseFormReset<T>;
 }>) => {
   const handleClose = () => {
     if (reset) {

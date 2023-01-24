@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import type { UseFormReturn } from "react-hook-form";
+import type { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Admin from "../../components/Admin";
@@ -11,7 +11,6 @@ import Textarea from "../../components/Textarea";
 import type { AboutFormType, TableHeading, TableOptions } from "../../types";
 import { api } from "../../utils/api";
 import createTRPCSSG from "../../utils/createTRPCSSG";
-import useFormSubmit from "../../utils/useFormSubmit";
 import useModal from "../../utils/useModal";
 
 export const getStaticProps = async () => {
@@ -27,10 +26,13 @@ export const getStaticProps = async () => {
   };
 };
 
+type Form = AboutFormType;
+
 const About: NextPage = () => {
   const { data } = api.about.getAll.useQuery();
+  const utils = api.useContext();
 
-  const formInstance = useForm<AboutFormType>({
+  const formInstance = useForm<Form>({
       defaultValues: {
         id: "",
         desc: "",
@@ -46,10 +48,70 @@ const About: NextPage = () => {
     [, setIsUpdateOpen] = updateModalState,
     [, setIsDeleteOpen] = deleteModalState;
 
-  const { submitAdd, submitUpdate, submitDelete } = useFormSubmit({
-    modalStates,
-    reset,
-  });
+  const addMutation = api.about.addOne.useMutation({
+      async onMutate() {
+        const prevData = utils.about.getAll.getData();
+        return { prevData };
+      },
+      onError(err, newPost, ctx) {
+        utils.about.getAll.setData(undefined, ctx?.prevData);
+      },
+      onSettled() {
+        utils.about.getAll.invalidate();
+      },
+    }),
+    updateMutation = api.about.updateOne.useMutation({
+      async onMutate() {
+        const prevData = utils.about.getAll.getData();
+        return { prevData };
+      },
+      onError(err, newPost, ctx) {
+        utils.about.getAll.setData(undefined, ctx?.prevData);
+      },
+      onSettled() {
+        utils.about.getAll.invalidate();
+      },
+    }),
+    deleteMutation = api.about.deleteOne.useMutation({
+      async onMutate() {
+        const prevData = utils.about.getAll.getData();
+        return { prevData };
+      },
+      onError(err, newPost, ctx) {
+        utils.about.getAll.setData(undefined, ctx?.prevData);
+      },
+      onSettled() {
+        utils.about.getAll.invalidate();
+      },
+    });
+
+  const submitAdd: SubmitHandler<Form> = ({ desc }) => {
+    addMutation.mutate({
+      desc,
+    });
+    setItemId(null);
+    reset();
+    setIsAddOpen(false);
+  };
+
+  const submitUpdate: SubmitHandler<Form> = ({ id, desc }) => {
+    updateMutation.mutate({
+      id,
+      desc,
+    });
+    setItemId(null);
+    reset();
+    setIsUpdateOpen(false);
+  };
+
+  const submitDelete: SubmitHandler<Form> = ({ id }) => {
+    deleteMutation.mutate({
+      id,
+    });
+    setItemId(null);
+    reset();
+    setIsDeleteOpen(false);
+  };
 
   const options: TableOptions[] = [
     {
@@ -148,7 +210,7 @@ const category = "About",
     },
   ];
 
-const Form = ({ form }: { form: UseFormReturn<AboutFormType> }) => {
+const Form = ({ form }: { form: UseFormReturn<Form> }) => {
   const { register } = form;
 
   return (
