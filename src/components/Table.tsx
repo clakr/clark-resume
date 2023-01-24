@@ -2,6 +2,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import type { PropsWithChildren } from "react";
 import { FaCaretRight, FaPlus } from "react-icons/fa";
 import { SlOptions } from "react-icons/sl";
+import type { TableOptions } from "../types";
 
 const TableDataCollapsible = ({
   children,
@@ -75,7 +76,13 @@ const TableAddCategory = ({
   );
 };
 
-const TableDataOptions = ({ children }: PropsWithChildren) => {
+const TableDataOptions = ({
+  options,
+  id,
+}: {
+  options: TableOptions[];
+  id: string;
+}) => {
   return (
     <>
       <Menu as="td" className="w-1/12">
@@ -91,7 +98,21 @@ const TableDataOptions = ({ children }: PropsWithChildren) => {
           leaveTo="transform scale-95 opacity-0"
         >
           <Menu.Items className="absolute bottom-0 right-0 flex w-32 -translate-x-1/2 flex-col gap-1 rounded border border-slate-300 bg-slate-100 p-1 text-sm shadow-lg shadow-slate-300 dark:border-slate-900 dark:bg-slate-700 dark:text-slate-100 dark:shadow-slate-900">
-            {children}
+            {options.map(({ icon: Icon, intent, onClick }, index) => (
+              <Menu.Item key={index}>
+                {({ active }) => (
+                  <button
+                    className={`flex items-center justify-start gap-3 rounded p-2 ${
+                      active && "bg-slate-400 text-slate-50 dark:bg-slate-500"
+                    }`}
+                    onClick={() => onClick(id)}
+                  >
+                    <Icon />
+                    {intent}
+                  </button>
+                )}
+              </Menu.Item>
+            ))}
           </Menu.Items>
         </Transition>
       </Menu>

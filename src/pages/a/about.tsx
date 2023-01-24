@@ -1,7 +1,5 @@
-import { Menu } from "@headlessui/react";
 import type { NextPage } from "next";
-import { useState } from "react";
-import type { SubmitHandler, UseFormReturn } from "react-hook-form";
+import type { UseFormReturn } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Admin from "../../components/Admin";
@@ -13,6 +11,8 @@ import Textarea from "../../components/Textarea";
 import type { AboutFormType, TableHeading, TableOptions } from "../../types";
 import { api } from "../../utils/api";
 import createTRPCSSG from "../../utils/createTRPCSSG";
+import useFormSubmit from "../../utils/useFormSubmit";
+import useModal from "../../utils/useModal";
 
 export const getStaticProps = async () => {
   const ssg = await createTRPCSSG();
@@ -27,95 +27,29 @@ export const getStaticProps = async () => {
   };
 };
 
-const category = "About",
-  tableHeadRows: TableHeading[] = [
-    {
-      text: "Description",
-    },
-  ];
-
-const Form = ({ form }: { form: UseFormReturn<AboutFormType> }) => {
-  const { register } = form;
-
-  return (
-    <FormGroup label="Description">
-      <Textarea
-        {...register("desc", {
-          required: true,
-        })}
-      />
-    </FormGroup>
-  );
-};
-
 const About: NextPage = () => {
   const { data } = api.about.getAll.useQuery();
 
-  const utils = api.useContext();
-  const addMutation = api.about.addOne.useMutation({
-      async onMutate() {
-        const prevData = utils.about.getAll.getData();
-        return { prevData };
+  const formInstance = useForm<AboutFormType>({
+      defaultValues: {
+        id: "",
+        desc: "",
       },
     }),
-    updateMutation = api.about.updateOne.useMutation({
-      async onMutate() {
-        const prevData = utils.about.getAll.getData();
-        return { prevData };
-      },
-    }),
-    deleteMutation = api.about.deleteOne.useMutation({
-      async onMutate() {
-        const prevData = utils.about.getAll.getData();
-        return { prevData };
-      },
-    });
+    { handleSubmit, reset, setValue } = formInstance;
 
-  const itemIdState = useState<string | null>(null),
-    addModalState = useState(false),
-    updateModalState = useState(false),
-    deleteModalState = useState(false),
+  const modalStates = useModal(),
+    { itemIdState, addModalState, updateModalState, deleteModalState } =
+      modalStates,
     [itemId, setItemId] = itemIdState,
     [, setIsAddOpen] = addModalState,
     [, setIsUpdateOpen] = updateModalState,
     [, setIsDeleteOpen] = deleteModalState;
 
-  const formInstance = useForm<AboutFormType>({
-    defaultValues: {
-      id: "",
-      desc: "",
-    },
+  const { submitAdd, submitUpdate, submitDelete } = useFormSubmit({
+    modalStates,
+    reset,
   });
-
-  const { handleSubmit, reset, setValue } = formInstance;
-
-  const submitAdd: SubmitHandler<AboutFormType> = ({ desc }) => {
-    addMutation.mutate({
-      desc,
-    });
-    setItemId(null);
-    reset();
-    setIsAddOpen(false);
-  };
-
-  const submitUpdate: SubmitHandler<AboutFormType> = ({ id, desc }) => {
-    updateMutation.mutate({
-      id,
-      desc,
-    });
-    setItemId(null);
-    reset();
-    setIsUpdateOpen(false);
-  };
-
-  const submitDelete: SubmitHandler<AboutFormType> = ({ id }) => {
-    deleteMutation.mutate({
-      id,
-    });
-    setItemId(null);
-    reset();
-    setIsDeleteOpen(false);
-  };
 
   const options: TableOptions[] = [
     {
@@ -138,7 +72,6 @@ const About: NextPage = () => {
 
   if (itemId) {
     const updateItem = data?.find(({ id }) => itemId === id);
-
     if (updateItem) {
       setValue("id", updateItem.id);
       setValue("desc", updateItem.desc);
@@ -159,24 +92,7 @@ const About: NextPage = () => {
           {data?.map(({ id, desc }) => (
             <Table.BodyRow key={id}>
               <Table.Data>{desc}</Table.Data>
-              <Table.DataOptions>
-                {options.map(({ icon: Icon, intent, onClick }, index) => (
-                  <Menu.Item key={index}>
-                    {({ active }) => (
-                      <button
-                        className={`flex items-center justify-start gap-3 rounded p-2 ${
-                          active &&
-                          "bg-slate-400 text-slate-50 dark:bg-slate-500"
-                        }`}
-                        onClick={() => onClick(id)}
-                      >
-                        <Icon />
-                        {intent}
-                      </button>
-                    )}
-                  </Menu.Item>
-                ))}
-              </Table.DataOptions>
+              <Table.DataOptions options={options} id={id} />
             </Table.BodyRow>
           ))}
         </Table.Body>
@@ -224,3 +140,24 @@ const About: NextPage = () => {
 };
 
 export default About;
+
+const category = "About",
+  tableHeadRows: TableHeading[] = [
+    {
+      text: "Description",
+    },
+  ];
+
+const Form = ({ form }: { form: UseFormReturn<AboutFormType> }) => {
+  const { register } = form;
+
+  return (
+    <FormGroup label="Description">
+      <Textarea
+        {...register("desc", {
+          required: true,
+        })}
+      />
+    </FormGroup>
+  );
+};
