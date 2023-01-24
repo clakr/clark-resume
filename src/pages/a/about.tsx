@@ -171,7 +171,7 @@ const About: NextPage = () => {
         itemIdState={itemIdState}
         reset={reset}
       >
-        <form onSubmit={handleSubmit(submitAdd)}>
+        <form onSubmit={handleSubmit(submitAdd)} className="space-y-2">
           <Form form={formInstance} />
           <SubmitButton intent="Add" category={category} />
         </form>
@@ -182,7 +182,7 @@ const About: NextPage = () => {
         itemIdState={itemIdState}
         reset={reset}
       >
-        <form onSubmit={handleSubmit(submitUpdate)}>
+        <form onSubmit={handleSubmit(submitUpdate)} className="space-y-2">
           <Form form={formInstance} />
           <SubmitButton intent="Update" category={category} />
         </form>
@@ -214,7 +214,7 @@ const Form = ({ form }: { form: UseFormReturn<Form> }) => {
   const { register } = form;
 
   return (
-    <FormGroup label="Description">
+    <FormGroup label="desc">
       <Textarea
         {...register("desc", {
           required: true,
