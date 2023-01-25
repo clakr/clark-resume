@@ -8,9 +8,15 @@ import type {
 import { Fragment } from "react";
 import type { UseFormReset } from "react-hook-form";
 import { MdOutlineClose } from "react-icons/md";
-import type { AboutFormType, ContactFormType } from "../types";
+import type {
+  AboutFormType,
+  ContactFormType,
+  OrganizationFormType,
+} from "../types";
 
-const Modal = <T extends AboutFormType | ContactFormType>({
+type FormTypes = AboutFormType | ContactFormType | OrganizationFormType;
+
+const Modal = <T extends FormTypes>({
   children,
   modalState: [isOpen, setIsOpen],
   itemIdState,
@@ -66,7 +72,7 @@ const Modal = <T extends AboutFormType | ContactFormType>({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform space-y-4 rounded-2xl bg-slate-50 p-6 text-left align-middle shadow-xl transition-all dark:bg-slate-900 dark:text-slate-50">
+              <Dialog.Panel className="w-full max-w-lg transform space-y-4 rounded-2xl bg-slate-50 p-6 text-left align-middle shadow-xl transition-all dark:bg-slate-900 dark:text-slate-50">
                 <div className="flex items-center justify-between pb-2">
                   <Dialog.Title
                     as="h2"
