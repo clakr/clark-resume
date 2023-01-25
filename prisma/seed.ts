@@ -7,6 +7,8 @@ async function main() {
   await prisma.education.deleteMany();
   await prisma.experience.deleteMany();
   await prisma.experienceDesc.deleteMany();
+  await prisma.leadership.deleteMany();
+  await prisma.leadershipProject.deleteMany();
   await prisma.miscellaneous.deleteMany();
 
   await prisma.contact.createMany({

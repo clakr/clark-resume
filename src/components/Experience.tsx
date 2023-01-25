@@ -12,7 +12,7 @@ const Experience = () => {
           {data.experience.map(
             ({ id, organization: { ...rest }, experienceDescs }) => (
               <OrganizationItem key={id} {...rest}>
-                <ul className="list-outside list-disc">
+                <ul className="list-inside list-disc px-4">
                   {experienceDescs.map(({ id, desc }) => (
                     <ListItem key={id} content={desc} />
                   ))}
