@@ -9,7 +9,6 @@ export const contactRouter = createTRPCRouter({
       },
     });
   }),
-
   addOne: protectedProcedure
     .input(
       z.object({

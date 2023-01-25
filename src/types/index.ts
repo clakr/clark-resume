@@ -1,4 +1,4 @@
-import type { About, Contact } from "@prisma/client";
+import type { About, Contact, Organization } from "@prisma/client";
 import type { IconType } from "react-icons/lib";
 
 export type TableHeading = {
@@ -13,3 +13,4 @@ export type TableOptions = {
 
 export type AboutFormType = Omit<About, "createdAt">;
 export type ContactFormType = Omit<Contact, "createdAt">;
+export type OrganizationFormType = Omit<Organization, "createdAt">;

@@ -33,7 +33,6 @@ type Form = ContactFormType;
 
 const Contact: NextPage = () => {
   const { data } = api.contact.getAll.useQuery();
-  const utils = api.useContext();
 
   const formInstance = useForm<Form>({
       defaultValues: {
@@ -52,7 +51,8 @@ const Contact: NextPage = () => {
     [, setIsUpdateOpen] = updateModalState,
     [, setIsDeleteOpen] = deleteModalState;
 
-  const addMutation = api.contact.addOne.useMutation({
+  const utils = api.useContext(),
+    addMutation = api.contact.addOne.useMutation({
       async onMutate() {
         const prevData = utils.contact.getAll.getData();
         return { prevData };
@@ -90,34 +90,32 @@ const Contact: NextPage = () => {
     });
 
   const submitAdd: SubmitHandler<Form> = ({ desc, type }) => {
-    addMutation.mutate({
-      desc,
-      type,
-    });
-    setItemId(null);
-    reset();
-    setIsAddOpen(false);
-  };
-
-  const submitUpdate: SubmitHandler<Form> = ({ id, desc, type }) => {
-    updateMutation.mutate({
-      id,
-      desc,
-      type,
-    });
-    setItemId(null);
-    reset();
-    setIsUpdateOpen(false);
-  };
-
-  const submitDelete: SubmitHandler<Form> = ({ id }) => {
-    deleteMutation.mutate({
-      id,
-    });
-    setItemId(null);
-    reset();
-    setIsDeleteOpen(false);
-  };
+      addMutation.mutate({
+        desc,
+        type,
+      });
+      setItemId(null);
+      reset();
+      setIsAddOpen(false);
+    },
+    submitUpdate: SubmitHandler<Form> = ({ id, desc, type }) => {
+      updateMutation.mutate({
+        id,
+        desc,
+        type,
+      });
+      setItemId(null);
+      reset();
+      setIsUpdateOpen(false);
+    },
+    submitDelete: SubmitHandler<Form> = ({ id }) => {
+      deleteMutation.mutate({
+        id,
+      });
+      setItemId(null);
+      reset();
+      setIsDeleteOpen(false);
+    };
 
   const options: TableOptions[] = [
     {
@@ -181,7 +179,7 @@ const Contact: NextPage = () => {
         itemIdState={itemIdState}
         reset={reset}
       >
-        <form onSubmit={handleSubmit(submitAdd)} className="space-y-2">
+        <form onSubmit={handleSubmit(submitAdd)} className="space-y-3">
           <Form form={formInstance} />
           <SubmitButton intent="Add" category={category} />
         </form>
@@ -192,7 +190,7 @@ const Contact: NextPage = () => {
         itemIdState={itemIdState}
         reset={reset}
       >
-        <form onSubmit={handleSubmit(submitUpdate)} className="space-y-2">
+        <form onSubmit={handleSubmit(submitUpdate)} className="space-y-3">
           <Form form={formInstance} />
           <SubmitButton intent="Update" category={category} />
         </form>

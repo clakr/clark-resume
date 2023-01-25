@@ -1,4 +1,5 @@
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { z } from "zod";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const organizationRouter = createTRPCRouter({
   getAll: publicProcedure.query(({ ctx }) => {
@@ -8,4 +9,63 @@ export const organizationRouter = createTRPCRouter({
       },
     });
   }),
+  addOne: protectedProcedure
+    .input(
+      z.object({
+        name: z.string(),
+        position: z.string(),
+        location: z.string(),
+        timeframeFrom: z.date(),
+        timeframeTo: z.date().nullish(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.organization.create({
+        data: {
+          name: input.name,
+          position: input.position,
+          location: input.location,
+          timeframeFrom: input.timeframeFrom,
+          timeframeTo: input.timeframeTo,
+        },
+      });
+    }),
+  updateOne: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+        position: z.string(),
+        location: z.string(),
+        timeframeFrom: z.date(),
+        timeframeTo: z.date().nullish(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.organization.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          name: input.name,
+          position: input.position,
+          location: input.location,
+          timeframeFrom: input.timeframeFrom,
+          timeframeTo: input.timeframeTo,
+        },
+      });
+    }),
+  deleteOne: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.organization.delete({
+        where: {
+          id: input.id,
+        },
+      });
+    }),
 });
