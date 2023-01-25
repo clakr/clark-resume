@@ -6,15 +6,13 @@ import type { AboutFormType } from "../types";
 const Textarea = forwardRef<
   HTMLTextAreaElement,
   PropsWithChildren & ReturnType<UseFormRegister<AboutFormType>>
->(({ onChange, onBlur, name, children }, ref) => {
+>(({ children, ...rest }, ref) => {
   return (
     <textarea
       className="w-full rounded-lg border border-slate-300 bg-slate-200 p-4 outline-slate-400 dark:border-slate-700 dark:bg-slate-800"
       rows={5}
-      name={name}
+      {...rest}
       ref={ref}
-      onChange={onChange}
-      onBlur={onBlur}
     >
       {children}
     </textarea>
