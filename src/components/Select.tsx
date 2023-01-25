@@ -5,9 +5,10 @@ import { FaCheck } from "react-icons/fa";
 
 type OptionProps = {
   value: string;
+  displayName: string;
 };
 
-const Option = ({ value }: OptionProps) => {
+const Option = ({ value, displayName }: OptionProps) => {
   return (
     <Listbox.Option value={value} key={value} as={Fragment}>
       {({ active, selected }) => (
@@ -16,7 +17,7 @@ const Option = ({ value }: OptionProps) => {
             active && "bg-slate-200 dark:bg-slate-700"
           } ${selected && "font-medium"}`}
         >
-          {value}
+          {displayName}
           {selected && <FaCheck />}
         </li>
       )}
