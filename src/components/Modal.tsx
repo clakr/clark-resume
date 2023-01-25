@@ -11,10 +11,15 @@ import { MdOutlineClose } from "react-icons/md";
 import type {
   AboutFormType,
   ContactFormType,
+  EducationFormType,
   OrganizationFormType,
 } from "../types";
 
-type FormTypes = AboutFormType | ContactFormType | OrganizationFormType;
+type FormTypes =
+  | AboutFormType
+  | ContactFormType
+  | OrganizationFormType
+  | EducationFormType;
 
 const Modal = <T extends FormTypes>({
   children,
