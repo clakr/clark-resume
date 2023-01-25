@@ -16,7 +16,7 @@ export const organizationRouter = createTRPCRouter({
         position: z.string(),
         location: z.string(),
         timeframeFrom: z.date(),
-        timeframeTo: z.date().nullish(),
+        timeframeTo: z.date().nullable(),
       })
     )
     .mutation(({ ctx, input }) => {
@@ -38,7 +38,7 @@ export const organizationRouter = createTRPCRouter({
         position: z.string(),
         location: z.string(),
         timeframeFrom: z.date(),
-        timeframeTo: z.date().nullish(),
+        timeframeTo: z.date().nullable(),
       })
     )
     .mutation(({ ctx, input }) => {
