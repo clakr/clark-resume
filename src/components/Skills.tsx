@@ -17,6 +17,13 @@ const Skills = () => {
     interest = data?.miscellaneous.filter(({ type }) => type === "INTEREST");
   }
 
+  const formatter = (miscellaneous: Miscellaneous[]) => {
+    return new Intl.ListFormat("en", {
+      style: "long",
+      type: "conjunction",
+    }).format(miscellaneous.map(({ name }) => name));
+  };
+
   return (
     <>
       {data && (
@@ -25,19 +32,19 @@ const Skills = () => {
             {technical && (
               <DefinitionItem
                 term="Technical:"
-                description={technical.map(({ name }) => name).join(", ")}
+                description={formatter(technical)}
               />
             )}
             {language && (
               <DefinitionItem
                 term="Language:"
-                description={language.map(({ name }) => name).join(", ")}
+                description={formatter(language)}
               />
             )}
             {interest && (
               <DefinitionItem
                 term="Interest:"
-                description={interest.map(({ name }) => name).join(", ")}
+                description={formatter(interest)}
               />
             )}
           </DefinitionList>
