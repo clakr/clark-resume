@@ -21,7 +21,7 @@
     "@trpc/server": "^10.9.0",
     "@vercel/analytics": "^0.1.8",
     "next": "13.1.6",
-    "next-auth": "^4.18.10",
+    "next-auth": "^4.19.0",
     "next-themes": "^0.2.1",
     "node-fetch": "^3.3.0",
     "react": "18.2.0",
