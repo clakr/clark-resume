@@ -9,7 +9,7 @@ export const experienceRouter = createTRPCRouter({
         experienceDescs: true,
       },
       orderBy: {
-        createdAt: "asc",
+        updatedAt: "asc",
       },
     });
   }),

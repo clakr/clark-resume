@@ -8,7 +8,7 @@ export const leadershipRouter = createTRPCRouter({
         leadershipProjects: true,
       },
       orderBy: {
-        createdAt: "asc",
+        updatedAt: "asc",
       },
     });
   }),

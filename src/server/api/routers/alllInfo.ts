@@ -5,17 +5,17 @@ export const allInfoRouter = createTRPCRouter({
     return {
       contact: await ctx.prisma.contact.findMany({
         orderBy: {
-          createdAt: "asc",
+          updatedAt: "asc",
         },
       }),
       about: await ctx.prisma.about.findMany({
         orderBy: {
-          createdAt: "asc",
+          updatedAt: "asc",
         },
       }),
       education: await ctx.prisma.education.findMany({
         orderBy: {
-          createdAt: "asc",
+          updatedAt: "asc",
         },
         include: {
           organization: true,
@@ -23,7 +23,7 @@ export const allInfoRouter = createTRPCRouter({
       }),
       experience: await ctx.prisma.experience.findMany({
         orderBy: {
-          createdAt: "asc",
+          updatedAt: "asc",
         },
         include: {
           organization: true,
@@ -32,7 +32,7 @@ export const allInfoRouter = createTRPCRouter({
       }),
       leadership: await ctx.prisma.leadership.findMany({
         orderBy: {
-          createdAt: "asc",
+          updatedAt: "asc",
         },
         include: {
           organization: true,
@@ -41,7 +41,7 @@ export const allInfoRouter = createTRPCRouter({
       }),
       miscellaneous: await ctx.prisma.miscellaneous.findMany({
         orderBy: {
-          createdAt: "asc",
+          updatedAt: "asc",
         },
       }),
     };

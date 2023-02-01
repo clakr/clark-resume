@@ -8,7 +8,7 @@ export const educationRouter = createTRPCRouter({
         organization: true,
       },
       orderBy: {
-        createdAt: "asc",
+        updatedAt: "asc",
       },
     });
   }),

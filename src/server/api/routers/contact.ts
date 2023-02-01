@@ -5,7 +5,7 @@ export const contactRouter = createTRPCRouter({
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.contact.findMany({
       orderBy: {
-        createdAt: "asc",
+        updatedAt: "asc",
       },
     });
   }),

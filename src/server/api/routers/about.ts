@@ -5,7 +5,7 @@ export const aboutRouter = createTRPCRouter({
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.about.findMany({
       orderBy: {
-        createdAt: "asc",
+        updatedAt: "asc",
       },
     });
   }),
