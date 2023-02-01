@@ -4,6 +4,8 @@ import type {
   Education,
   Experience,
   ExperienceDesc,
+  Leadership,
+  LeadershipProject,
   Organization,
 } from "@prisma/client";
 import type { IconType } from "react-icons/lib";
@@ -18,21 +20,22 @@ export type TableOptions = {
   onClick: (id: string) => void;
 };
 
-export type AboutFormType = Omit<
-  About,
-  "createdAt" | "updatedAt" | "updatedAt"
->;
+type DateTypes = "createdAt" | "updatedAt";
 
-export type ContactFormType = Omit<Contact, "createdAt" | "updatedAt">;
+export type AboutFormType = Omit<About, DateTypes>;
 
-export type OrganizationFormType = Omit<
-  Organization,
-  "createdAt" | "updatedAt"
->;
+export type ContactFormType = Omit<Contact, DateTypes>;
 
-export type EducationFormType = Omit<Education, "createdAt" | "updatedAt">;
+export type OrganizationFormType = Omit<Organization, DateTypes>;
 
-export type ExperienceFormType = Omit<Experience, "createdAt" | "updatedAt"> & {
+export type EducationFormType = Omit<Education, DateTypes>;
+
+export type ExperienceFormType = Omit<Experience, DateTypes> & {
   experienceDescs: ExperienceDescFormType[];
 };
-type ExperienceDescFormType = Omit<ExperienceDesc, "createdAt" | "updatedAt">;
+type ExperienceDescFormType = Omit<ExperienceDesc, DateTypes>;
+
+export type LeadershipFormType = Omit<Leadership, "createdAt" | "updatedAt"> & {
+  leadershipProjects: LeadershipProjectsFormType[];
+};
+type LeadershipProjectsFormType = Omit<LeadershipProject, DateTypes>;

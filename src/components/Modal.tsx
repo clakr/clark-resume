@@ -13,6 +13,7 @@ import type {
   ContactFormType,
   EducationFormType,
   ExperienceFormType,
+  LeadershipFormType,
   OrganizationFormType,
 } from "../types";
 
@@ -21,7 +22,8 @@ type FormTypes =
   | ContactFormType
   | OrganizationFormType
   | EducationFormType
-  | ExperienceFormType;
+  | ExperienceFormType
+  | LeadershipFormType;
 
 const Modal = <T extends FormTypes>({
   children,
