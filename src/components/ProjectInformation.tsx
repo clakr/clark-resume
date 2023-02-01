@@ -50,7 +50,7 @@ const ProjectInformation = ({
           />{" "}
           which consists of the following technologies:
         </p>
-        <ul className="ml-2 list-outside list-disc">
+        <ul className="ml-2 list-inside list-disc">
           {links.map(({ href, name }, index) => (
             <li key={index}>
               <a
