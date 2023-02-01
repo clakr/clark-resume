@@ -1,18 +1,11 @@
 import type { HTMLInputTypeAttribute } from "react";
 import { forwardRef } from "react";
 import type { UseFormRegister } from "react-hook-form";
-import type { ExperienceDescFormType, OrganizationFormType } from "../types";
+import type { OrganizationFormType } from "../types";
 
 const Input = forwardRef<
   HTMLInputElement,
-  ReturnType<
-    UseFormRegister<
-      | OrganizationFormType
-      | {
-          experienceDescs: ExperienceDescFormType[];
-        }
-    >
-  > & {
+  ReturnType<UseFormRegister<OrganizationFormType>> & {
     type?: HTMLInputTypeAttribute;
     className?: string;
   }

@@ -1,9 +1,13 @@
 import type { PropsWithChildren, TextareaHTMLAttributes } from "react";
 import { forwardRef } from "react";
 import type { UseFormRegister } from "react-hook-form/dist/types";
-import type { AboutFormType, EducationFormType } from "../types";
+import type {
+  AboutFormType,
+  EducationFormType,
+  MiscellaneousFormType,
+} from "../types";
 
-type FormTypes = AboutFormType | EducationFormType;
+type FormTypes = AboutFormType | EducationFormType | MiscellaneousFormType;
 
 const Textarea = forwardRef<
   HTMLTextAreaElement,

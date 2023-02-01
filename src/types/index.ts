@@ -6,6 +6,7 @@ import type {
   ExperienceDesc,
   Leadership,
   LeadershipProject,
+  Miscellaneous,
   Organization,
 } from "@prisma/client";
 import type { IconType } from "react-icons/lib";
@@ -39,3 +40,5 @@ export type LeadershipFormType = Omit<Leadership, "createdAt" | "updatedAt"> & {
   leadershipProjects: LeadershipProjectsFormType[];
 };
 type LeadershipProjectsFormType = Omit<LeadershipProject, DateTypes>;
+
+export type MiscellaneousFormType = Omit<Miscellaneous, DateTypes>;
