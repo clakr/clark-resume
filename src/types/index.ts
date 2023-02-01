@@ -18,9 +18,21 @@ export type TableOptions = {
   onClick: (id: string) => void;
 };
 
-export type AboutFormType = Omit<About, "createdAt">;
-export type ContactFormType = Omit<Contact, "createdAt">;
-export type OrganizationFormType = Omit<Organization, "createdAt">;
-export type EducationFormType = Omit<Education, "createdAt">;
-export type ExperienceFormType = Omit<Experience, "createdAt">;
-export type ExperienceDescFormType = Omit<ExperienceDesc, "createdAt">;
+export type AboutFormType = Omit<
+  About,
+  "createdAt" | "updatedAt" | "updatedAt"
+>;
+
+export type ContactFormType = Omit<Contact, "createdAt" | "updatedAt">;
+
+export type OrganizationFormType = Omit<
+  Organization,
+  "createdAt" | "updatedAt"
+>;
+
+export type EducationFormType = Omit<Education, "createdAt" | "updatedAt">;
+
+export type ExperienceFormType = Omit<Experience, "createdAt" | "updatedAt"> & {
+  experienceDescs: ExperienceDescFormType[];
+};
+type ExperienceDescFormType = Omit<ExperienceDesc, "createdAt" | "updatedAt">;
