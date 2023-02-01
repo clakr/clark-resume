@@ -227,24 +227,6 @@ const Form = ({ form }: { form: UseFormReturn<Form> }) => {
 
   const { data = [] } = api.organization.getAll.useQuery();
 
-  const inputs = [
-    {
-      id: "",
-      organizationId: "",
-      desc: "",
-    },
-    {
-      id: "",
-      organizationId: "",
-      desc: "",
-    },
-    {
-      id: "",
-      organizationId: "",
-      desc: "",
-    },
-  ];
-
   return (
     <>
       <FormGroup label="organization">
