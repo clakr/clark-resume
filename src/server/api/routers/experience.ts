@@ -14,28 +14,47 @@ export const experienceRouter = createTRPCRouter({
     });
   }),
 
-  addOrganization: protectedProcedure
+  addOne: protectedProcedure
     .input(
       z.object({
         organizationId: z.string(),
+        experienceDescs: z.array(
+          z.object({
+            id: z.string(),
+            experienceId: z.string(),
+            desc: z.string(),
+          })
+        ),
       })
     )
     .mutation(({ ctx, input }) => {
       return ctx.prisma.experience.create({
         data: {
           organizationId: input.organizationId,
+          experienceDescs: {
+            createMany: {
+              data: input.experienceDescs.map(({ desc }) => ({ desc })),
+            },
+          },
         },
       });
     }),
-  updateOrganization: protectedProcedure
+  updateOne: protectedProcedure
     .input(
       z.object({
         id: z.string(),
         organizationId: z.string(),
+        experienceDescs: z.array(
+          z.object({
+            id: z.string(),
+            experienceId: z.string(),
+            desc: z.string(),
+          })
+        ),
       })
     )
-    .mutation(({ ctx, input }) => {
-      return ctx.prisma.experience.update({
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.experience.update({
         where: {
           id: input.id,
         },
@@ -43,8 +62,23 @@ export const experienceRouter = createTRPCRouter({
           organizationId: input.organizationId,
         },
       });
+
+      await ctx.prisma.$transaction(
+        input.experienceDescs.map(({ id, desc }) =>
+          ctx.prisma.experienceDesc.update({
+            where: {
+              id,
+            },
+            data: {
+              desc,
+            },
+          })
+        )
+      );
+
+      return;
     }),
-  deleteOrganization: protectedProcedure
+  deleteOne: protectedProcedure
     .input(
       z.object({
         id: z.string(),

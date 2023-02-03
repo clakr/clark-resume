@@ -1,9 +1,10 @@
 import type { NextPage } from "next";
 import type { SubmitHandler, UseFormReturn } from "react-hook-form";
-import { Controller, useForm } from "react-hook-form";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
 import Admin from "../../components/Admin";
 import FormGroup from "../../components/FormGroup";
+import Input from "../../components/Input";
 import Modal from "../../components/Modal";
 import Select from "../../components/Select";
 import SubmitButton from "../../components/SubmitButton";
@@ -41,6 +42,13 @@ const Experience: NextPage = () => {
       defaultValues: {
         id: "",
         organizationId: orgs ? orgs.map(({ id }) => id)[0] : "",
+        experienceDescs: [
+          {
+            id: "",
+            experienceId: "",
+            desc: "",
+          },
+        ],
       },
     }),
     { handleSubmit, reset, setValue } = formInstance;
@@ -54,7 +62,7 @@ const Experience: NextPage = () => {
     [, setIsDeleteOpen] = deleteModalState;
 
   const utils = api.useContext(),
-    addMutation = api.experience.addOrganization.useMutation({
+    addMutation = api.experience.addOne.useMutation({
       async onMutate() {
         const prevData = utils.experience.getAll.getData();
         return { prevData };
@@ -66,7 +74,7 @@ const Experience: NextPage = () => {
         utils.experience.getAll.invalidate();
       },
     }),
-    updateMutation = api.experience.updateOrganization.useMutation({
+    updateMutation = api.experience.updateOne.useMutation({
       async onMutate() {
         const prevData = utils.experience.getAll.getData();
         return { prevData };
@@ -78,7 +86,7 @@ const Experience: NextPage = () => {
         utils.experience.getAll.invalidate();
       },
     }),
-    deleteMutation = api.experience.deleteOrganization.useMutation({
+    deleteMutation = api.experience.deleteOne.useMutation({
       async onMutate() {
         const prevData = utils.experience.getAll.getData();
         return { prevData };
@@ -91,18 +99,27 @@ const Experience: NextPage = () => {
       },
     });
 
-  const submitAdd: SubmitHandler<Form> = ({ organizationId }) => {
+  const submitAdd: SubmitHandler<Form> = ({
+      organizationId,
+      experienceDescs,
+    }) => {
       addMutation.mutate({
         organizationId,
+        experienceDescs,
       });
       setItemId(null);
       reset();
       setIsAddOpen(false);
     },
-    submitUpdate: SubmitHandler<Form> = ({ id, organizationId }) => {
+    submitUpdate: SubmitHandler<Form> = ({
+      id,
+      organizationId,
+      experienceDescs,
+    }) => {
       updateMutation.mutate({
         id,
         organizationId,
+        experienceDescs,
       });
       setItemId(null);
       reset();
@@ -141,6 +158,7 @@ const Experience: NextPage = () => {
     if (updateItem) {
       setValue("id", updateItem.id);
       setValue("organizationId", updateItem.organizationId);
+      setValue("experienceDescs", updateItem.experienceDescs);
     }
   }
 
@@ -227,6 +245,11 @@ const Form = ({ form }: { form: UseFormReturn<Form> }) => {
 
   const { data = [] } = api.organization.getAll.useQuery();
 
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "experienceDescs",
+  });
+
   return (
     <>
       <FormGroup label="organization">
@@ -246,6 +269,33 @@ const Form = ({ form }: { form: UseFormReturn<Form> }) => {
             </Select>
           )}
         />
+      </FormGroup>
+      <FormGroup label="descriptions">
+        {fields.map((input, index) => (
+          <div key={input.id} className="flex">
+            <Input
+              {...register(`experienceDescs.${index}.desc`)}
+              className="flex-grow-0"
+            />
+            <button className="flex-grow px-4" onClick={() => remove(index)}>
+              <FaTrash className="h-4 w-4" />
+            </button>
+          </div>
+        ))}
+        <button
+          className="flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-slate-200 px-4 py-2 outline-slate-400 dark:border-slate-700 dark:bg-slate-800"
+          onClick={() =>
+            append({
+              id: "",
+              experienceId: "",
+              desc: "",
+            })
+          }
+          type="button"
+        >
+          <FaPlus className="h-4 w-4" />
+          Add Field
+        </button>
       </FormGroup>
     </>
   );

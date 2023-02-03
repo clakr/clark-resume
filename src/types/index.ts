@@ -34,11 +34,11 @@ export type EducationFormType = Omit<Education, DateTypes>;
 export type ExperienceFormType = Omit<Experience, DateTypes> & {
   experienceDescs: ExperienceDescFormType[];
 };
-type ExperienceDescFormType = Omit<ExperienceDesc, DateTypes>;
+export type ExperienceDescFormType = Omit<ExperienceDesc, DateTypes>;
 
 export type LeadershipFormType = Omit<Leadership, "createdAt" | "updatedAt"> & {
   leadershipProjects: LeadershipProjectsFormType[];
 };
-type LeadershipProjectsFormType = Omit<LeadershipProject, DateTypes>;
+export type LeadershipProjectsFormType = Omit<LeadershipProject, DateTypes>;
 
 export type MiscellaneousFormType = Omit<Miscellaneous, DateTypes>;

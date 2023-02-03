@@ -60,19 +60,18 @@ const CommandPalette = () => {
       title="Command Palette"
     >
       <div className="flex flex-col gap-2 opacity-75">
-        <StateContext.Provider value={{ infoState }}>
-          {(session ? buttons.slice(0, 3) : buttons).map(
-            ({ isFocused, ...rest }, index) => (
-              <>
-                <Button
-                  key={index}
-                  ref={isFocused ? initialFocusRef : null}
-                  {...rest}
-                />
-              </>
-            )
-          )}
-        </StateContext.Provider>
+        {(session ? buttons.slice(0, 3) : buttons).map(
+          ({ isFocused, ...rest }, index) => (
+            <>
+              <Button
+                key={index}
+                ref={isFocused ? initialFocusRef : null}
+                infoState={infoState}
+                {...rest}
+              />
+            </>
+          )
+        )}
       </div>
 
       <ProjectInformation state={infoState} />
@@ -81,15 +80,19 @@ const CommandPalette = () => {
 };
 
 const Button = forwardRef(
-  ({ text, icon: Icon }: Button, ref: ForwardedRef<HTMLButtonElement>) => {
+  (
+    {
+      text,
+      icon: Icon,
+      infoState: [, setIsInfoOpen],
+    }: Button & { infoState: [boolean, Dispatch<SetStateAction<boolean>>] },
+    ref: ForwardedRef<HTMLButtonElement>
+  ) => {
     const [isLoading, setIsLoading] = useState(false);
     let onClick: (() => void) | undefined = undefined;
 
     const { theme, setTheme, systemTheme } = useTheme();
     const data = useQueries();
-    const {
-      infoState: [, setIsInfoOpen],
-    } = useStateContext();
 
     switch (text) {
       case "Dark Mode":
