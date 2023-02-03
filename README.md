@@ -6,9 +6,18 @@
 - [x] Integrate NextJS' Data Fetch Patterns, for whichever fits best
 - [x] Mobile Responsive
 - [x] Dark Mode
-- [x] Project Information
+- [ ] Project Information
+  - [ ] Refactor to not use React native context
 - [x] Export to PDF
 - [ ] Admin Portal for mutating page content
+  - [ ] Form Validations
+  - [ ] Check for a11y
+     - [ ] `for` attributes for `label`
+  - [ ] Submit Button icons
+  - [ ] Delete description
+  - [ ] `valueAsDate` for `input:date`
+  - [ ] inputs that can be null (checkbox)
+  - [ ] Fix UI for dynamic form fields
 
 ## References
 
