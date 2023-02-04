@@ -1,9 +1,10 @@
 import type { NextPage } from "next";
 import type { SubmitHandler, UseFormReturn } from "react-hook-form";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Admin from "../../components/Admin";
 import FormGroup from "../../components/FormGroup";
+import Input from "../../components/Input";
 import Modal from "../../components/Modal";
 import Select from "../../components/Select";
 import SubmitButton from "../../components/SubmitButton";
@@ -101,18 +102,27 @@ const Leadership: NextPage = () => {
       },
     });
 
-  const submitAdd: SubmitHandler<Form> = ({ organizationId }) => {
+  const submitAdd: SubmitHandler<Form> = ({
+      organizationId,
+      leadershipProjects,
+    }) => {
       addMutation.mutate({
         organizationId,
+        leadershipProjects,
       });
       setItemId(null);
       reset();
       setIsAddOpen(false);
     },
-    submitUpdate: SubmitHandler<Form> = ({ id, organizationId }) => {
+    submitUpdate: SubmitHandler<Form> = ({
+      id,
+      organizationId,
+      leadershipProjects,
+    }) => {
       updateMutation.mutate({
         id,
         organizationId,
+        leadershipProjects,
       });
       setItemId(null);
       reset();
@@ -151,6 +161,7 @@ const Leadership: NextPage = () => {
     if (updateItem) {
       setValue("id", updateItem.id);
       setValue("organizationId", updateItem.organizationId);
+      setValue("leadershipProjects", updateItem.leadershipProjects);
     }
   }
 
@@ -274,6 +285,11 @@ const Form = ({ form }: { form: UseFormReturn<Form> }) => {
 
   const { data = [] } = api.organization.getAll.useQuery();
 
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "leadershipProjects",
+  });
+
   return (
     <>
       <FormGroup label="organization">
@@ -293,6 +309,36 @@ const Form = ({ form }: { form: UseFormReturn<Form> }) => {
             </Select>
           )}
         />
+      </FormGroup>
+      <FormGroup label="projects">
+        {fields.map((project, index) => (
+          <div key={project.id} className="space-y-1">
+            <Input {...register(`leadershipProjects.${index}.course`)} />
+            <Input {...register(`leadershipProjects.${index}.name`)} />
+            <Input {...register(`leadershipProjects.${index}.purpose`)} />
+            <Input
+              {...register(`leadershipProjects.${index}.otherPositions`)}
+            />
+            <button type="button" onClick={() => remove(index)}>
+              remove
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={() =>
+            append({
+              id: "",
+              leadershipId: "",
+              course: "",
+              name: "",
+              purpose: "",
+              otherPositions: "",
+            })
+          }
+        >
+          append
+        </button>
       </FormGroup>
     </>
   );

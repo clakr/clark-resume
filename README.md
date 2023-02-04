@@ -18,6 +18,7 @@
   - [ ] `valueAsDate` for `input:date`
   - [ ] inputs that can be null (checkbox)
   - [ ] Fix UI for dynamic form fields
+  - [ ] setTimeout for resetting fields?
 
 ## References
 

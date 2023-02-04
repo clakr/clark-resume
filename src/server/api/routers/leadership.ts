@@ -17,12 +17,33 @@ export const leadershipRouter = createTRPCRouter({
     .input(
       z.object({
         organizationId: z.string(),
+        leadershipProjects: z.array(
+          z.object({
+            id: z.string(),
+            course: z.string(),
+            name: z.string(),
+            purpose: z.string().nullable(),
+            otherPositions: z.string().nullable(),
+          })
+        ),
       })
     )
-    .mutation(({ ctx, input }) => {
-      return ctx.prisma.leadership.create({
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.leadership.create({
         data: {
           organizationId: input.organizationId,
+          leadershipProjects: {
+            createMany: {
+              data: input.leadershipProjects.map(
+                ({ course, name, purpose, otherPositions }) => ({
+                  course,
+                  name,
+                  purpose,
+                  otherPositions,
+                })
+              ),
+            },
+          },
         },
       });
     }),
@@ -31,10 +52,19 @@ export const leadershipRouter = createTRPCRouter({
       z.object({
         id: z.string(),
         organizationId: z.string(),
+        leadershipProjects: z.array(
+          z.object({
+            id: z.string(),
+            course: z.string(),
+            name: z.string(),
+            purpose: z.string().nullable(),
+            otherPositions: z.string().nullable(),
+          })
+        ),
       })
     )
-    .mutation(({ ctx, input }) => {
-      return ctx.prisma.leadership.update({
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.leadership.update({
         where: {
           id: input.id,
         },
@@ -42,6 +72,23 @@ export const leadershipRouter = createTRPCRouter({
           organizationId: input.organizationId,
         },
       });
+
+      return ctx.prisma.$transaction(
+        input.leadershipProjects.map(
+          ({ id, course, name, purpose, otherPositions }) =>
+            ctx.prisma.leadershipProject.update({
+              where: {
+                id,
+              },
+              data: {
+                course,
+                name,
+                purpose,
+                otherPositions,
+              },
+            })
+        )
+      );
     }),
   deleteOne: protectedProcedure
     .input(
