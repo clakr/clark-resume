@@ -1,15 +1,15 @@
-import { Miscellaneous, MiscellaneousType } from "@prisma/client";
+import { MiscellaneousType } from "@prisma/client";
 import type { NextPage } from "next";
 import type { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Admin from "../../components/Admin";
 import FormGroup from "../../components/FormGroup";
+import Input from "../../components/Input";
 import Modal from "../../components/Modal";
 import Select from "../../components/Select";
 import SubmitButton from "../../components/SubmitButton";
 import Table from "../../components/Table";
-import Textarea from "../../components/Textarea";
 import type {
   MiscellaneousFormType,
   TableHeading,
@@ -35,7 +35,7 @@ export const getStaticProps = async () => {
 type Form = MiscellaneousFormType;
 
 const Miscellaneous: NextPage = () => {
-  const { data } = api.miscellaneous.getAll.useQuery();
+  const { data = [] } = api.miscellaneous.getAll.useQuery();
 
   const formInstance = useForm<Form>({
       defaultValues: {
@@ -140,25 +140,13 @@ const Miscellaneous: NextPage = () => {
   ];
 
   if (itemId) {
-    const updateItem = data?.find(({ type }) => itemId === type);
+    const updateItem = data?.find(({ id }) => itemId === id);
     if (updateItem) {
       setValue("id", updateItem.id);
       setValue("name", updateItem.name);
       setValue("type", updateItem.type);
     }
   }
-
-  let technical: Miscellaneous[] | undefined = undefined,
-    language: Miscellaneous[] | undefined = undefined,
-    interest: Miscellaneous[] | undefined = undefined;
-
-  if (data) {
-    technical = data.filter(({ type }) => type === "TECHNICAL");
-    language = data.filter(({ type }) => type === "LANGUAGE");
-    interest = data.filter(({ type }) => type === "INTEREST");
-  }
-
-  console.log(itemId);
 
   return (
     <Admin pageTitle={category}>
@@ -171,33 +159,13 @@ const Miscellaneous: NextPage = () => {
           ))}
         </Table.Head>
         <Table.Body>
-          {technical && (
-            <Table.BodyRow>
-              <Table.Data>Technical</Table.Data>
-              <Table.Data>
-                {technical.map(({ name }) => name).join(", ")}
-              </Table.Data>
-              <Table.DataOptions options={options} id="TECHNICAL" />
+          {data.map(({ id, name, type }) => (
+            <Table.BodyRow key={id}>
+              <Table.Data>{name}</Table.Data>
+              <Table.Data>{type}</Table.Data>
+              <Table.DataOptions options={options} id={id} />
             </Table.BodyRow>
-          )}
-          {language && (
-            <Table.BodyRow>
-              <Table.Data>Language</Table.Data>
-              <Table.Data>
-                {language.map(({ name }) => name).join(", ")}
-              </Table.Data>
-              <Table.DataOptions options={options} id="LANGUAGE" />
-            </Table.BodyRow>
-          )}
-          {interest && (
-            <Table.BodyRow>
-              <Table.Data>Interest</Table.Data>
-              <Table.Data>
-                {interest.map(({ name }) => name).join(", ")}
-              </Table.Data>
-              <Table.DataOptions options={options} id="INTEREST" />
-            </Table.BodyRow>
-          )}
+          ))}
         </Table.Body>
         <Table.AddCategory
           category={category}
@@ -247,10 +215,10 @@ export default Miscellaneous;
 const category = "Miscellaneous",
   tableHeadRows: TableHeading[] = [
     {
-      text: "Type",
+      text: "Name",
     },
     {
-      text: "Name",
+      text: "Type",
     },
   ];
 
@@ -280,7 +248,7 @@ const Form = ({ form }: { form: UseFormReturn<Form> }) => {
         />
       </FormGroup>
       <FormGroup label="desc">
-        <Textarea
+        <Input
           {...register("name", {
             required: true,
           })}
