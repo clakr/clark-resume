@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import type { IconType } from "react-icons/lib";
+import { SiFrontendmentor } from "react-icons/si";
 
 type Link = {
   href: string;
@@ -19,6 +20,11 @@ const Footer = () => {
       href: "https://www.linkedin.com/in/clark-tolosa/",
       icon: FaLinkedin,
       alt: "LinkedIn Profile",
+    },
+    {
+      href: "https://www.frontendmentor.io/profile/clakr",
+      icon: SiFrontendmentor,
+      alt: "Frontend Mentor Profile",
     },
   ];
 
