@@ -6,7 +6,7 @@ import ContactList from "./ContactList";
 
 const Aside = () => {
   return (
-    <section className="hidden p-12 backdrop-invert-[.1] lg:col-span-2 lg:block xl:col-span-1">
+    <section className="hidden bg-slate-800 p-12 lg:col-span-2 lg:block xl:col-span-1">
       <div className="sticky top-12 flex flex-col gap-8">
         <Contact />
         <About />
