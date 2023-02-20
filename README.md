@@ -6,8 +6,8 @@
 - [x] Integrate NextJS' Data Fetch Patterns, for whichever fits best
 - [x] Mobile Responsive
 - [x] Dark Mode
-- [ ] Project Information
-  - [ ] Refactor to not use React native context
+- [x] Project Information
+  - [x] Refactor to not use React native context
 - [x] Export to PDF
 - [ ] Admin Portal for mutating page content
   - [ ] Form Validations

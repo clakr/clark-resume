@@ -1,7 +1,7 @@
 import { signIn, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import type { Dispatch, ForwardedRef, SetStateAction } from "react";
-import { createContext, forwardRef, useContext, useRef, useState } from "react";
+import { forwardRef, useRef, useState } from "react";
 import { AiOutlineLoading } from "react-icons/ai";
 import { FaFileExport, FaGithub, FaInfoCircle, FaMoon } from "react-icons/fa";
 import type { IconType } from "react-icons/lib";
@@ -37,15 +37,6 @@ const buttons: Button[] = [
   },
 ];
 
-const StateContext = createContext<
-  | { infoState: [boolean, Dispatch<SetStateAction<boolean>>] }
-  | Record<string, never>
->({});
-
-export const useStateContext = () => {
-  return useContext(StateContext);
-};
-
 const CommandPalette = () => {
   const paletteState = usePalette();
   const infoState = useState(false);
@@ -62,14 +53,12 @@ const CommandPalette = () => {
       <div className="flex flex-col gap-2 opacity-75">
         {(session ? buttons.slice(0, 3) : buttons).map(
           ({ isFocused, ...rest }, index) => (
-            <>
-              <Button
-                key={index}
-                ref={isFocused ? initialFocusRef : null}
-                infoState={infoState}
-                {...rest}
-              />
-            </>
+            <Button
+              key={index}
+              ref={isFocused ? initialFocusRef : null}
+              infoState={infoState}
+              {...rest}
+            />
           )
         )}
       </div>
@@ -171,6 +160,7 @@ const Button = forwardRef(
         ref={ref}
         onClick={onClick}
         disabled={isLoading}
+        type="button"
       >
         {isLoading ? (
           <AiOutlineLoading className="h-6 w-6 flex-1 animate-spin" />
