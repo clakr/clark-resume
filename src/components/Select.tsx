@@ -7,6 +7,7 @@ import type {
   ContactFormType,
   EducationFormType,
   ExperienceFormType,
+  MiscellaneousFormType,
 } from "../types";
 
 type OptionProps = {
@@ -65,7 +66,8 @@ type SelectProps = {
   field:
     | ControllerRenderProps<ContactFormType, "type">
     | ControllerRenderProps<EducationFormType, "organizationId">
-    | ControllerRenderProps<ExperienceFormType, "organizationId">;
+    | ControllerRenderProps<ExperienceFormType, "organizationId">
+    | ControllerRenderProps<MiscellaneousFormType, "type">;
 };
 
 const Select = ({

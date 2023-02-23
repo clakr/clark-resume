@@ -4,8 +4,6 @@ import type { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Admin from "../../components/Admin";
-import FormGroup from "../../components/FormGroup";
-import Input from "../../components/Input";
 import Modal from "../../components/Modal";
 import Select from "../../components/Select";
 import SubmitButton from "../../components/SubmitButton";
@@ -227,33 +225,45 @@ const Form = ({ form }: { form: UseFormReturn<Form> }) => {
 
   return (
     <>
-      <FormGroup label="type">
-        <Controller
-          name="type"
-          control={control}
-          render={({ field: { value, onChange } }) => (
-            <Select value={value} onChange={onChange}>
-              <Select.Button>{value}</Select.Button>
-              <Select.Options>
-                {Object.values(MiscellaneousType).map((value, index) => (
-                  <Select.Option
-                    value={value}
-                    key={index}
-                    displayName={value}
-                  />
-                ))}
-              </Select.Options>
-            </Select>
-          )}
-        />
-      </FormGroup>
-      <FormGroup label="desc">
-        <Input
+      <Controller
+        name="type"
+        control={control}
+        render={({ field }) => (
+          <Select field={field}>
+            <Select.Label>Type</Select.Label>
+            <Select.Button>{field.value}</Select.Button>
+            <Select.Options>
+              {Object.values(MiscellaneousType).map((value, index) => (
+                <Select.Option value={value} key={index} displayName={value} />
+              ))}
+            </Select.Options>
+          </Select>
+        )}
+      />
+      <div className="flex flex-col gap-2">
+        <label htmlFor="name" className="form__label">
+          Name
+        </label>
+        <input
+          type="text"
+          id="name"
+          className="form__input px-4 py-2"
           {...register("name", {
             required: true,
           })}
         />
-      </FormGroup>
+      </div>
     </>
   );
 };
+
+/*
+  TODO:
+  - [x] unabstract form inputs
+  - [] form validation
+    - [] error fields
+  - [] sort by type
+
+  FormGroup.tsx
+  Input.tsx
+*/
