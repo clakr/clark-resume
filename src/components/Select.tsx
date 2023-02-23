@@ -3,7 +3,11 @@ import type { PropsWithChildren } from "react";
 import { Fragment } from "react";
 import type { ControllerRenderProps } from "react-hook-form";
 import { FaCheck } from "react-icons/fa";
-import type { ContactFormType, EducationFormType } from "../types";
+import type {
+  ContactFormType,
+  EducationFormType,
+  ExperienceFormType,
+} from "../types";
 
 type OptionProps = {
   value: string;
@@ -60,7 +64,8 @@ const Label = ({ children }: PropsWithChildren) => {
 type SelectProps = {
   field:
     | ControllerRenderProps<ContactFormType, "type">
-    | ControllerRenderProps<EducationFormType, "organizationId">;
+    | ControllerRenderProps<EducationFormType, "organizationId">
+    | ControllerRenderProps<ExperienceFormType, "organizationId">;
 };
 
 const Select = ({

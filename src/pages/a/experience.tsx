@@ -3,8 +3,6 @@ import type { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
 import Admin from "../../components/Admin";
-import FormGroup from "../../components/FormGroup";
-import Input from "../../components/Input";
 import Modal from "../../components/Modal";
 import Select from "../../components/Select";
 import SubmitButton from "../../components/SubmitButton";
@@ -252,51 +250,65 @@ const Form = ({ form }: { form: UseFormReturn<Form> }) => {
 
   return (
     <>
-      <FormGroup label="organization">
-        <Controller
-          name="organizationId"
-          control={control}
-          render={({ field: { value, onChange } }) => (
-            <Select value={value} onChange={onChange}>
-              <Select.Button>
-                {data.find(({ id }) => id === value)?.name}
-              </Select.Button>
-              <Select.Options>
-                {data.map(({ id, name }) => (
-                  <Select.Option value={id} key={id} displayName={name} />
-                ))}
-              </Select.Options>
-            </Select>
-          )}
-        />
-      </FormGroup>
-      <FormGroup label="descriptions">
+      <Controller
+        name="organizationId"
+        control={control}
+        render={({ field }) => (
+          <Select field={field}>
+            <Select.Label>Organization</Select.Label>
+            <Select.Button>
+              {data.find(({ id }) => id === field.value)?.name}
+            </Select.Button>
+            <Select.Options>
+              {data.map(({ id, name }) => (
+                <Select.Option value={id} key={id} displayName={name} />
+              ))}
+            </Select.Options>
+          </Select>
+        )}
+      />
+      <div className="flex flex-col gap-2">
+        <label htmlFor="descriptions" className="form__label">
+          Descriptions
+        </label>
         {fields.map((input, index) => (
           <div key={input.id} className="flex">
-            <Input
+            <input
+              type="text"
+              className="form__input flex-grow px-4 py-2"
               {...register(`experienceDescs.${index}.desc`)}
-              className="flex-grow-0"
             />
-            <button className="flex-grow px-4" onClick={() => remove(index)}>
+            <button className="flex-shrink px-4" onClick={() => remove(index)}>
               <FaTrash className="h-4 w-4" />
             </button>
           </div>
         ))}
-        <button
-          className="flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-slate-200 px-4 py-2 outline-slate-400 dark:border-slate-700 dark:bg-slate-800"
-          onClick={() =>
-            append({
-              id: "",
-              experienceId: "",
-              desc: "",
-            })
-          }
-          type="button"
-        >
-          <FaPlus className="h-4 w-4" />
-          Add Field
-        </button>
-      </FormGroup>
+      </div>
+      <button
+        className="form__input flex w-full items-center justify-center gap-2 border-dashed bg-opacity-50 px-4 py-2 text-xs"
+        onClick={() =>
+          append({
+            id: "",
+            experienceId: "",
+            desc: "",
+          })
+        }
+        type="button"
+      >
+        <FaPlus className="h-4 w-4" />
+        Add Description Input
+      </button>
     </>
   );
 };
+
+/*
+  TODO:
+  - [] unabstract form inputs
+  - [] form validation
+    - [] error fields
+  - [] fix bug from updating 3 inputs to 1
+
+  Formgroup.tsx
+  Input.tsx
+*/
