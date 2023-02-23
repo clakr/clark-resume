@@ -3,12 +3,10 @@ import type { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Admin from "../../components/Admin";
-import FormGroup from "../../components/FormGroup";
 import Modal from "../../components/Modal";
 import Select from "../../components/Select";
 import SubmitButton from "../../components/SubmitButton";
 import Table from "../../components/Table";
-import Textarea from "../../components/Textarea";
 import type {
   EducationFormType,
   TableHeading,
@@ -259,48 +257,73 @@ const Form = ({ form }: { form: UseFormReturn<Form> }) => {
 
   return (
     <>
-      <FormGroup label="desc">
-        <Controller
-          name="organizationId"
-          control={control}
-          render={({ field: { value, onChange } }) => (
-            <Select value={value} onChange={onChange}>
-              <Select.Button>
-                {data.find(({ id }) => id === value)?.name}
-              </Select.Button>
-              <Select.Options>
-                {data.map(({ id, name }) => (
-                  <Select.Option value={id} key={id} displayName={name} />
-                ))}
-              </Select.Options>
-            </Select>
-          )}
-        />
-      </FormGroup>
-      <FormGroup label="degree">
-        <Textarea
+      <Controller
+        name="organizationId"
+        control={control}
+        render={({ field }) => (
+          <Select field={field}>
+            <Select.Label>Organization</Select.Label>
+            <Select.Button>
+              {data.find(({ id }) => id === field.value)?.name}
+            </Select.Button>
+            <Select.Options>
+              {data.map(({ id, name }) => (
+                <Select.Option value={id} key={id} displayName={name} />
+              ))}
+            </Select.Options>
+          </Select>
+        )}
+      />
+      <div className="flex flex-col gap-2">
+        <label htmlFor="degree" className="form__label">
+          Degree
+        </label>
+        <textarea
+          id="degree"
           rows={3}
+          className="form__input p-4"
           {...register("degree", {
             required: true,
           })}
         />
-      </FormGroup>
-      <FormGroup label="thesis">
-        <Textarea
+      </div>
+      <div className="flex flex-col gap-2">
+        <label htmlFor="thesis" className="form__label">
+          Thesis
+        </label>
+        <textarea
+          id="thesis"
           rows={3}
+          className="form__input p-4"
           {...register("thesis", {
             required: true,
           })}
         />
-      </FormGroup>
-      <FormGroup label="awards">
-        <Textarea
+      </div>
+      <div className="flex flex-col gap-2">
+        <label htmlFor="awards" className="form__label">
+          Awards
+        </label>
+        <textarea
+          id="awards"
           rows={3}
+          className="form__input p-4"
           {...register("awards", {
             required: true,
           })}
         />
-      </FormGroup>
+      </div>
     </>
   );
 };
+
+/*
+  TODO:
+  - [x] unabstract form inputs
+  - [] form validation
+    - [] error fields
+  - [] one example per ORGANIZATION only
+
+  Formgroup.tsx
+  Textarea.tsx
+*/

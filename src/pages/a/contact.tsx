@@ -260,6 +260,7 @@ const Form = ({ form }: { form: UseFormReturn<Form> }) => {
   - [x] unabstract form inputs
   - [] form validation
     - [] error fields
+  - [] one example per TYPE only
 
   Formgroup.tsx
   Textarea.tsx
