@@ -304,9 +304,10 @@ const Form = ({ form }: { form: UseFormReturn<Form> }) => {
 
 /*
   TODO:
-  - [] unabstract form inputs
+  - [x] unabstract form inputs
   - [] form validation
     - [] error fields
+    - [] disable delete button when field === 1
   - [] fix bug from updating 3 inputs to 1
 
   Formgroup.tsx

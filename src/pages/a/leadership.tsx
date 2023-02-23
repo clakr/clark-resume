@@ -1,10 +1,8 @@
 import type { NextPage } from "next";
 import type { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
 import Admin from "../../components/Admin";
-import FormGroup from "../../components/FormGroup";
-import Input from "../../components/Input";
 import Modal from "../../components/Modal";
 import Select from "../../components/Select";
 import SubmitButton from "../../components/SubmitButton";
@@ -292,54 +290,125 @@ const Form = ({ form }: { form: UseFormReturn<Form> }) => {
 
   return (
     <>
-      <FormGroup label="organization">
-        <Controller
-          name="organizationId"
-          control={control}
-          render={({ field: { value, onChange } }) => (
-            <Select value={value} onChange={onChange}>
-              <Select.Button>
-                {data.find(({ id }) => id === value)?.name}
-              </Select.Button>
-              <Select.Options>
-                {data.map(({ id, name }) => (
-                  <Select.Option value={id} key={id} displayName={name} />
-                ))}
-              </Select.Options>
-            </Select>
-          )}
-        />
-      </FormGroup>
-      <FormGroup label="projects">
-        {fields.map((project, index) => (
-          <div key={project.id} className="space-y-1">
-            <Input {...register(`leadershipProjects.${index}.course`)} />
-            <Input {...register(`leadershipProjects.${index}.name`)} />
-            <Input {...register(`leadershipProjects.${index}.purpose`)} />
-            <Input
-              {...register(`leadershipProjects.${index}.otherPositions`)}
-            />
+      <Controller
+        name="organizationId"
+        control={control}
+        render={({ field }) => (
+          <Select field={field}>
+            <Select.Label>Organization</Select.Label>
+            <Select.Button>
+              {data.find(({ id }) => id === field.value)?.name}
+            </Select.Button>
+            <Select.Options>
+              {data.map(({ id, name }) => (
+                <Select.Option value={id} key={id} displayName={name} />
+              ))}
+            </Select.Options>
+          </Select>
+        )}
+      />
+      {fields.map((project, index) => (
+        <div
+          key={project.id}
+          className="space-y-3 rounded-lg border border-slate-200 p-4"
+        >
+          <div className="flex items-center justify-between">
+            <label className="form__label">
+              Course {fields.length > 1 ? `#${index + 1}` : null}
+            </label>
             <button type="button" onClick={() => remove(index)}>
-              remove
+              <FaTrash className="h-8 w-8 p-2" />
             </button>
           </div>
-        ))}
-        <button
-          type="button"
-          onClick={() =>
-            append({
-              id: "",
-              leadershipId: "",
-              course: "",
-              name: "",
-              purpose: "",
-              otherPositions: "",
-            })
-          }
-        >
-          append
-        </button>
-      </FormGroup>
+          <div className="flex flex-col gap-1">
+            <label
+              htmlFor={`leadershipProjects.${index}.course`}
+              className="form__label text-sm"
+            >
+              Name
+            </label>
+            <input
+              type="text"
+              id={`leadershipProjects.${index}.course`}
+              className="form__input px-4 py-2 text-xs"
+              {...register(`leadershipProjects.${index}.course`)}
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label
+              htmlFor={`leadershipProjects.${index}.name`}
+              className="form__label text-sm"
+            >
+              Project
+            </label>
+            <input
+              type="text"
+              id={`leadershipProjects.${index}.name`}
+              className="form__input px-4 py-2 text-xs"
+              {...register(`leadershipProjects.${index}.name`)}
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label
+              htmlFor={`leadershipProjects.${index}.purpose`}
+              className="form__label text-sm"
+            >
+              Purpose
+            </label>
+            <input
+              type="text"
+              id={`leadershipProjects.${index}.purpose`}
+              className="form__input px-4 py-2 text-xs"
+              {...register(`leadershipProjects.${index}.purpose`)}
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label
+              htmlFor={`leadershipProjects.${index}.otherPositions`}
+              className="form__label text-sm"
+            >
+              Other Position/s
+            </label>
+            <input
+              type="text"
+              id={`leadershipProjects.${index}.otherPositions`}
+              className="form__input px-4 py-2 text-xs"
+              {...register(`leadershipProjects.${index}.otherPositions`)}
+            />
+          </div>
+        </div>
+      ))}
+      <button
+        type="button"
+        className="form__input flex w-full items-center justify-center gap-2 border-dashed bg-opacity-50 px-4 py-2 text-xs"
+        onClick={() =>
+          append({
+            id: "",
+            leadershipId: "",
+            course: "",
+            name: "",
+            purpose: "",
+            otherPositions: "",
+          })
+        }
+      >
+        <FaPlus className="h-4 w-4" />
+        Add Course Field
+      </button>
     </>
   );
 };
+
+/*
+  TODO:
+  - [x] unabstract form inputs
+  - [] form validation
+    - [] error fields
+    - [] disable delete button when field === 1
+  - [] fix bug from updating 3 inputs to 1
+  - [] one example per ORGANIZATION only
+  - [] prevent modal scroll
+
+  Formgroup.tsx
+  Textarea.tsx
+*/
