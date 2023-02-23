@@ -4,12 +4,10 @@ import type { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Admin from "../../components/Admin";
-import FormGroup from "../../components/FormGroup";
 import Modal from "../../components/Modal";
 import Select from "../../components/Select";
 import SubmitButton from "../../components/SubmitButton";
 import Table from "../../components/Table";
-import Textarea from "../../components/Textarea";
 import type { ContactFormType, TableHeading, TableOptions } from "../../types";
 import { api } from "../../utils/api";
 import createTRPCSSG from "../../utils/createTRPCSSG";
@@ -225,33 +223,34 @@ const Form = ({ form }: { form: UseFormReturn<Form> }) => {
 
   return (
     <>
-      <FormGroup label="type">
-        <Controller
-          name="type"
-          control={control}
-          render={({ field: { value, onChange } }) => (
-            <Select value={value} onChange={onChange}>
-              <Select.Button>{value}</Select.Button>
-              <Select.Options>
-                {Object.values(ContactType).map((value, index) => (
-                  <Select.Option
-                    value={value}
-                    key={index}
-                    displayName={value}
-                  />
-                ))}
-              </Select.Options>
-            </Select>
-          )}
-        />
-      </FormGroup>
-      <FormGroup label="desc">
-        <Textarea
+      <Controller
+        name="type"
+        control={control}
+        render={({ field }) => (
+          <Select field={field}>
+            <Select.Label>Type</Select.Label>
+            <Select.Button>{field.value}</Select.Button>
+            <Select.Options>
+              {Object.values(ContactType).map((value, index) => (
+                <Select.Option value={value} key={index} displayName={value} />
+              ))}
+            </Select.Options>
+          </Select>
+        )}
+      />
+      <div className="flex flex-col gap-2">
+        <label htmlFor="description" className="form__label">
+          Description
+        </label>
+        <textarea
+          id="description"
+          rows={5}
+          className="form__input p-4"
           {...register("desc", {
             required: true,
           })}
         />
-      </FormGroup>
+      </div>
     </>
   );
 };
