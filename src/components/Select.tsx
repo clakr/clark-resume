@@ -87,3 +87,8 @@ Select.Options = Options;
 Select.Option = Option;
 
 export default Select;
+
+/*
+  TODO:
+  - [] Option hover
+*/

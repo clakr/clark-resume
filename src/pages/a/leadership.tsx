@@ -402,6 +402,8 @@ const Form = ({ form }: { form: UseFormReturn<Form> }) => {
 /*
   TODO:
   - [x] unabstract form inputs
+  - [] fix bug from updating from x to y number of fields
+    e.g. 1 -> 2
   - [] form validation
     - [] error fields
     - [] disable delete button when field === 1
