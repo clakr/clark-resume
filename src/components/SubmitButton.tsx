@@ -1,3 +1,5 @@
+import { FaEdit, FaPlus } from "react-icons/fa";
+
 type SubmitButtonProps = {
   intent: "Add" | "Update" | "Delete";
   category: string;
@@ -6,9 +8,10 @@ type SubmitButtonProps = {
 const SubmitButton = ({ intent, category }: SubmitButtonProps) => {
   return (
     <button
-      className="!mt-6 w-full rounded-md border border-slate-300 bg-slate-200 p-2 outline-slate-400 hover:bg-slate-300 focus:bg-slate-300 dark:border-slate-700 dark:bg-slate-800"
+      className="form__input flex w-full items-center justify-center gap-2 p-2"
       type="submit"
     >
+      {intent === "Add" ? <FaPlus /> : <FaEdit />}
       {intent} {category}
     </button>
   );

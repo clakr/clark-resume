@@ -3,11 +3,9 @@ import type { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Admin from "../../components/Admin";
-import FormGroup from "../../components/FormGroup";
 import Modal from "../../components/Modal";
 import SubmitButton from "../../components/SubmitButton";
 import Table from "../../components/Table";
-import Textarea from "../../components/Textarea";
 import type { AboutFormType, TableHeading, TableOptions } from "../../types";
 import { api } from "../../utils/api";
 import createTRPCSSG from "../../utils/createTRPCSSG";
@@ -138,6 +136,8 @@ const About: NextPage = () => {
     }
   }
 
+  console.log();
+
   return (
     <Admin pageTitle={category}>
       <Table>
@@ -191,7 +191,7 @@ const About: NextPage = () => {
         itemIdState={itemIdState}
         reset={reset}
       >
-        <form onSubmit={handleSubmit(submitDelete)}>
+        <form onSubmit={handleSubmit(submitDelete)} className="space-y-3">
           <SubmitButton intent="Delete" category={category} />
         </form>
       </Modal>
@@ -212,12 +212,18 @@ const Form = ({ form }: { form: UseFormReturn<Form> }) => {
   const { register } = form;
 
   return (
-    <FormGroup label="desc">
-      <Textarea
+    <div className="flex flex-col gap-2">
+      <label htmlFor="description" className="form__label">
+        Description
+      </label>
+      <textarea
+        id="description"
+        rows={5}
+        className="form__input p-4"
         {...register("desc", {
           required: true,
         })}
       />
-    </FormGroup>
+    </div>
   );
 };
