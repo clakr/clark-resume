@@ -8,7 +8,7 @@ type SubmitButtonProps = {
 const SubmitButton = ({ intent, category }: SubmitButtonProps) => {
   return (
     <button
-      className="form__input flex w-full items-center justify-center gap-2 p-2"
+      className="form__input !mt-6 flex w-full items-center justify-center gap-2 p-3 text-sm"
       type="submit"
     >
       {intent === "Add" ? <FaPlus /> : <FaEdit />}

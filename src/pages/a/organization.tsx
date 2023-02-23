@@ -3,8 +3,6 @@ import type { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Admin from "../../components/Admin";
-import FormGroup from "../../components/FormGroup";
-import Input from "../../components/Input";
 import Modal from "../../components/Modal";
 import SubmitButton from "../../components/SubmitButton";
 import Table from "../../components/Table";
@@ -105,8 +103,8 @@ const Organization: NextPage = () => {
         name,
         position,
         location,
-        timeframeFrom: new Date(timeframeFrom),
-        timeframeTo: timeframeTo ? new Date(timeframeTo) : null,
+        timeframeFrom,
+        timeframeTo,
       });
       setItemId(null);
       reset();
@@ -125,8 +123,8 @@ const Organization: NextPage = () => {
         name,
         position,
         location,
-        timeframeFrom: new Date(timeframeFrom),
-        timeframeTo: timeframeTo ? new Date(timeframeTo) : null,
+        timeframeFrom,
+        timeframeTo,
       });
       setItemId(null);
       reset();
@@ -272,54 +270,87 @@ const Form = ({ form }: { form: UseFormReturn<Form> }) => {
 
   return (
     <>
-      <FormGroup label="name">
-        <Input
+      <div className="flex flex-col gap-2">
+        <label htmlFor="name" className="form__label">
+          Name
+        </label>
+        <input
+          type="text"
+          id="name"
+          className="form__input px-4 py-2"
           {...register("name", {
             required: true,
           })}
         />
-      </FormGroup>
+      </div>
       <div className="grid grid-cols-7 gap-4">
-        <FormGroup label="position" className="col-span-5">
-          <Input
+        <div className="col-span-5 flex flex-col gap-2">
+          <label htmlFor="position" className="form__label">
+            Position
+          </label>
+          <input
+            type="text"
+            id="position"
+            className="form__input px-4 py-2"
             {...register("position", {
               required: true,
             })}
           />
-        </FormGroup>
-        <FormGroup label="location" className="col-span-2">
-          <Input
+        </div>
+        <div className="col-span-2 flex flex-col gap-2">
+          <label htmlFor="location" className="form__label">
+            Location
+          </label>
+          <input
+            type="text"
+            id="location"
+            className="form__input px-4 py-2"
             {...register("location", {
               required: true,
             })}
           />
-        </FormGroup>
+        </div>
       </div>
-      <FormGroup label="timeframeFrom">
-        <Input
+      <div className="flex flex-col gap-2">
+        <label htmlFor="timeframeFrom" className="form__label">
+          Start Date
+        </label>
+        <input
           type="date"
+          id="timeframeFrom"
+          className="form__input px-4 py-2"
           {...register("timeframeFrom", {
             required: true,
+            valueAsDate: true,
           })}
         />
-      </FormGroup>
-      <FormGroup label="timeframeTo">
-        <Input
+      </div>
+      <div className="flex flex-col gap-2">
+        <label htmlFor="timeframeTo" className="form__label">
+          End Date
+        </label>
+        <input
           type="date"
+          id="timeframeTo"
+          className="form__input px-4 py-2"
           {...register("timeframeTo", {
             required: true,
+            valueAsDate: true,
           })}
         />
-      </FormGroup>
+      </div>
     </>
   );
 };
 
 /*
   TODO:
-  - [] unabstract form inputs
+  - [x] unabstract form inputs
   - [] form validation
     - [] error fields
+  - [] optional inputs
+  - [] valueOnChange
+
 
   FormGroup.tsx
   Input.tsx
