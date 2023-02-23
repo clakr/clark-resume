@@ -230,9 +230,9 @@ const Form = ({ form }: { form: UseFormReturn<Form> }) => {
 
 /*
   TODO:
-  - unabstract form inputs
-  - form validation
-    - error fields
+  - [x] unabstract form inputs
+  - [] form validation
+    - [] error fields
 
   Textarea.tsx
 */

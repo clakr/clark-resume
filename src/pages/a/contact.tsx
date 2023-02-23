@@ -254,3 +254,12 @@ const Form = ({ form }: { form: UseFormReturn<Form> }) => {
     </>
   );
 };
+
+/*
+  TODO:
+  - [x] unabstract form inputs
+  - [] form validation
+    - [] error fields
+
+  Textarea.tsx
+*/
