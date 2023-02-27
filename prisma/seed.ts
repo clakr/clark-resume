@@ -48,6 +48,7 @@ async function main() {
       name: "FEU - Institute of Technology",
       location: "MNL, PH",
       timeframeFrom: new Date(2018, 7, 1, 0, 0, 0, 0),
+      timeframeTo: new Date(2023, 1, 1, 0, 0, 0, 0),
 
       educations: {
         create: {
@@ -104,7 +105,7 @@ async function main() {
     data: {
       position: "Web Developer Intern",
       name: "Aguora IT Solutions and Technology Inc.",
-      location: "WFH",
+      location: "QZT, PH | WFH",
       timeframeFrom: new Date(2022, 3, 1, 0, 0, 0, 0),
       timeframeTo: new Date(2022, 10, 1, 0, 0, 0, 0),
 
@@ -114,25 +115,25 @@ async function main() {
             createMany: {
               data: [
                 {
-                  desc: "Provide support for existing software revisions.",
+                  desc: "Provided support for existing software revisions.",
                 },
                 {
-                  desc: "Build design systems for page, and components reusability.",
+                  desc: "Built design systems for page and components reusability.",
                 },
                 {
                   desc: "Remodeled Santiago City's website for mobile responsive design.",
                 },
                 {
-                  desc: "Translate & Interpret UI mock designs to fully-functional web pages and applications.",
+                  desc: "Translated & Interpreted UI mock designs to fully functional web pages and applications.",
                 },
                 {
-                  desc: "Bootstrap a design system based on UI mock design, resulting in developing application modules with ease.",
+                  desc: "Bootstrapped a design system based on UI mock design, resulting in developing application modules with ease.",
                 },
                 {
-                  desc: "Conduct isolated Quality Assurance tests for every assigned task, resulting in filtered tests for the staging process.",
+                  desc: "Conducted isolated Quality Assurance tests for every assigned task, resulting in filtered tests for the staging process.",
                 },
                 {
-                  desc: "Engineer & Maintain a Project Management System's Frontend & Backend for Marikina Polytechnic College's Smart Campus.",
+                  desc: "Engineered & Maintained a Project Management System's Frontend & Backend for Marikina Polytechnic College's Smart Campus.",
                 },
               ],
             },
