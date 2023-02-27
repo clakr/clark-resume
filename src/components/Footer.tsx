@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useState } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import type { IconType } from "react-icons/lib";
 import { SiFrontendmentor } from "react-icons/si";
@@ -9,32 +10,33 @@ type Link = {
   alt: string;
 };
 
+const links: Link[] = [
+  {
+    href: "https://github.com/clakr",
+    icon: FaGithub,
+    alt: "Github Profile",
+  },
+  {
+    href: "https://www.linkedin.com/in/clark-tolosa/",
+    icon: FaLinkedin,
+    alt: "LinkedIn Profile",
+  },
+  {
+    href: "https://www.frontendmentor.io/profile/clakr",
+    icon: SiFrontendmentor,
+    alt: "Frontend Mentor Profile",
+  },
+];
+
 const Footer = () => {
-  const links: Link[] = [
-    {
-      href: "https://github.com/clakr",
-      icon: FaGithub,
-      alt: "Github Profile",
-    },
-    {
-      href: "https://www.linkedin.com/in/clark-tolosa/",
-      icon: FaLinkedin,
-      alt: "LinkedIn Profile",
-    },
-    {
-      href: "https://www.frontendmentor.io/profile/clakr",
-      icon: SiFrontendmentor,
-      alt: "Frontend Mentor Profile",
-    },
-  ];
+  const [year] = useState(new Date());
 
   return (
-    <footer className="flex items-center justify-center gap-4 pt-4 text-xs lg:pt-8">
-      <h1>Clark Kenneth C. Tolosa</h1>
-      <span>•</span>
-      <h2>Web Developer</h2>
-      <span>•</span>
-      <ul className="flex items-center text-base">
+    <footer className="grid place-items-center gap-2 pt-4 text-xs md:grid-cols-2 md:gap-4 lg:pt-8">
+      <span className="md:justify-self-end">
+        &copy;{year.getFullYear()} Clark Kenneth C. Tolosa
+      </span>
+      <ul className="flex items-center justify-center md:justify-self-start">
         {links.map(({ href, icon: Icon, alt }, index) => (
           <li key={index}>
             <Link href={href} target="_blank" aria-label={alt}>
