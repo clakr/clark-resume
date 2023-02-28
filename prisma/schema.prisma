@@ -108,6 +108,7 @@ enum ContactType {
 
 enum MiscellaneousType {
   TECHNICAL
+  TOOLS
   LANGUAGE
   INTEREST
 }

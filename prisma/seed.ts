@@ -145,6 +145,7 @@ async function main() {
 
   await prisma.miscellaneous.createMany({
     data: [
+      // TECHNICAL
       {
         name: "HTML",
         type: "TECHNICAL",
@@ -154,15 +155,19 @@ async function main() {
         type: "TECHNICAL",
       },
       {
+        name: "SASS",
+        type: "TECHNICAL",
+      },
+      {
+        name: "Tailwind",
+        type: "TECHNICAL",
+      },
+      {
+        name: "Bootstrap",
+        type: "TECHNICAL",
+      },
+      {
         name: "JavaScript",
-        type: "TECHNICAL",
-      },
-      {
-        name: "React",
-        type: "TECHNICAL",
-      },
-      {
-        name: "TailwindCSS",
         type: "TECHNICAL",
       },
       {
@@ -170,7 +175,19 @@ async function main() {
         type: "TECHNICAL",
       },
       {
+        name: "jQuery",
+        type: "TECHNICAL",
+      },
+      {
+        name: "React",
+        type: "TECHNICAL",
+      },
+      {
         name: "NextJS",
+        type: "TECHNICAL",
+      },
+      {
+        name: "AstroJS",
         type: "TECHNICAL",
       },
       {
@@ -182,15 +199,11 @@ async function main() {
         type: "TECHNICAL",
       },
       {
-        name: "Bootstrap",
-        type: "TECHNICAL",
-      },
-      {
-        name: "jQuery",
-        type: "TECHNICAL",
-      },
-      {
         name: "SQL",
+        type: "TECHNICAL",
+      },
+      {
+        name: "PostgreSQL",
         type: "TECHNICAL",
       },
       {
@@ -201,6 +214,62 @@ async function main() {
         name: "Git",
         type: "TECHNICAL",
       },
+
+      // TOOLS
+      {
+        name: "Visual Studio Code",
+        type: "TOOLS",
+      },
+      {
+        name: "GitHub",
+        type: "TOOLS",
+      },
+      {
+        name: "GitLab",
+        type: "TOOLS",
+      },
+      {
+        name: "Node Package Manager",
+        type: "TOOLS",
+      },
+      {
+        name: "Composer",
+        type: "TOOLS",
+      },
+      {
+        name: "Vercel",
+        type: "TOOLS",
+      },
+      {
+        name: "Railway",
+        type: "TOOLS",
+      },
+      {
+        name: "Prisma",
+        type: "TOOLS",
+      },
+      {
+        name: "Prettier",
+        type: "TOOLS",
+      },
+      {
+        name: "ESLint",
+        type: "TOOLS",
+      },
+      {
+        name: "Figma",
+        type: "TOOLS",
+      },
+      {
+        name: "AdobeXD",
+        type: "TOOLS",
+      },
+      {
+        name: "Notion",
+        type: "TOOLS",
+      },
+
+      // LANGUAGE
       {
         name: "Filipino",
         type: "LANGUAGE",
@@ -209,6 +278,8 @@ async function main() {
         name: "English",
         type: "LANGUAGE",
       },
+
+      // INTEREST
       {
         name: "Modern Technologies",
         type: "INTEREST",
