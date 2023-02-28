@@ -8,13 +8,15 @@ const Skills = () => {
   const data = useQueries();
 
   let technical: Miscellaneous[] | undefined = undefined,
+    tool: Miscellaneous[] | undefined = undefined,
     language: Miscellaneous[] | undefined = undefined,
     interest: Miscellaneous[] | undefined = undefined;
 
   if (data) {
-    technical = data?.miscellaneous.filter(({ type }) => type === "TECHNICAL");
-    language = data?.miscellaneous.filter(({ type }) => type === "LANGUAGE");
-    interest = data?.miscellaneous.filter(({ type }) => type === "INTEREST");
+    technical = data.miscellaneous.filter(({ type }) => type === "TECHNICAL");
+    tool = data.miscellaneous.filter(({ type }) => type === "TOOLS");
+    language = data.miscellaneous.filter(({ type }) => type === "LANGUAGE");
+    interest = data.miscellaneous.filter(({ type }) => type === "INTEREST");
   }
 
   const formatter = (miscellaneous: Miscellaneous[]) => {
@@ -34,6 +36,9 @@ const Skills = () => {
                 term="Technical:"
                 description={formatter(technical)}
               />
+            )}
+            {tool && (
+              <DefinitionItem term="Tools:" description={formatter(tool)} />
             )}
             {language && (
               <DefinitionItem
