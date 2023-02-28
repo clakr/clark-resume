@@ -1,5 +1,5 @@
-import { Inter } from "@next/font/google";
 import type { NextPage } from "next";
+import { Inter } from "next/font/google";
 import Head from "next/head";
 import { createContext, useContext } from "react";
 import Aside from "../components/Aside";
