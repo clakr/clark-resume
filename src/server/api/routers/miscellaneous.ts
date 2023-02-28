@@ -13,7 +13,7 @@ export const miscellaneousRouter = createTRPCRouter({
     .input(
       z.object({
         name: z.string(),
-        type: z.enum(["INTEREST", "LANGUAGE", "TECHNICAL"]),
+        type: z.enum(["INTEREST", "LANGUAGE", "TECHNICAL", "TOOLS"]),
       })
     )
     .mutation(({ ctx, input }) => {
@@ -29,7 +29,7 @@ export const miscellaneousRouter = createTRPCRouter({
       z.object({
         id: z.string(),
         name: z.string(),
-        type: z.enum(["INTEREST", "LANGUAGE", "TECHNICAL"]),
+        type: z.enum(["INTEREST", "LANGUAGE", "TECHNICAL", "TOOLS"]),
       })
     )
     .mutation(({ ctx, input }) => {

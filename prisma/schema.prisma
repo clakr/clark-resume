@@ -11,85 +11,79 @@ model Contact {
   id        String      @id @default(cuid())
   type      ContactType
   createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
   desc      String
+  updatedAt DateTime    @updatedAt
 }
 
 model About {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
   desc      String
+  updatedAt DateTime @updatedAt
 }
 
 model Education {
-  id             String   @id @default(cuid())
+  id             String       @id @default(cuid())
   organizationId String
   degree         String?
   thesis         String?
   awards         String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 }
 
 model Experience {
-  id             String   @id @default(cuid())
-  organizationId String
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-
+  id              String           @id @default(cuid())
+  organizationId  String
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
   organization    Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   experienceDescs ExperienceDesc[]
 }
 
 model ExperienceDesc {
-  id           String   @id @default(cuid())
+  id           String     @id @default(cuid())
   experienceId String
   desc         String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  experience Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  experience   Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
 }
 
 model Leadership {
-  id             String   @id @default(cuid())
-  organizationId String
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-
+  id                 String              @id @default(cuid())
+  organizationId     String
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
   organization       Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   leadershipProjects LeadershipProject[]
 }
 
 model LeadershipProject {
-  id             String   @id @default(cuid())
+  id             String     @id @default(cuid())
   leadershipId   String
   course         String
   name           String
   purpose        String?
   otherPositions String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-
-  leadership Leadership @relation(fields: [leadershipId], references: [id], onDelete: Cascade)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  leadership     Leadership @relation(fields: [leadershipId], references: [id], onDelete: Cascade)
 }
 
 model Organization {
-  id            String    @id @default(cuid())
+  id            String       @id @default(cuid())
   position      String
   name          String
   location      String
   timeframeFrom DateTime
   timeframeTo   DateTime?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-
-  educations  Education[]
-  experiences Experience[]
-  leaderships Leadership[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  educations    Education[]
+  experiences   Experience[]
+  leaderships   Leadership[]
 }
 
 model Miscellaneous {
@@ -108,7 +102,7 @@ enum ContactType {
 
 enum MiscellaneousType {
   TECHNICAL
-  TOOLS
   LANGUAGE
   INTEREST
+  TOOLS
 }
