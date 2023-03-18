@@ -5,10 +5,7 @@ const getTimeframe = ({
   timeframeFrom: Date;
   timeframeTo: Date | null;
 }) => {
-  if (!timeframeTo) return `${timeframeFrom.getFullYear()} - Present`;
-
-  if (timeframeTo.getFullYear() - timeframeFrom.getFullYear() >= 1)
-    return `${timeframeFrom.getFullYear()} - ${timeframeTo.getFullYear()}`;
+  if (!timeframeTo) return `${formatTimeframe(timeframeFrom)} - Present`;
 
   return `${formatTimeframe(timeframeFrom)} - ${formatTimeframe(timeframeTo)}`;
 };
@@ -16,6 +13,6 @@ const getTimeframe = ({
 const formatTimeframe = (timeframe: Date) =>
   `${new Intl.DateTimeFormat("en-PH", {
     month: "long",
-  }).format(timeframe)} ${timeframe.getFullYear()}`;
+  }).format(timeframe)} '${timeframe.getFullYear().toString().slice(-2)}`;
 
 export default getTimeframe;
