@@ -13,7 +13,7 @@ import type {
 } from "../../types";
 import { api } from "../../utils/api";
 import createTRPCSSG from "../../utils/createTRPCSSG";
-import getDate from "../../utils/getDate";
+import getTimeframe from "../../utils/getTimeframe";
 import useModal from "../../utils/useModal";
 
 export const getStaticProps = async () => {
@@ -196,7 +196,7 @@ const Organization: NextPage = () => {
                   <Table.Data>{position}</Table.Data>
                   <Table.Data>{location}</Table.Data>
                   <Table.Data>
-                    {getDate(timeframeFrom)} - {getDate(timeframeTo)}
+                    {getTimeframe({timeframeFrom, timeframeTo})}
                   </Table.Data>
                   <Table.DataOptions options={options} id={id} />
                 </Table.BodyRow>

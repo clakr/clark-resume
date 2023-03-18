@@ -5,8 +5,6 @@ const getTimeframe = ({
   timeframeFrom: Date;
   timeframeTo: Date | null;
 }) => {
-  console.log(timeframeFrom.getFullYear(), timeframeTo?.getFullYear());
-
   if (!timeframeTo) return `${timeframeFrom.getFullYear()} - Present`;
 
   if (timeframeTo.getFullYear() - timeframeFrom.getFullYear() >= 1)
