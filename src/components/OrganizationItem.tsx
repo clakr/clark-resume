@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import getDate from "../utils/getDate";
+import getTimeframe from "../utils/getTimeframe";
 
 type OrganizationItemProps = {
   position: string | null;
@@ -20,7 +20,7 @@ const OrganizationItem = ({
   const [timeframe, setTimeframe] = useState("");
 
   useEffect(() => {
-    setTimeframe(`${getDate(timeframeFrom)} - ${getDate(timeframeTo)}`);
+    setTimeframe(getTimeframe({ timeframeFrom, timeframeTo }));
   }, [timeframeTo, timeframeFrom]);
 
   return (
