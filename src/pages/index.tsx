@@ -51,7 +51,7 @@ const Home: NextPage = () => {
 
       <QueriesContext.Provider value={data}>
         <main
-          className={`${inter.className} bg-slate-50 text-slate-900 transition-colors selection:bg-slate-300 dark:bg-slate-900 dark:text-slate-50 dark:selection:bg-slate-700 lg:grid lg:min-h-screen lg:grid-cols-5 xl:grid-cols-4`}
+          className={`${inter.className} relative bg-slate-50 text-slate-900 transition-colors selection:bg-slate-300 dark:bg-slate-900 dark:text-slate-50 dark:selection:bg-slate-700 lg:grid lg:min-h-screen lg:grid-cols-5 xl:grid-cols-4`}
         >
           <Header />
           <Content />

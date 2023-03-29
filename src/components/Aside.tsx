@@ -6,12 +6,12 @@ import ContactList from "./ContactList";
 
 const Aside = () => {
   return (
-    <section className="hidden bg-gray-200 p-12 dark:bg-gray-800 lg:col-span-2 lg:block xl:col-span-1">
-      <div className="sticky top-12 flex flex-col gap-8">
+    <aside className="fixed right-0 top-0 hidden h-screen flex-col justify-between bg-gray-200 p-12 pb-6 dark:bg-gray-800 lg:flex lg:w-[40vw] xl:w-[25vw]">
+      <div className="flex flex-col gap-y-8">
         <Contact />
         <About />
       </div>
-    </section>
+    </aside>
   );
 };
 

@@ -29,12 +29,13 @@ const links: Link[] = [
 ];
 
 const Footer = () => {
-  const [year] = useState(new Date());
+  const [date] = useState(new Date());
 
   return (
-    <footer className="grid place-items-center gap-2 pt-4 text-xs md:grid-cols-2 md:gap-4 lg:pt-8">
+    <footer className="grid place-items-center gap-y-2 pt-4 text-xs md:grid-cols-2 md:gap-x-4 lg:pt-8">
       <span className="md:justify-self-end">
-        &copy;{year.getFullYear()} Clark Kenneth C. Tolosa
+        Copyright &copy; {date.getFullYear()}{" "}
+        <span className="whitespace-nowrap">Clark Kenneth C. Tolosa</span>
       </span>
       <ul className="flex items-center justify-center md:justify-self-start">
         {links.map(({ href, icon: Icon, alt }, index) => (
