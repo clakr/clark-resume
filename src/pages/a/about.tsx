@@ -10,7 +10,6 @@ import type { AboutFormType, TableHeading, TableOptions } from "../../types";
 import { api } from "../../utils/api";
 import createTRPCSSG from "../../utils/createTRPCSSG";
 import useModal from "../../utils/useModal";
-import { useEffect } from "react";
 
 export const getStaticProps = async () => {
   const ssg = await createTRPCSSG();
