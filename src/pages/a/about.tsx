@@ -136,8 +136,6 @@ const About: NextPage = () => {
     }
   }
 
-  console.log();
-
   return (
     <Admin pageTitle={category}>
       <Table>
@@ -228,12 +226,9 @@ const Form = ({ form }: { form: UseFormReturn<Form> }) => {
   );
 };
 
-/*
-  TODO:
-  - [x] unabstract form inputs
-  - [] form validation
-    - [] error fields
-
-  Formgroup.tsx
-  Textarea.tsx
-*/
+/**
+ * TODO:
+ *  - [x] unabstract form inputs
+ *  - [] form validation
+ *    -  [] error fields
+ */
